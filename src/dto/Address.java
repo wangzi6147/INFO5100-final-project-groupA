@@ -1,34 +1,14 @@
 package dto;
 
-import java.io.Serializable;
-
-public class Dealer implements Serializable {
-    private String id;
-    private String name;
+public  class Address {
     private String address1;
     private String address2;
     private String city;
     private String state;
     private String zip;
 
-    public Dealer(String name) {
-        this.name = name;
-    }
+    public Address() {
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getAddress1() {
@@ -70,6 +50,4 @@ public class Dealer implements Serializable {
     public void setZip(String zip) {
         this.zip = zip;
     }
-
-
 }

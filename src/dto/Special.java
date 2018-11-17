@@ -1,29 +1,37 @@
 package dto;
 
-import java.util.ArrayList;
-
 public class Special {
-    private String id;
-    private String startDate;
+    private String id; //auto generated
+    private String dealerID;  // who is giving such special offer.
+    private String startDate; // by default it's today
     private String endDate;
     private String title;
     private String description;
     private String disclaimer;
     private String value;
+    private SpecialScope scope;
+    private String specialParameter;
 
-    public Special(String id, String startDate, String endDate, String title, String description, String disclaimer, String value) {
-        this.id = id;
-        this.startDate = startDate;
+
+    public Special(String dealerID, String endDate, String title, String value, SpecialScope scope, String specialParameter) {
+
+        this.dealerID = dealerID;
         this.endDate = endDate;
         this.title = title;
-        this.description = description;
-        this.disclaimer = disclaimer;
         this.value = value;
+        this.specialParameter = specialParameter;
+        this.scope = scope;
     }
 
     public String getId() {
         return id;
     }
+
+    public String getDealerID() {
+        return dealerID;
+    }
+
+    public void setDealerID(String dealerID) { this.dealerID = dealerID; }
 
     public String getStartDate() {
         return startDate;
@@ -73,70 +81,11 @@ public class Special {
         this.value = value;
     }
 
-    // ------------ VehicleCriterion Class ----------------------------------------
-    public static class VehicleCriterion {
-        private String make;
-        private String model;
-        private String year;
-        private String minPrice;
-        private String maxPrice;
-        private ArrayList<String> vehicleIds;
+    public SpecialScope getScope() { return scope; }
 
-        public VehicleCriterion(String make, String model, String year, String minPrice, String maxPrice, ArrayList<String> vehicleIds) {
-            this.make = make;
-            this.model = model;
-            this.year = year;
-            this.minPrice = minPrice;
-            this.maxPrice = maxPrice;
-            this.vehicleIds = vehicleIds;
-        }
+    public void setScope(SpecialScope scope){ this.scope = scope; }
 
-        public String getMake() {
-            return make;
-        }
+    public String getSpecialParameter(){ return specialParameter;    }
 
-        public void setMake(String make) {
-            this.make = make;
-        }
-
-        public String getModel() {
-            return model;
-        }
-
-        public void setModel(String model) {
-            this.model = model;
-        }
-
-        public String getYear() {
-            return year;
-        }
-
-        public void setYear(String year) {
-            this.year = year;
-        }
-
-        public String getMinPrice() {
-            return minPrice;
-        }
-
-        public void setMinPrice(String minPrice) {
-            this.minPrice = minPrice;
-        }
-
-        public String getMaxPrice() {
-            return maxPrice;
-        }
-
-        public void setMaxPrice(String maxPrice) {
-            this.maxPrice = maxPrice;
-        }
-
-        public ArrayList<String> getVehicleIds() {
-            return vehicleIds;
-        }
-
-        public void setVehicleIds(ArrayList<String> vehicleIds) {
-            this.vehicleIds = vehicleIds;
-        }
-    }
+    public void setSpecialParameter(String specialParameter){ this.specialParameter = specialParameter;}
 }

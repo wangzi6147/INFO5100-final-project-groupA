@@ -1,51 +1,39 @@
 package dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 public class Vehicle implements Serializable {
     private String id;
-    private String dealerName;
+    private String dealerID;
     private String year;
-    private String make;
+    private String brand;
     private String model;
-    private boolean type;   // true for new , false for used
+    private boolean isNew;   // true for new , false for used
     private String price;
     private String exteriorColor;
     private String interiorColor;
     private BodyType bodyType;
-    private ArrayList<String> features;
+    private List<String> features;
     private String miles;
-//    private ArrayList<VehicleImage> images;
-//    private ArrayList<Special> specials;
+    private List<String> images;
 
-    public Vehicle(String id, String dealerName, String year, String make, String model, boolean type, String price, String exteriorColor, String interiorColor, BodyType bodyType, ArrayList<String> features, String miles) {
+
+    public Vehicle(String id, String dealerID) {
         this.id = id;
-        this.dealerName = dealerName;
-        this.year = year;
-        this.make = make;
-        this.model = model;
-        this.type = type;
-        this.price = price;
-        this.exteriorColor = exteriorColor;
-        this.interiorColor = interiorColor;
-        this.bodyType = bodyType;
-        this.features = features;
-        this.miles = miles;
-//        this.images = images;
-//        this.specials = specials;
+        this.dealerID = dealerID;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getDealerName() {
-        return dealerName;
+    public String getDealerID() {
+        return dealerID;
     }
 
-    public void setDealerName(String dealerName) {
-        this.dealerName = dealerName;
+    public void setDealerID(String dealerID) {
+        this.dealerID = dealerID;
     }
 
     public String getYear() {
@@ -56,12 +44,12 @@ public class Vehicle implements Serializable {
         this.year = year;
     }
 
-    public String getMake() {
-        return make;
+    public String getBran() {
+        return brand;
     }
 
-    public void setMake(String make) {
-        this.make = make;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public String getModel() {
@@ -72,12 +60,12 @@ public class Vehicle implements Serializable {
         this.model = model;
     }
 
-    public boolean isType() {
-        return type;
+    public boolean getIsNew() {
+        return isNew;
     }
 
-    public void setType(boolean type) {
-        this.type = type;
+    public void setNewOrUsed(boolean isNew) {
+        this.isNew = isNew;
     }
 
     public String getPrice() {
@@ -112,11 +100,11 @@ public class Vehicle implements Serializable {
         this.bodyType = bodyType;
     }
 
-    public ArrayList<String> getFeatures() {
+    public List<String> getFeatures() {
         return features;
     }
 
-    public void setFeatures(ArrayList<String> features) {
+    public void setFeatures(List<String> features) {
         this.features = features;
     }
 
@@ -128,10 +116,7 @@ public class Vehicle implements Serializable {
         this.miles = miles;
     }
 
-    // ---------- Body Type Class -----------
-    public enum BodyType {
-        VAN, SUV, Jeep
-    }
+
 
     public static class VehicleImage implements Serializable {
         private String id;

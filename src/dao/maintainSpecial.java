@@ -1,8 +1,5 @@
 package dao;
-
-import main.Components.Special;
-import java.sql.*;
-
+import dto.*;
 public class maintainSpecial {
 
     private static final String DRIVER = "com.mysql.jdbc.Driver";
