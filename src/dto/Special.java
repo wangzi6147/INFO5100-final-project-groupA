@@ -23,6 +23,8 @@ public class Special {
         this.scope = scope;
     }
 
+    public void setId(String id){ this.id = id; }
+
     public String getId() {
         return id;
     }
@@ -88,4 +90,5 @@ public class Special {
     public String getSpecialParameter(){ return specialParameter;    }
 
     public void setSpecialParameter(String specialParameter){ this.specialParameter = specialParameter;}
+
 }

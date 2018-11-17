@@ -4,24 +4,23 @@ import dto.*;
 public class App {
     public static void main(String[] args) {
 
+//
+//        maintainDealer md = new maintainDealer();
+//        maintainVehicle mv = new maintainVehicle();
 
-        maintainDealer m = new maintainDealer();
+        maintainSpecial ms = new maintainSpecial();
 
+        Special s = new Special("1322","2018-12-24","Big sale!!!", "60%", SpecialScope.ALL, "");
 
-        Dealer a = new Dealer("dandan");
-        Dealer b = new Dealer("brother");
-        a.setAddress1("fremont");
-        a.setCity("seattle");
+//        Vehicle v = new Vehicle("132","1234");
+//        v.setBodyType(BodyType.SUV);
+//
+//
+//
+//        mv.addVehicle(v);
 
-
-        b.setAddress1("NEU");
-        b.setCity("seattle");
-
-        m.addDealer(a);
-
-
-        System.out.println(a.getName());
-        System.out.println(a.getId());
+        ms.addSpecial(s);
+        System.out.println(s.getId());
 
 
         System.out.println("Hello project!");

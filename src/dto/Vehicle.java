@@ -44,7 +44,7 @@ public class Vehicle implements Serializable {
         this.year = year;
     }
 
-    public String getBran() {
+    public String getBrand() {
         return brand;
     }
 
@@ -108,6 +108,8 @@ public class Vehicle implements Serializable {
         this.features = features;
     }
 
+    public void addFeature(String feature) { this.features.add(feature); }
+
     public String getMiles() {
         return miles;
     }
@@ -116,28 +118,10 @@ public class Vehicle implements Serializable {
         this.miles = miles;
     }
 
+    public List<String> getImages() { return images; }
 
+    public void setImages(List<String> images) { this.images = images; }
 
-    public static class VehicleImage implements Serializable {
-        private String id;
-        private String url;
-
-        public VehicleImage(String id, String url) {
-            this.id = id;
-            this.url = url;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-    }
+    public void addImages(String url){ this.images.add(url); }
 
 }
