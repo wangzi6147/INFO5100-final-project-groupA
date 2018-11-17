@@ -45,10 +45,12 @@ Methods : getter, setter
 | price         | String   | price of a vehicle           |
 | exteriorColor | String   | exterior color               |
 | interiorColor | String   | interior color               |
-| bodyType      | BodyType | VAN, SUV, Jeep               |
+| bodyType      | BodyType |     VAN, SUV, CAR, TRUCK           |
 | features      | List<String>   | features of a vehicle        |
 | miles         | String   | miles                        |
 | images         |  List<String>   | the urls of images of such vehicle.  |
+  
+  
 Methods :getter, setter 
 
 
