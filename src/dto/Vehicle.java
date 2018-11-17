@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Vehicle implements Serializable {
+
     private String id;
     private String dealerID;
     private String year;

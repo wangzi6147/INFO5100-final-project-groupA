@@ -10,16 +10,16 @@ public class Special {
     private String disclaimer;
     private String value;
     private SpecialScope scope;
-    private String specialParameter;
+    private String scopeParameter;
 
 
-    public Special(String dealerID, String endDate, String title, String value, SpecialScope scope, String specialParameter) {
+    public Special(String dealerID, String endDate, String title, String value, SpecialScope scope, String scopeParameter) {
 
         this.dealerID = dealerID;
         this.endDate = endDate;
         this.title = title;
         this.value = value;
-        this.specialParameter = specialParameter;
+        this.scopeParameter = scopeParameter;
         this.scope = scope;
     }
 
@@ -87,8 +87,8 @@ public class Special {
 
     public void setScope(SpecialScope scope){ this.scope = scope; }
 
-    public String getSpecialParameter(){ return specialParameter;    }
+    public String getScopeParameter(){ return scopeParameter;    }
 
-    public void setSpecialParameter(String specialParameter){ this.specialParameter = specialParameter;}
+    public void setScopeParameter(String scopeParameter){ this.scopeParameter = scopeParameter;}
 
 }
