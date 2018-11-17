@@ -11,6 +11,14 @@ public  class Address {
 
     }
 
+    public Address(String address1, String address2, String city, String state, String zip){
+        this.address1 = address1;
+        this.address2 = address2;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+    }
+
     public String getAddress1() {
         return address1;
     }

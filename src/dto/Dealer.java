@@ -27,7 +27,7 @@ public class Dealer implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public void setAddress(Address add){  this.address = add; }
 
     public Address getAddress(){ return this.address; }

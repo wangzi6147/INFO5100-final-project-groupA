@@ -5,7 +5,7 @@ public class App {
     public static void main(String[] args) {
 
 //
-//        maintainDealer md = new maintainDealer();
+
 //        maintainVehicle mv = new maintainVehicle();
 
         maintainSpecial ms = new maintainSpecial();
@@ -22,6 +22,13 @@ public class App {
         ms.addSpecial(s);
         System.out.println(s.getId());
 
+
+        maintainDealer md = new maintainDealer();
+        Dealer d = new Dealer("Brother ");
+        Address add = new Address("Terry 401","NW","Seattle","WA","98107");
+        d.setAddress(add);
+
+        md.addDealer(d);
 
         System.out.println("Hello project!");
 
