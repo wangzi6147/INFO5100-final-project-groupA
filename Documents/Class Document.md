@@ -14,13 +14,11 @@
 | name        | String  | name of a dealer      |
 | address     | Address | address of a dealer   |
 
-​       Methods : // todo
+​       Methods :  getter, setter 
 
 
 
 ## Address
-
-**Address is a inner class of Dealer Class**
 
 | Member Name | Type   | Description          |
 | ----------- | ------ | -------------------- |
@@ -30,7 +28,7 @@
 | state       | String | state                |
 | zipCode     | String | zip code             |
 
-Methods : // todo
+Methods : getter, setter 
 
 
 
@@ -51,7 +49,7 @@ Methods : // todo
 | features      | List<String>   | features of a vehicle        |
 | miles         | String   | miles                        |
 | images         |  List<String>   | the urls of images of such vehicle.  |
-Methods : // todo
+Methods :getter, setter 
 
 
 
@@ -76,7 +74,7 @@ Methods : // todo
 | scope   | SpecialScope | the granularity of this special      |
 | scopeParameter   | String | together with scope, they can define the special. Like  scope = BRAND, and scopeParameter = Chevrolet  , or, scope = YEAR and scopeParameter = 2016  |
 
-Methods : // todo
+Methods : getter, setter 
 
 
 
@@ -84,5 +82,4 @@ Methods : // todo
 
  **a enum class, contains 6 values (ALL, BRAND, NEWORUSED, YEAR, BODYTYPE, UNIQUEONE).**
 
-Methods : // todo
 
