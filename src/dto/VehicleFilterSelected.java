@@ -3,7 +3,7 @@ import java.util.*;
 
 public class VehicleFilterSelected {
 
-    private String dealerID;
+    private String dealerID; // must have
     private List<String> years;
     private List<String> brand;
     private List<String> model;
@@ -14,10 +14,8 @@ public class VehicleFilterSelected {
     private List<BodyType> bodyType;
     private List<String>  miles;
 
-    private int pageNumber;
-    private int pageSize;
-
-    private List<SortType> sortTypes;
+    private int pageNumber; // must have
+    private SortType sortType;
 
 
     public String getDealerID() {
