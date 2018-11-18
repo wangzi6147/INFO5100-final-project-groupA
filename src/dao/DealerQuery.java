@@ -12,6 +12,25 @@ public class DealerQuery {
         conn = new DBconnect().connectDB();
     }
 
+
+    public List<String> getCityList(){
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT DISTINCT city FROM dealer");
+
+            List<String> cities = new ArrayList<>();
+            while(rs.next()){
+                cities.add(rs.getString(1));
+            }
+            rs.close();
+            return cities;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     public Dealer findDealerByID(String id) {
         try {
             Statement stm = conn.createStatement();
