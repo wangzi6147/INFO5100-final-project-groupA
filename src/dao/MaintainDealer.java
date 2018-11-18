@@ -3,11 +3,11 @@ import dto.*;
 import java.sql.*;
 
 
-public class maintainDealer {
+public class MaintainDealer {
 
     Connection conn;
 
-    public maintainDealer(){
+    public MaintainDealer(){
         conn = new DBconnect().connectDB();
     }
 

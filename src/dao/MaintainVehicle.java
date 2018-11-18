@@ -2,7 +2,7 @@ package dao;
 import dto.*;
 import java.sql.*;
 
-public class maintainVehicle {
+public class MaintainVehicle {
 
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     private static final String DBURL = "jdbc:mysql://localhost:3306/car";
@@ -11,7 +11,7 @@ public class maintainVehicle {
 
     Connection conn;
 
-    public maintainVehicle(){
+    public MaintainVehicle(){
         conn = new DBconnect().connectDB();
     }
 

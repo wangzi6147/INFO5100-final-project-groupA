@@ -1,13 +1,12 @@
 package dao;
 import dto.*;
-
 import java.sql.*;
 
-public class maintainSpecial {
+public class MaintainSpecial {
 
     Connection conn;
 
-    public maintainSpecial(){
+    public MaintainSpecial(){
         conn = new DBconnect().connectDB();
     }
 
@@ -24,7 +23,7 @@ public class maintainSpecial {
             ps.setString(6,  s.getDisclaimer());
             ps.setString(7,  s.getValue());
             ps.setString(8,  s.getScope()==null? null :s.getScope().toString());
-            ps.setString(9,  s.getSpecialParameter());
+            ps.setString(9,  s.getScopeParameter());
             ps.executeUpdate();
             ps.close();
 
@@ -75,7 +74,7 @@ public class maintainSpecial {
             ps.setString(6,  newSpecial.getDisclaimer());
             ps.setString(7,  newSpecial.getValue());
             ps.setString(8,  newSpecial.getScope()==null? null :newSpecial.getScope().toString());
-            ps.setString(9,  newSpecial.getSpecialParameter());
+            ps.setString(9,  newSpecial.getScopeParameter());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
