@@ -1,6 +1,7 @@
 package main;
 import dao.*;
 import dto.*;
+import java.util.*;
 public class App {
     public static void main(String[] args) {
 
@@ -15,8 +16,8 @@ public class App {
 //        v.setBodyType(BodyType.SUV);
 //
 //
-//
 //        mv.addVehicle(v);
+
 //
 //        ms.addSpecial(s);
 //        System.out.println(s.getId());
@@ -28,6 +29,18 @@ public class App {
 //        d.setAddress(add);
 //
 //        md.addDealer(d);
+
+//        ms.addSpecial(s);
+//        System.out.println(s.getId());
+
+//
+//        dealerQuery dq = new dealerQuery();
+//        List<Dealer> list = dq.findDealersByPostCode(98107);
+//
+//        for(Dealer d : list){
+//            System.out.println(d.getName()+"\t"+d.getId()+"\t"+d.getAddress1());
+//        }
+
 
         System.out.println("Hello project!");
 
