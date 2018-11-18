@@ -1,6 +1,7 @@
 package dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Vehicle implements Serializable {
@@ -22,6 +23,22 @@ public class Vehicle implements Serializable {
     public Vehicle(String id, String dealerID) {
         this.id = id;
         this.dealerID = dealerID;
+    }
+
+    public Vehicle(String id, String dealerID, String year, String brand, String model, boolean isNew, String price, String exteriorColor, String interiorColor, BodyType bodyType) {
+        this.id = id;
+        this.dealerID = dealerID;
+        this.year = year;
+        this.brand = brand;
+        this.model = model;
+        this.isNew = isNew;
+        this.price = price;
+        this.exteriorColor = exteriorColor;
+        this.interiorColor = interiorColor;
+        this.bodyType = bodyType;
+        this.features = new ArrayList<>();
+        this.miles = "";
+        this.images = new ArrayList<>();
     }
 
     public String getId() {
