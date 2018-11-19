@@ -58,4 +58,12 @@ public  class Address {
     public void setZip(String zip) {
         this.zip = zip;
     }
+     public String toString(){
+	   StringBuilder sb=new StringBuilder();
+	   sb.append(address1+",");
+	   sb.append(address2+",");
+	   sb.append(city+",");
+	   sb.append(state+","+zip);
+	  return sb.toString();
+   }
 }
