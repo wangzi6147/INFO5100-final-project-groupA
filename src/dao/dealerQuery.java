@@ -9,7 +9,7 @@ public class DealerQuery {
     Connection conn;
 
     public DealerQuery() {
-        conn = new DBconnect().connectDB();
+        conn = DBconnect.connectDB();
     }
 
 

@@ -9,7 +9,7 @@ public class VehicleQuery {
 	Connection conn;
 	Statement stmt = null;
 	public VehicleQuery() throws SQLException{
-		 conn = new DBconnect().connectDB();
+		 conn = DBconnect.connectDB();
 		 stmt=conn.createStatement();
 	}
 

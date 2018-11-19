@@ -7,7 +7,7 @@ public class MaintainSpecial {
     Connection conn;
 
     public MaintainSpecial(){
-        conn = new DBconnect().connectDB();
+        conn = DBconnect.connectDB();
     }
 
 

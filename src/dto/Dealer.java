@@ -2,7 +2,7 @@ package dto;
 
 import java.io.Serializable;
 
-public class Dealer implements Serializable {
+public class Dealer {
     private String id;
     private String name;
     private Address address;

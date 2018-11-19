@@ -12,7 +12,7 @@ public class MaintainVehicle {
     Connection conn;
 
     public MaintainVehicle(){
-        conn = new DBconnect().connectDB();
+        conn = DBconnect.connectDB();
     }
 
     public void addVehicle(Vehicle v){

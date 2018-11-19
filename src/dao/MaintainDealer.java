@@ -8,7 +8,7 @@ public class MaintainDealer {
     Connection conn;
 
     public MaintainDealer(){
-        conn = new DBconnect().connectDB();
+        conn = DBconnect.connectDB();
     }
 
     //Basic infos modification.
