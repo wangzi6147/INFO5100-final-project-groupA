@@ -9,7 +9,7 @@ public class SpecialQuery {
     Connection conn;
 
 //    public SpecialQuery(){
-//        conn = new DBconnect().connectDB();
+//        conn = DBconnect.connectDB();
 //    }
 //
 //    public Special getSpecialByID(String id){
