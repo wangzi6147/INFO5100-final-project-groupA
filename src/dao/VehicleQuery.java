@@ -167,7 +167,8 @@ public class VehicleQuery {
 		if(p.getInteriorColor()!=null) sql.append(inColorSql(p.getInteriorColor()));		
 		if(p.getBodyType()!=null) sql.append(typeSql(p.getBodyType()));		
 		if(p.getMiles()!=null)	sql.append(milesSql(p.getMiles()));
-		
+		if(p.getSortTypes()!=null) sql.append(sortTypeSql(p.getSortTypes()));
+	
 		int pageSplit_start=(p.getPageNumber()-1)*20;
 		sql.append(" limit ");
 		sql.append(pageSplit_start);
@@ -179,7 +180,7 @@ public class VehicleQuery {
     	BodyType bodyType=null;
     	switch(type){
 		case "SUV":
-			bodyType=BodyType.SUV;
+			bodyType=BodyType.SUV; 
 			break;
 		case "CAR":
 			bodyType=BodyType.CAR;
@@ -293,7 +294,23 @@ public class VehicleQuery {
 		sql.append(" ");
 		return sql.toString();
     }
-    
-
+    private String sortTypeSql(SortType sortType){
+    	StringBuffer sql= new StringBuffer(" order by ");
+    	switch(sortType){
+    	case PRICE_ASC:
+    		sql.append("price "); break;
+    	case PRICE_DSC:
+    		sql.append("price desc ");break;
+    //	case DISCOUNT:
+    //		sql.append("???? ");break;
+    	case YEAR:
+    		sql.append("year desc "); break;
+    	case MILES:
+    		sql.append("miles "); break;
+		default:
+			break;
+    	}
+		return sql.toString();
+    }
 
 }
