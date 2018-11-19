@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBconnect {
     //119.23.73.176
-    private static String url = "jdbc:mysql://localhost:3306/car?useSSL=false";
+    private static String url = "jdbc:mysql://119.23.73.176:3306/car?useSSL=false";
     private static String userName="root";
     private static String password="12345678";
     private static Connection connection;
