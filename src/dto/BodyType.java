@@ -1,5 +1,5 @@
 package dto;
 
 public enum BodyType {
-    SUV, CAR, TRUCK, VAN
+    SUV, CAR, TRUCK, VAN,
 }

@@ -12,6 +12,11 @@ public class Dealer implements Serializable {
         this.name = name;
     }
 
+    public Dealer(String name, Address address) {
+        this.name = name;
+        this.address = address;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
