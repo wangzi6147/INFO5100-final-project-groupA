@@ -7,15 +7,15 @@ public class VehicleQuery {
 
 
 
-    public List<Vehicle> getVehiclesByFilter(VehicleFilterSelected parameter){
-
-        //@todo select * from vechile where XXX =XXXX order by XXX ,XXX limit XXX,XXX;
-
-    }
-
-    public VehicleFilterContent getVehicleFilerContent(){
-        //@todo select distinct XXXX from vehicle.
-    }
+//    public List<Vehicle> getVehiclesByFilter(VehicleFilterSelected parameter){
+//
+//        //@todo select * from vechile where XXX =XXXX order by XXX ,XXX limit XXX,XXX;
+//
+//    }
+//
+//    public VehicleFilterContent getVehicleFilerContent(){
+//        //@todo select distinct XXXX from vehicle.
+//    }
 
 
 
