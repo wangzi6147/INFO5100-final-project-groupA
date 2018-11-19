@@ -17,6 +17,11 @@ public class VehicleFilterSelected {
     private int pageNumber; // must have
     private SortType sortType;
 
+    public VehicleFilterSelected(String dealerID){
+    	this.dealerID=dealerID;
+    	this.pageNumber=1;
+    }
+
 
     public String getDealerID() {
         return dealerID;
