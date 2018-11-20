@@ -52,17 +52,13 @@ public class VehicleFilterContent {
         return bodyType;
     }
 
-    public List<String> getMiles() {
-        return miles;
-    }
+    public List<String> getMiles() { return miles; }
 
     public void setDealerID(String dealerID) {
         this.dealerID = dealerID;
     }
 
-    public void setYears(List<String> years) {
-        this.years = years;
-    }
+    public void setYears(List<String> years) { this.years = years; }
 
     public void setBrand(List<String> brand) {
         this.brand = brand;

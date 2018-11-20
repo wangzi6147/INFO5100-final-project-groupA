@@ -13,6 +13,8 @@ public class Vehicle {
     private String model;
     private boolean isNew;   // true for new , false for used
     private String price;
+    private String finalPrice;
+    private String discountRate;
     private String exteriorColor;
     private String interiorColor;
     private BodyType bodyType;
@@ -141,5 +143,21 @@ public class Vehicle {
     public void setImages(List<String> images) { this.images = images; }
 
     public void addImages(String url){ this.images.add(url); }
+
+    public String getFinalPrice() {
+        return finalPrice;
+    }
+
+    public void setFinalPrice(String finalPrice) {
+        this.finalPrice = finalPrice;
+    }
+
+    public String getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(String discountRate) {
+        this.discountRate = discountRate;
+    }
 
 }
