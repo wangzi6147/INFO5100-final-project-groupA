@@ -1,4 +1,5 @@
 package dto;
+
 import java.util.List;
 
 public class VehicleFilterContent {
@@ -11,9 +12,9 @@ public class VehicleFilterContent {
     private List<Boolean> isNew;   // {true} {false} {true, false} {}
     private List<String> price;
     private List<String> exteriorColor;
-    private List<String>  interiorColor;
+    private List<String> interiorColor;
     private List<BodyType> bodyType;
-    private List<String>  miles;
+    private List<String> miles;
 
     public String getDealerID() {
         return dealerID;

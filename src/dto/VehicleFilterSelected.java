@@ -1,4 +1,5 @@
 package dto;
+
 import java.util.*;
 
 public class VehicleFilterSelected {
@@ -10,18 +11,17 @@ public class VehicleFilterSelected {
     private List<Boolean> isNew; // {true} {false} {}
     private List<String> price;
     private List<String> exteriorColor;
-    private List<String>  interiorColor;
+    private List<String> interiorColor;
     private List<BodyType> bodyType;
-    private List<String>  miles;
+    private List<String> miles;
 
     private int pageNumber; // must have
     private SortType sortType;
 
-    public VehicleFilterSelected(String dealerID){
-    	this.dealerID=dealerID;
-    	this.pageNumber=1;
+    public VehicleFilterSelected(String dealerID) {
+        this.dealerID = dealerID;
+        this.pageNumber = 1;
     }
-
 
     public String getDealerID() {
         return dealerID;
@@ -31,9 +31,7 @@ public class VehicleFilterSelected {
         this.dealerID = dealerID;
     }
 
-    public List<String> getYears() {
-        return years;
-    }
+    public List<String> getYears() { return years; }
 
     public void setYears(List<String> years) {
         this.years = years;
@@ -79,9 +77,7 @@ public class VehicleFilterSelected {
         this.exteriorColor = exteriorColor;
     }
 
-    public List<String> getInteriorColor() {
-        return interiorColor;
-    }
+    public List<String> getInteriorColor() { return interiorColor; }
 
     public void setInteriorColor(List<String> interiorColor) {
         this.interiorColor = interiorColor;
@@ -91,15 +87,15 @@ public class VehicleFilterSelected {
         return bodyType;
     }
 
-    public void setBodyType(List<BodyType> bodyType) {
-        this.bodyType = bodyType;
-    }
+    public void setBodyType(List<BodyType> bodyType) { this.bodyType = bodyType; }
 
-    public List<String> getMiles() {
-        return miles;
-    }
+    public List<String> getMiles() { return miles; }
 
     public void setMiles(List<String> miles) {
         this.miles = miles;
     }
+
+    public SortType getSortType() { return this.sortType; }
+
+    public int getPageNumber() { return this.pageNumber; }
 }
