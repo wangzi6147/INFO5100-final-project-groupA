@@ -26,13 +26,10 @@ public class MaintainSpecial {
             ps.setString(9,  s.getScopeParameter());
             ps.executeUpdate();
             ps.close();
-
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery("select last_insert_id()");
-
             if(rs.first()){
                 s.setId(rs.getString(1));
-                //@todo here we need to come up a solution that can solve the sql query exception or null result.
             }
             rs.close();
 
@@ -40,6 +37,7 @@ public class MaintainSpecial {
             e.printStackTrace();
         }
     }
+
     public void removeSpecial(Special s){
 
         try {
@@ -51,6 +49,7 @@ public class MaintainSpecial {
             e.printStackTrace();
         }
     }
+
     public void removeSpecial(String id){
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(
@@ -61,6 +60,7 @@ public class MaintainSpecial {
             e.printStackTrace();
         }
     }
+
     public void modifySpecial(Special oldSpecial, Special newSpecial){
 
         try {
@@ -80,10 +80,6 @@ public class MaintainSpecial {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-
     }
-
 
 }

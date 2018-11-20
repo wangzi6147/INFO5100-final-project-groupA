@@ -55,7 +55,6 @@ public class VehicleQuery {
     private List<Vehicle> vehicles;
     private VehicleFilterContent vehicleFilterContent;
 
-
     public VehicleQuery() throws SQLException {
 
         conn = DBconnect.connectDB();
@@ -85,7 +84,6 @@ public class VehicleQuery {
         }
         return res;
     }
-
 
     public void Query(VehicleFilterSelected p) throws SQLException {
 
@@ -207,6 +205,8 @@ public class VehicleQuery {
             List<String> images = new ArrayList<>();
             images.add(rs.getString("images"));
             v.setImages(images);
+            v.setFinalPrice(rs.getString("finalPrice"));
+            v.setDiscountRate(rs.getString("discountRate"));
             vehicles.add(v);
         }
 
