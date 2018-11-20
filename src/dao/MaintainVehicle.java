@@ -1,6 +1,7 @@
 package dao;
 import dto.*;
 import java.sql.*;
+import java.util.*;
 
 public class MaintainVehicle {
 
@@ -88,6 +89,7 @@ public class MaintainVehicle {
         }
 
     }
+
     public void modifyVehicle(Vehicle oldVehicle, Vehicle newVehicle){
 
         deleteVehicle(oldVehicle);
@@ -95,7 +97,26 @@ public class MaintainVehicle {
 
     }
 
+    public void updateFinalPriceAndDiscount(List<Vehicle> vehicles) throws SQLException{
 
-
+        Statement stmt = conn.createStatement();
+        StringBuffer sql = new StringBuffer("UPDATE vehicle SET finalPrice = CASE id ");
+        for(Vehicle v : vehicles){
+            sql.append(" when "+ v.getId() + " then " + v.getFinalPrice());
+        }
+        sql.append(" END, discountRate = CASE id");
+        for(Vehicle v : vehicles){
+            sql.append(" when "+ v.getId() + " then " + v.getDiscountRate());
+        }
+        sql.append( " END where id in (");
+        for(Vehicle v :vehicles){
+            sql.append(v.getId() + ",");
+        }
+        sql.deleteCharAt(sql.length()-1);
+        sql.append(")");
+        System.out.println(sql);
+        stmt.executeUpdate(sql.toString());
+        stmt.close();
+    }
 
 }

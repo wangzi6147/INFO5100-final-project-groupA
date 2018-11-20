@@ -64,7 +64,31 @@ public class VehicleQuery {
         vehicles = new ArrayList<>();
     }
 
+    //A specified simplified query port ONLY used for apply specials.
+    public List<Vehicle> getAllVehiclesByFilter(VehicleFilterSelected p) throws SQLException{
+
+        List<Vehicle> res = new ArrayList<>();
+        String sql = generateConditionSQL(p);
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            Vehicle v = new Vehicle(rs.getString("id"), dealerID);
+            v.setYear(rs.getString("year"));
+            v.setBrand(rs.getString("brand"));
+            v.setModel(rs.getString("model"));
+            v.setNewOrUsed(rs.getBoolean("isNew"));
+            v.setPrice(String.valueOf(rs.getString("price")));
+            v.setExteriorColor(rs.getString("exColor"));
+            v.setInteriorColor(rs.getString("inColor"));
+            v.setBodyType(BodyType.valueOf(rs.getString("type")));
+            v.setMiles(String.valueOf(rs.getString("miles")));
+            res.add(v);
+        }
+        return res;
+    }
+
+
     public void Query(VehicleFilterSelected p) throws SQLException {
+
         String cacheTableName = "cache" + p.getDealerID();
         String sql = generateConditionSQL(p);
         stmt.executeUpdate("DROP TABLE IF EXISTS " + cacheTableName);
@@ -115,7 +139,6 @@ public class VehicleQuery {
         // Prices
         List<String> priceList = new ArrayList<>();
         for (double[] pricePair : priceChart) {
-
             rs = stmt.executeQuery("SELECT EXISTS (SELECT * FROM " + cacheTableName + " WHERE price<=" + pricePair[1] + " AND price>=" + pricePair[0] + ")");
             if (rs.first()) {
                 if (rs.getInt(1) > 0) {
@@ -166,7 +189,6 @@ public class VehicleQuery {
 
         rs = stmt.executeQuery("SELECT * FROM " + cacheTableName + " ORDER BY " + sortTypeSql(p.getSortType()) + " LIMIT " + (p.getPageNumber() * pageSize) + " , " + pageSize);
         while (rs.next()) {
-
             Vehicle v = new Vehicle(rs.getString("id"), rs.getString("dealerID"));
             v.setYear(rs.getString("year"));
             v.setBrand(rs.getString("brand"));
@@ -190,7 +212,6 @@ public class VehicleQuery {
 
         stmt.executeUpdate("DROP TABLE IF EXISTS " + cacheTableName);
     }
-
 
     public List<Vehicle> getVehicles() {
         return this.vehicles;
@@ -221,6 +242,7 @@ public class VehicleQuery {
         if (p.getInteriorColor() != null) sql.append(inColorSql(p.getInteriorColor()));
         if (p.getBodyType() != null) sql.append(typeSql(p.getBodyType()));
         if (p.getMiles() != null) sql.append(milesSql(p.getMiles()));
+        System.out.println(sql);
         return sql.toString();
     }
 
