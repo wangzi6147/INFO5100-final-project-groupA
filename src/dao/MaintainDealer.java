@@ -39,7 +39,7 @@ public class MaintainDealer {
         }
     }
 
-    public void delteDealer(Dealer dealer){
+    public void deleteDealer(Dealer dealer){
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "DELETE FROM dealer WHERE id=" + dealer.getId());
@@ -50,7 +50,7 @@ public class MaintainDealer {
         }
 
     }
-    public void delteDealer(String dealerID){
+    public void deleteDealer(String dealerID){
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "DELETE FROM dealer WHERE id="+dealerID);
