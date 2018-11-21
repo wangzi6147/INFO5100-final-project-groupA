@@ -376,32 +376,25 @@ public class VehicleQuery {
         return sql.toString();
     }
 
-    //@todo discount
     private String sortTypeSql(SortType sortType) {
 
         if (sortType == null) {
             return null;
         }
 
-
         StringBuffer sql = new StringBuffer(" order by ");
         switch (sortType) {
             case PRICE_ASC:
-                sql.append("price ");
-                break;
+                sql.append("price ");break;
             case PRICE_DSC:
-                sql.append("price desc ");
-                break;
-            //	case DISCOUNT:
-            //		sql.append("???? ");break;
+                sql.append("price desc ");break;
+            case DISCOUNT:
+            		sql.append("discountRate desc ");break;
             case YEAR:
-                sql.append("year desc ");
-                break;
+                sql.append("year desc ");break;
             case MILES:
-                sql.append("miles ");
-                break;
-            default:
-                break;
+                sql.append("miles ");break;
+            // we can have a default sort. but not specified now.
         }
         return sql.toString();
     }
