@@ -162,7 +162,7 @@ public class VehicleQuery {
         while (rs.next()) {
             inColors.add(rs.getString(1));
         }
-        vehicleFilterContent.setExteriorColor(inColors);
+        vehicleFilterContent.setInteriorColor(inColors);
         //BodyType
         rs = stmt.executeQuery("SELECT DISTINCT type FROM " + cacheTableName);
         List<BodyType> bodyTypes = new ArrayList<>();
