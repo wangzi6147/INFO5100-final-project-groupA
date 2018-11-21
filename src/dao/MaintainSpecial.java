@@ -14,7 +14,8 @@ public class MaintainSpecial {
     public void addSpecial(Special s){
         try {
             PreparedStatement ps = conn.prepareStatement(
-                    "INSERT INTO special (dealerID, startDate, endDate, title, description, disclaimer, value, scope, parameter) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO special (dealerID, startDate, endDate, title, description, disclaimer, value, scope, scopeParameter, isMutex, valueType ) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1,  s.getDealerID());
             ps.setString(2,  s.getStartDate());
             ps.setString(3,  s.getEndDate());
@@ -24,6 +25,8 @@ public class MaintainSpecial {
             ps.setString(7,  s.getValue());
             ps.setString(8,  s.getScope()==null? null :s.getScope().toString());
             ps.setString(9,  s.getScopeParameter());
+            ps.setBoolean(10,  s.isMutex());
+            ps.setString(11,  s.getValueType().toString());
             ps.executeUpdate();
             ps.close();
             Statement stm = conn.createStatement();
@@ -61,25 +64,25 @@ public class MaintainSpecial {
         }
     }
 
-    public void modifySpecial(Special oldSpecial, Special newSpecial){
-
-        try {
-            PreparedStatement ps = conn.prepareStatement(
-                    "UPDATE dealer SET dealerID=?, startDate=?, endDate=?, title=?, description=?, disclaimer=?, value=?, scope=?, parameter=? WHERE id="+oldSpecial.getId());
-            ps.setString(1,  newSpecial.getDealerID());
-            ps.setString(2,  newSpecial.getStartDate());
-            ps.setString(3,  newSpecial.getEndDate());
-            ps.setString(4,  newSpecial.getTitle());
-            ps.setString(5,  newSpecial.getDescription());
-            ps.setString(6,  newSpecial.getDisclaimer());
-            ps.setString(7,  newSpecial.getValue());
-            ps.setString(8,  newSpecial.getScope()==null? null :newSpecial.getScope().toString());
-            ps.setString(9,  newSpecial.getScopeParameter());
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void modifySpecial(Special oldSpecial, Special newSpecial){
+//
+//        try {
+//            PreparedStatement ps = conn.prepareStatement(
+//                    "UPDATE dealer SET dealerID=?, startDate=?, endDate=?, title=?, description=?, disclaimer=?, value=?, scope=?, parameter=? WHERE id="+oldSpecial.getId());
+//            ps.setString(1,  newSpecial.getDealerID());
+//            ps.setString(2,  newSpecial.getStartDate());
+//            ps.setString(3,  newSpecial.getEndDate());
+//            ps.setString(4,  newSpecial.getTitle());
+//            ps.setString(5,  newSpecial.getDescription());
+//            ps.setString(6,  newSpecial.getDisclaimer());
+//            ps.setString(7,  newSpecial.getValue());
+//            ps.setString(8,  newSpecial.getScope()==null? null :newSpecial.getScope().toString());
+//            ps.setString(9,  newSpecial.getScopeParameter());
+//            ps.executeUpdate();
+//            ps.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 }

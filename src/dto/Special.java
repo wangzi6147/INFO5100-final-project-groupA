@@ -2,25 +2,30 @@ package dto;
 
 public class Special {
     private String id; //auto generated
-    private String dealerID;  // who is giving such special offer.
-    private String startDate; // by default it's today
+    private String dealerID;  //
+    private String startDate;
     private String endDate;
     private String title;
     private String description;
     private String disclaimer;
-    private String value;
     private SpecialScope scope;
     private String scopeParameter;
+    private boolean isMutex;
+    private String value;
+    private ValueType valueType;
 
 
-    public Special(String dealerID, String endDate, String title, String value, SpecialScope scope, String scopeParameter) {
+    public Special(String dealerID, String endDate, String title, SpecialScope scope, String scopeParameter,
+                   boolean isMutex, String value, ValueType valueType) {
 
         this.dealerID = dealerID;
         this.endDate = endDate;
         this.title = title;
-        this.value = value;
         this.scopeParameter = scopeParameter;
         this.scope = scope;
+        this.isMutex = isMutex;
+        this.value = value;
+        this.valueType = valueType;
     }
 
     public void setId(String id){ this.id = id; }
@@ -91,4 +96,19 @@ public class Special {
 
     public void setScopeParameter(String scopeParameter){ this.scopeParameter = scopeParameter;}
 
+    public boolean isMutex() {
+        return isMutex;
+    }
+
+    public void setMutex(boolean mutex) {
+        isMutex = mutex;
+    }
+
+    public ValueType getValueType() {
+        return valueType;
+    }
+
+    public void setValueType(ValueType valueType) {
+        this.valueType = valueType;
+    }
 }

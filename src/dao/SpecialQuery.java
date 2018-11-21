@@ -34,13 +34,29 @@ public class SpecialQuery {
     }
 
 
+    public List<Special> getAllSpecials() throws SQLException{
+
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM special");
+        List<Special> res = new ArrayList<>();
+        while(rs.next()){
+            Special s = createSpecialFromRS(rs);
+            res.add(s);
+        }
+        return res;
+    }
+
+
+
     private Special createSpecialFromRS(ResultSet rs) throws SQLException {
 
-        Special s = new Special(rs.getString(2),rs.getString(4),rs.getString(5),rs.getString(8),SpecialScope.valueOf(rs.getString(9)),rs.getString(10));
-        s.setId(rs.getString(1));
-        s.setStartDate(rs.getString(3));
-        s.setDescription(rs.getString(6));
-        s.setDisclaimer(rs.getString(7));
+        Special s = new Special(rs.getString("dealerID"),rs.getString("endDate"),rs.getString("title"),
+                SpecialScope.valueOf(rs.getString("scope")),rs.getString("scopeParameter"),
+                rs.getBoolean("isMutex"), rs.getString("value"),ValueType.valueOf(rs.getString("valueType")));
+        s.setId(rs.getString("id"));
+        s.setStartDate(rs.getString("startDate"));
+        s.setDescription(rs.getString("description"));
+        s.setDisclaimer(rs.getString("disclaimer"));
         return s;
     }
 }

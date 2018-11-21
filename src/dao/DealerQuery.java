@@ -47,6 +47,18 @@ public class DealerQuery {
         return null;
     }
 
+
+    public List<String> getAllDealerIDs() throws SQLException{
+        Statement stm = conn.createStatement();
+        ResultSet rs =stm.executeQuery("SELECT id FROM dealer");
+        List<String> res = new ArrayList<>();
+        while(rs.next()){
+            res.add(rs.getString(1));
+        }
+        return res;
+    }
+
+
     public int countDealersByCity(String city) {
 
         try {
