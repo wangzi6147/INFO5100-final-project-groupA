@@ -207,6 +207,8 @@ public class VehicleQuery {
             v.setImages(images);
             v.setFinalPrice(rs.getString("finalPrice"));
             v.setDiscountRate(rs.getString("discountRate"));
+            List<String> specialIDs = Arrays.asList(rs.getString("specialIDs").split(","));
+            v.setSpecialIDs(specialIDs);
             vehicles.add(v);
         }
 

@@ -29,17 +29,20 @@ public class SpecialManagement {
     public void update(String dealerID){
 
         try {
-            List<Special> specials = new SpecialQuery().getSpecialsByDealerID(dealerID);
-            if(specials == null || specials.isEmpty()){
+            SpecialQuery sq = new SpecialQuery();
+            List<Special> nonMutexSpecials = sq.getNonMutexValidSpecialsByDealerID(dealerID);
+            List<Special> mutexSpecials = sq.getMutexValidSpecialsByDealerID(dealerID);
+            if((nonMutexSpecials == null || nonMutexSpecials.isEmpty()) && (mutexSpecials == null || mutexSpecials.isEmpty())){
                 return;
             }
 
+
+            //@todo calculate nonmutex
+
+            //@todo calculate mutex seperately.
             VehicleFilterSelected p = new VehicleFilterSelected(dealerID);
             List<Vehicle> vehicles = new VehicleQuery().getAllVehiclesByFilter(p);
 
-
-            //@todo must not use those expired ones.
-            //@todo RULES
 
             new MaintainVehicle().updateFinalPriceAndDiscount(vehicles);
 

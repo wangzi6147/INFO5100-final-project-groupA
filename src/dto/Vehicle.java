@@ -1,8 +1,6 @@
 package dto;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Vehicle {
 
@@ -21,6 +19,7 @@ public class Vehicle {
     private List<String> features;
     private String miles;
     private List<String> images;
+    private List<String> specialIDs;
 
 
     public Vehicle(String id, String dealerID) {
@@ -160,4 +159,11 @@ public class Vehicle {
         this.discountRate = discountRate;
     }
 
+    public List<String> getSpecialIDs() {
+        return specialIDs;
+    }
+
+    public void setSpecialIDs(List<String> specialIDs) {
+        this.specialIDs = specialIDs;
+    }
 }
