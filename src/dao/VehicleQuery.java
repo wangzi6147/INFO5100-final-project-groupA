@@ -185,7 +185,7 @@ public class VehicleQuery {
         }
         vehicleFilterContent.setMiles(miles);
 
-        rs = stmt.executeQuery("SELECT * FROM " + cacheTableName + " ORDER BY " + sortTypeSql(p.getSortType()) + " LIMIT " + (p.getPageNumber() * pageSize) + " , " + pageSize);
+        rs = stmt.executeQuery("SELECT * FROM " + cacheTableName + sortTypeSql(p.getSortType()) + " LIMIT " + (p.getPageNumber() * pageSize) + " , " + pageSize);
         while (rs.next()) {
             Vehicle v = new Vehicle(rs.getString("id"), rs.getString("dealerID"));
             v.setYear(rs.getString("year"));
@@ -207,7 +207,8 @@ public class VehicleQuery {
             v.setImages(images);
             v.setFinalPrice(rs.getString("finalPrice"));
             v.setDiscountRate(rs.getString("discountRate"));
-            List<String> specialIDs = Arrays.asList(rs.getString("specialIDs").split(","));
+            String specials = rs.getString("specialIDs");
+            List<String> specialIDs = (specials == null || specials.isEmpty()) ? new ArrayList<>() : Arrays.asList(specials.split(","));
             v.setSpecialIDs(specialIDs);
             vehicles.add(v);
         }
@@ -379,7 +380,7 @@ public class VehicleQuery {
     private String sortTypeSql(SortType sortType) {
 
         if (sortType == null) {
-            return null;
+            return "";
         }
 
         StringBuffer sql = new StringBuffer(" order by ");
