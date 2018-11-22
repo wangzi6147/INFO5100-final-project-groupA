@@ -166,9 +166,9 @@ public class VehicleQuery {
         vehicleFilterContent.setInteriorColor(inColors);
         //BodyType
         rs = stmt.executeQuery("SELECT DISTINCT type FROM " + cacheTableName);
-        List<BodyType> bodyTypes = new ArrayList<>();
+        List<String> bodyTypes = new ArrayList<>();
         while (rs.next()) {
-            bodyTypes.add(BodyType.valueOf(rs.getString(1)));
+            bodyTypes.add(rs.getString(1));
         }
         vehicleFilterContent.setBodyType(bodyTypes);
 
@@ -345,7 +345,7 @@ public class VehicleQuery {
         return sql.toString();
     }
 
-    private String typeSql(List<BodyType> bodytype) {
+    private String typeSql(List<String> bodytype) {
         StringBuffer sql = new StringBuffer(" and ( ");
         for (int i = 0; i < bodytype.size(); i++) {
             sql.append("type='");

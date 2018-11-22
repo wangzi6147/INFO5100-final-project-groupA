@@ -13,7 +13,7 @@ public class VehicleFilterContent {
     private List<String> price;
     private List<String> exteriorColor;
     private List<String> interiorColor;
-    private List<BodyType> bodyType;
+    private List<String> bodyType;
     private List<String> miles;
 
     public String getDealerID() {
@@ -48,7 +48,7 @@ public class VehicleFilterContent {
         return interiorColor;
     }
 
-    public List<BodyType> getBodyType() {
+    public List<String> getBodyType() {
         return bodyType;
     }
 
@@ -82,7 +82,7 @@ public class VehicleFilterContent {
         this.interiorColor = interiorColor;
     }
 
-    public void setBodyType(List<BodyType> bodyType) {
+    public void setBodyType(List<String> bodyType) {
         this.bodyType = bodyType;
     }
 

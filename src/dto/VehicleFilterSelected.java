@@ -12,7 +12,7 @@ public class VehicleFilterSelected {
     private List<String> price;
     private List<String> exteriorColor;
     private List<String> interiorColor;
-    private List<BodyType> bodyType;
+    private List<String> bodyType;
     private List<String> miles;
 
     private int pageNumber; // must have
@@ -83,11 +83,11 @@ public class VehicleFilterSelected {
         this.interiorColor = interiorColor;
     }
 
-    public List<BodyType> getBodyType() {
+    public List<String> getBodyType() {
         return bodyType;
     }
 
-    public void setBodyType(List<BodyType> bodyType) { this.bodyType = bodyType; }
+    public void setBodyType(List<String> bodyType) { this.bodyType = bodyType; }
 
     public List<String> getMiles() { return miles; }
 
