@@ -129,9 +129,10 @@ public class VehicleQuery {
         vehicleFilterContent.setModel(models);
         // isNew
         rs = stmt.executeQuery("SELECT DISTINCT isNew FROM " + cacheTableName);
-        List<Boolean> conidtions = new ArrayList<>();
+        List<String> conidtions = new ArrayList<>();
         while (rs.next()) {
-            conidtions.add(rs.getBoolean(1));
+            boolean isnew = rs.getBoolean(1);
+            conidtions.add(isnew?"New":"Used");
         }
         vehicleFilterContent.setIsNew(conidtions);
         // Prices
@@ -293,14 +294,11 @@ public class VehicleQuery {
     }
 
     private String isNewSql(List<Boolean> isNew) {
-        StringBuffer sql = new StringBuffer(" and ");
-        sql.append("isNew=");
-        if (isNew.get(0) != null)
-            sql.append(1);
-        else
-            sql.append(0);
-        sql.append(" ");
-        return sql.toString();
+        if(isNew==null || isNew.isEmpty() ||isNew.size() == 2){
+            return "";
+        }
+        String s = isNew.get(0)?"1":"0";
+        return " AND isNew="+s;
     }
 
     private String priceSql(List<String> prices) {

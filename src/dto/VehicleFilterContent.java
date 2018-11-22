@@ -9,7 +9,7 @@ public class VehicleFilterContent {
     private List<String> years;
     private List<String> brand;
     private List<String> model;
-    private List<Boolean> isNew;   // {true} {false} {true, false} {}
+    private List<String> isNew;   // {true} {false} {true, false} {}
     private List<String> price;
     private List<String> exteriorColor;
     private List<String> interiorColor;
@@ -32,7 +32,7 @@ public class VehicleFilterContent {
         return model;
     }
 
-    public List<Boolean> getIsNew() {
+    public List<String> getIsNew() {
         return isNew;
     }
 
@@ -68,9 +68,7 @@ public class VehicleFilterContent {
         this.model = model;
     }
 
-    public void setIsNew(List<Boolean> isNew) {
-        this.isNew = isNew;
-    }
+    public void setIsNew(List<String> isNew) { this.isNew = isNew; }
 
     public void setPrice(List<String> price) {
         this.price = price;
