@@ -293,11 +293,11 @@ public class VehicleQuery {
         return sql.toString();
     }
 
-    private String isNewSql(List<Boolean> isNew) {
+    private String isNewSql(List<String> isNew) {
         if(isNew==null || isNew.isEmpty() ||isNew.size() == 2){
             return "";
         }
-        String s = isNew.get(0)?"1":"0";
+        String s = isNew.get(0).equals("New")?"1":"0";
         return " AND isNew="+s;
     }
 

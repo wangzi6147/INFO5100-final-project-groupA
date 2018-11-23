@@ -8,7 +8,7 @@ public class VehicleFilterSelected {
     private List<String> years;
     private List<String> brand;
     private List<String> model;
-    private List<Boolean> isNew; // {true} {false} {}
+    private List<String> isNew; // {New} {Used} {}
     private List<String> price;
     private List<String> exteriorColor;
     private List<String> interiorColor;
@@ -53,11 +53,11 @@ public class VehicleFilterSelected {
         this.model = model;
     }
 
-    public List<Boolean> getIsNew() {
+    public List<String> getIsNew() {
         return isNew;
     }
 
-    public void setIsNew(List<Boolean> isNew) {
+    public void setIsNew(List<String> isNew) {
         this.isNew = isNew;
     }
 
