@@ -67,8 +67,10 @@ public class VehicleQuery {
     public List<Vehicle> getAllVehiclesByFilter(VehicleFilterSelected p) throws SQLException{
 
         List<Vehicle> res = new ArrayList<>();
-        String sql = generateConditionSQL(p);
-        ResultSet rs = stmt.executeQuery(sql);
+        StringBuffer sql = new StringBuffer();
+        sql.append(generateConditionSQL(p));
+        sql.append(pageSql(p.getPageNumber()));
+        ResultSet rs = stmt.executeQuery(sql.toString());
         while(rs.next()){
             Vehicle v = new Vehicle(rs.getString("id"), dealerID);
             v.setYear(rs.getString("year"));
@@ -209,7 +211,7 @@ public class VehicleQuery {
             v.setFinalPrice(rs.getString("finalPrice"));
             v.setDiscountRate(rs.getString("discountRate"));
             String specials = rs.getString("specialIDs");
-            List<String> specialIDs = (specials == null || specials.isEmpty()) ? new ArrayList<>() : Arrays.asList(specials.split(","));
+            List<String> specialIDs = (List<String>) ((specials == null || specials.isEmpty()) ? new ArrayList<>() : Arrays.asList(specials.split(",")));
             v.setSpecialIDs(specialIDs);
             vehicles.add(v);
         }
@@ -246,10 +248,19 @@ public class VehicleQuery {
         if (p.getInteriorColor() != null) sql.append(inColorSql(p.getInteriorColor()));
         if (p.getBodyType() != null) sql.append(typeSql(p.getBodyType()));
         if (p.getMiles() != null) sql.append(milesSql(p.getMiles()));
-        System.out.println(sql);
+        //System.out.println(sql);
+       
         return sql.toString();
     }
-
+    private String pageSql(int PageNumber){
+    	StringBuffer sql = new StringBuffer(" ");
+    	 int pageSplit_start=(PageNumber-1)*20;
+ 		sql.append(" limit ");
+ 		sql.append(pageSplit_start);
+ 		sql.append(" , ");
+ 		sql.append(20);
+ 		 return sql.toString();
+    }
     private String yearSql(List<String> years) {
         StringBuffer sql = new StringBuffer(" and (");
         for (String year : years) {
@@ -388,7 +399,7 @@ public class VehicleQuery {
             case PRICE_DSC:
                 sql.append("price desc ");break;
             case DISCOUNT:
-            		sql.append("discountRate desc ");break;
+            	sql.append("discountRate desc ");break;
             case YEAR:
                 sql.append("year desc ");break;
             case MILES:
@@ -397,5 +408,86 @@ public class VehicleQuery {
         }
         return sql.toString();
     }
-
+    /*
+    public void test() throws SQLException{
+    	VehicleFilterSelected  vs=new VehicleFilterSelected("10142");
+    	List<String> years=new ArrayList();
+    	years.add("2015");
+    	years.add("2017");
+    	years.add("2016");
+    	//years.add("2011--2014");
+    	//vs.setYears(years);
+    	List<String> brand=new ArrayList();
+    	//brand.add("Ford");
+    	//brand.add("Dodge");
+    	brand.add("Chevrolet");
+    	//brand.add("GMC");
+    	vs.setBrand(brand);
+    	List<String> price=new ArrayList();
+    	//price.add("32297.0");
+    	//vs.setPrice(price);
+    	List<String> bodyType=new ArrayList();
+    	//vs.setBodyType(bodyType);
+    	List<String> isNew =new ArrayList();
+    	isNew.add("Used");
+    	//vs.setIsNew(isNew);
+    	List<String> miles = new ArrayList();
+    	miles.add("1--4999");
+    	//miles.add("90000--99999");
+    	vs.setMiles(miles);
+    	List<String> prices = new ArrayList();
+    	prices.add("20000.0--29999.9");
+    	prices.add("60000.0--69999.9");
+    	vs.setPrice(prices);
+    	vs.setPageNumber(3);
+    	System.out.println("Start");
+    	
+    	String result=generateConditionSQL(vs);
+    	System.out.println(result);
+    	
+    	List<Vehicle> v=getAllVehiclesByFilter(vs);
+    	for(int i=0;i<v.size();i++){
+    		System.out.print(v.get(i).getId()+" ");
+    		System.out.print(v.get(i).getBrand()+" ");
+    		System.out.print(v.get(i).getDealerID()+" ");
+    		System.out.print(v.get(i).getExteriorColor()+" ");
+    		System.out.print(v.get(i).getInteriorColor()+" ");
+    		System.out.print(v.get(i).getIsNew()+" ");
+    		System.out.print(v.get(i).getMiles()+" ");
+    		System.out.print(v.get(i).getModel()+" ");
+    		System.out.print(v.get(i).getPrice()+" ");
+    		System.out.print(v.get(i).getYear()+" ");
+    		System.out.print(v.get(i).getBodyType()+" ");
+    		System.out.print(v.get(i).getFeatures()+" ");
+    		System.out.print(v.get(i).getImages()+" ");
+    		System.out.println();
+    	}
+    	//System.out.println(BodyType.SUV);
+    	//
+    	System.out.println("finish");
+    	Query(vs);
+    	VehicleFilterContent vc=vehicleFilterContent;
+    	System.out.println("DealerID ");
+    	System.out.println(vc.getDealerID());
+    	System.out.println("\n years ");
+    	for(int i=0;i<vc.getYears().size();i++) System.out.print(vc.getYears().get(i)+"  ");
+    	System.out.println("\n brand");
+    	for(int i=0;i<vc.getBrand().size();i++) System.out.print(vc.getBrand().get(i)+"  ");
+    	System.out.println("\n model");
+    	for(int i=0;i<vc.getModel().size();i++) System.out.print(vc.getModel().get(i)+"  ");
+    	System.out.println("\n is new");
+    	for(int i=0;i<vc.getIsNew().size();i++) System.out.print(vc.getIsNew().get(i)+"  ");
+    	System.out.println("\n price");
+    	for(int i=0;i<vc.getPrice().size();i++) System.out.print(vc.getPrice().get(i)+"  ");
+    	System.out.println("\n excolor");
+    	for(int i=0;i<vc.getExteriorColor().size();i++) System.out.print(vc.getExteriorColor().get(i)+"  ");
+    	System.out.println("\n incolor");
+    	for(int i=0;i<vc.getInteriorColor().size();i++) System.out.print(vc.getInteriorColor().get(i)+"  ");
+    	System.out.println("\n type");
+    	for(int i=0;i<vc.getBodyType().size();i++) System.out.print(vc.getBodyType().get(i)+"  ");
+    	System.out.println("\n miles");
+    	for(int i=0;i<vc.getMiles().size();i++) System.out.print(vc.getMiles().get(i)+"  ");
+    	System.out.println();
+    	
+    }*/
 }
