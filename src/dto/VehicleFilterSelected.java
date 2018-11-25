@@ -98,4 +98,9 @@ public class VehicleFilterSelected {
     public SortType getSortType() { return this.sortType; }
 
     public int getPageNumber() { return this.pageNumber; }
+
+    public void setPageNumber(int pageNumber) { this.pageNumber = pageNumber; }
+
+    public void setSortType(SortType sortType) { this.sortType = sortType; }
+
 }
