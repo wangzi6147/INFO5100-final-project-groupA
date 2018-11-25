@@ -41,6 +41,7 @@ public class SpecialManagement {
             List<Vehicle> vehicles = new VehicleQuery().getAllVehiclesByFilter(p);
 
             //@todo Assign different applicable specials to different vehicles.
+            //this
 
             //@todo inside different vehicle, calculate the minimum value, and remove those 'useless' specials.
 
