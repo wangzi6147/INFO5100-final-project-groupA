@@ -44,7 +44,7 @@ public class MaintainVehicle {
             ps.setString(11,  v.getDealerID());
             ps.setBoolean(12,  v.getIsNew());
 
-            if(v.getFeatures() != null &&  !v.getFeatures().isEmpty()){
+            if(v.getImages() != null &&  !v.getImages().isEmpty()){
                 StringBuilder sb = new StringBuilder();
                 for(String s : v.getFeatures()){
                     sb.append(s + "\n");
