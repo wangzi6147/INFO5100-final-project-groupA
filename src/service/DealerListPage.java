@@ -1,22 +1,25 @@
 package service;
-import dto.Dealer;
+import dao.DealerQuery;
+import dto.DealerQueryResponse;
 
-import java.util.*;
 public class DealerListPage {
 
+    private DealerQuery dealerQuery;
 
-//    public List<String> getCityList(){
+    public DealerListPage() {
+        this.dealerQuery = new DealerQuery();
+    }
+
+    //    public List<String> getCityList(){
 //
 //
 //        //@todo
 //    }
 //
 //
-//    public List<Dealer> getDealerList(String city){
-//
-//        //@todo
-//
-//    }
+    public DealerQueryResponse getDealerList(String dealerName, String city, int pageNumber){
+        return dealerQuery.findDealersByNameAndCityWithPageNumber(dealerName, city, pageNumber);
+    }
 
 
 
