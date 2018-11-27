@@ -67,9 +67,7 @@ public class VehicleQuery {
     public List<Vehicle> getAllVehiclesByFilter(VehicleFilterSelected p) throws SQLException{
 
         List<Vehicle> res = new ArrayList<>();
-        StringBuffer sql = new StringBuffer();
-        sql.append(generateConditionSQL(p));
-        sql.append(pageSql(p.getPageNumber()));
+        String sql = generateConditionSQL(p);
         ResultSet rs = stmt.executeQuery(sql.toString());
         while(rs.next()){
             Vehicle v = new Vehicle(rs.getString("id"), dealerID);
@@ -88,7 +86,8 @@ public class VehicleQuery {
     }
 
     public void Query(VehicleFilterSelected p) throws SQLException {
-
+    	vehicleFilterContent = new VehicleFilterContent();
+        vehicles = new ArrayList<>();
         String cacheTableName = "cache" + p.getDealerID();
         String sql = generateConditionSQL(p);
         stmt.executeUpdate("DROP TABLE IF EXISTS " + cacheTableName);
@@ -408,6 +407,7 @@ public class VehicleQuery {
         }
         return sql.toString();
     }
+    
     /*
     public void test() throws SQLException{
     	VehicleFilterSelected  vs=new VehicleFilterSelected("10142");
@@ -430,22 +430,23 @@ public class VehicleQuery {
     	//vs.setBodyType(bodyType);
     	List<String> isNew =new ArrayList();
     	isNew.add("Used");
-    	//vs.setIsNew(isNew);
+    	vs.setIsNew(isNew);
     	List<String> miles = new ArrayList();
     	miles.add("1--4999");
     	//miles.add("90000--99999");
-    	vs.setMiles(miles);
+    	//vs.setMiles(miles);
     	List<String> prices = new ArrayList();
     	prices.add("20000.0--29999.9");
     	prices.add("60000.0--69999.9");
-    	vs.setPrice(prices);
-    	vs.setPageNumber(3);
+    	//vs.setPrice(prices);
+    	vs.setPageNumber(1);
+    	this.Query(vs);
     	System.out.println("Start");
     	
-    	String result=generateConditionSQL(vs);
-    	System.out.println(result);
+    	//String result=generateConditionSQL(vs);
+    	//System.out.println(result);
     	
-    	List<Vehicle> v=getAllVehiclesByFilter(vs);
+    	List<Vehicle> v=vehicles;
     	for(int i=0;i<v.size();i++){
     		System.out.print(v.get(i).getId()+" ");
     		System.out.print(v.get(i).getBrand()+" ");
@@ -489,5 +490,6 @@ public class VehicleQuery {
     	for(int i=0;i<vc.getMiles().size();i++) System.out.print(vc.getMiles().get(i)+"  ");
     	System.out.println();
     	
-    }*/
+    }
+    */
 }
