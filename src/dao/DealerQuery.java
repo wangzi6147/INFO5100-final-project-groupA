@@ -2,7 +2,6 @@ package dao;
 
 import dto.*;
 
-import javax.naming.Name;
 import java.sql.*;
 import java.util.*;
 
