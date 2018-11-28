@@ -1,4 +1,4 @@
-package ui.SpecificDealer.special;
+package ui.special;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
