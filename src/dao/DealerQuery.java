@@ -48,7 +48,24 @@ public class DealerQuery {
         return null;
     }
 
+    public List<Dealer> findDealersByName(String name) {
+        try {
 
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT * FROM dealer WHERE name='" + name + "'");
+
+            List<Dealer> res = new ArrayList<>();
+            while (rs.next()) {
+                res.add(createDealerFromRS(rs));
+            }
+            rs.close();
+            return res;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
     public List<String> getAllDealerIDs() throws SQLException{
         Statement stm = conn.createStatement();
         ResultSet rs =stm.executeQuery("SELECT id FROM dealer");
@@ -112,7 +129,26 @@ public class DealerQuery {
         }
         return null;
     }
-
+    
+    public DealerQueryResponse findDealersByPostCodeWithinLines(int postCode,int lines) {
+       try {
+           Statement stm = conn.createStatement();
+           ResultSet rs = stm.executeQuery("SELECT SQL_CALC_FOUND_ROWS * FROM dealer WHERE zip="+ postCode +" LIMIT "+lines );
+           List<Dealer> res = new ArrayList<>();
+           while (rs.next()) {
+               res.add(createDealerFromRS(rs));
+           }
+           rs = stm.executeQuery("SELECT FOUND_ROWS()");
+           rs.next();
+           DealerQueryResponse response = new DealerQueryResponse(res, pages(rs.getInt(1)));
+           rs.close();
+           return response;
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+       return null;
+   }
+    
     public DealerQueryResponse findDealersByNameAndCityWithPageNumber(String dealerName, String city, int pageNumber) {
         try {
             Statement stm = conn.createStatement();
