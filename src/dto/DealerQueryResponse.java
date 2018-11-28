@@ -10,4 +10,12 @@ public class DealerQueryResponse {
         this.dealerList = dealerList;
         this.totalPageNumber = totalPageNumber;
     }
+
+    public List<Dealer> getDealerList() {
+        return dealerList;
+    }
+
+    public int getTotalPageNumber() {
+        return totalPageNumber;
+    }
 }
