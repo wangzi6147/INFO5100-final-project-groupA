@@ -13,6 +13,7 @@ public class SpecialView{
     private JFrame jFrame;
     private JTable jTable;
     private JPanel addPane;
+    private JLabel note;
     private JScrollPane resultPane;
     private SpecialTableModel SpecialTableModel;
     private JButton addButton;
@@ -25,6 +26,8 @@ public class SpecialView{
     public SpecialView(Dealer dealer) {
         this.dealer = dealer;
 
+        String[] temp = {"Title", "Description", "Disclaimer", "Scope", "Value", "Start Date", "End Date"};
+        this.ColumnName = temp;
 
         this.createComponents();
         this.setLayout();
@@ -58,6 +61,7 @@ public class SpecialView{
         }
         this.jFrame = new JFrame("Special");
         this.addButton = new JButton("Add new special");
+        this.note = new JLabel("Double click on a special to modify or delete.");
         this.SpecialTableModel = new SpecialTableModel();
         this.jTable = new JTable(this.SpecialTableModel);
         this.resultPane = new JScrollPane(this.jTable);
@@ -78,6 +82,7 @@ public class SpecialView{
 
 
         this.addPane.add(addButton);
+        this.addPane.add(note);
         this.springLayout.putConstraint(SpringLayout.WEST, addButton, 300, SpringLayout.WEST, addPane);
         this.springLayout.putConstraint(SpringLayout.NORTH, addButton, 8, SpringLayout.NORTH, addPane);
 
@@ -108,6 +113,13 @@ public class SpecialView{
                 Container detailFramePane = detailFrame.getContentPane();
                 SpringLayout springLayout = new SpringLayout();
 
+/*
+                JPanel p = new JPanel();
+                JButton m = new JButton("Modify");
+                JButton d = new JButton("Delete");
+                p.add(m,d);
+                detailFrame.setContentPane(p);
+*/
 
                 for (int i = 0; i < ColumnName.length; i++) {
                     JLabel title = new JLabel(ColumnName[i]);
@@ -119,6 +131,7 @@ public class SpecialView{
                     springLayout.putConstraint(SpringLayout.WEST, text, 150, SpringLayout.WEST, detailFramePane);
                     springLayout.putConstraint(SpringLayout.NORTH, text, 25 * (i + 15), SpringLayout.NORTH, detailFramePane);
                 }
+
 
                 detailFrame.setLayout(springLayout);
                 detailFrame.setVisible(true);

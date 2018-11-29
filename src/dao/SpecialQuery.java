@@ -34,6 +34,18 @@ public class SpecialQuery {
     }
 
 
+    public List<Special> getAllSpecialsByDealerID(String dealerID) throws SQLException{
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM special WHERE dealerID=" + dealerID );
+        List<Special> res = new ArrayList<>();
+        while(rs.next()){
+            Special sp = createSpecialFromRS(rs);
+            res.add(sp);
+        }
+        return res;
+    }
+
+
 //    public List<Special> getMutexValidSpecialsByDealerID(String dealerID) throws SQLException{
 //        Statement stmt = conn.createStatement();
 //        ResultSet rs = stmt.executeQuery("SELECT * FROM special WHERE dealerID=" + dealerID + " AND isMutex=1 AND to_days(endDate)>=to_days(now())");
