@@ -13,7 +13,6 @@ public class DealerQuery {
         conn =  DBconnect.connectDB();
     }
 
-
     public List<String> getCityList(){
         try {
             Statement stm = conn.createStatement();
@@ -23,11 +22,14 @@ public class DealerQuery {
             while(rs.next()){
                 cities.add(rs.getString(1));
             }
-            rs.close();
             return cities;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            // rs.close();
+
         }
+        // when exception
         return null;
     }
 
@@ -166,6 +168,8 @@ public class DealerQuery {
             return response;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+
         }
         return null;
     }

@@ -175,17 +175,17 @@ public class CreatSpecialCarUI extends JDialog{
 				datepickStart.setDate(dateStart);
 				datepickStart.setMaximumSize(new Dimension(10, 30));
 				datepickStart.setBounds(137, 83, 177, 24);
-				
+
 				JLabel together = new JLabel("Can this special be used");
 				JLabel together2 = new JLabel(" together with others?");
-				
+
 				JLabel endDate = new JLabel("*End Date:");
 				Date dateEnd = new Date();
 				final JXDatePicker datepickEnd = new JXDatePicker();
 				datepickEnd.setMaximumSize(new Dimension(0, 30));
 				datepickEnd.setDate(dateEnd);
 				datepickEnd.setBounds(137, 83, 177, 24);
-				
+
 				
 				
 				ButtonGroup bg = new ButtonGroup();
@@ -207,11 +207,11 @@ public class CreatSpecialCarUI extends JDialog{
 				
 				add(centerLayout, startDate, centerConstraints, 0, 0, 1, 0, 2);
 				add(centerLayout, datepickStart, centerConstraints, 0, 0, 1, 1, 2);
-				
-				
+
+
 				add(centerLayout, endDate, centerConstraints, 0, 0, 1, 0, 3);
 				add(centerLayout, datepickEnd, centerConstraints, 0, 0, 1, 1, 3);
-				
+
 				add(centerLayout, together, centerConstraints, 0, 0, 1, 0, 4);
 				add(centerLayout, yes, centerConstraints, 0, 0, 0, 1, 4);
 				add(centerLayout, together2, centerConstraints, 0, 0, 1, 0, 5);

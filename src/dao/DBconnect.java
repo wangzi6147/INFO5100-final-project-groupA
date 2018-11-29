@@ -1,23 +1,28 @@
 package dao;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.*;
+import java.util.Properties;
 
 public class DBconnect {
-    //119.23.73.176
-    private static String url = "jdbc:mysql://119.23.73.176:3306/car?useSSL=false";
-    private static String userName="root";
-    private static String password="123456";
+    // in property file
     private static Connection connection;
     public static Connection connectDB(){
         if (connection != null)  return connection;
         try {
-            connection = DriverManager.getConnection(url, userName, password);
+            // lock
+            Properties properties = new Properties();
+            FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/src/app.properties");
+            properties.load(fis);
+            connection = DriverManager.getConnection(properties.getProperty("mysql.url"), properties.getProperty("mysql.username"), properties.getProperty("mysql.password"));
             System.out.println("Connect to DB successful! ");
-            return connection;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println("Failed connecting to DB ! ");
             e.printStackTrace();
             return null;
+        } finally {
+            return connection;
         }
     }
 }

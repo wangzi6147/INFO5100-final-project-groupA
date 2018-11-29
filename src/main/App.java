@@ -2,6 +2,7 @@ package main;
 
 import dao.*;
 import dto.*;
+import service.DealerListPage;
 import service.VehicleListPage;
 
 import java.sql.SQLException;
@@ -48,7 +49,6 @@ public class App {
 
 
 //        new InventoryView(new Dealer("zane"));
-
         VehicleFilterSelected p = new VehicleFilterSelected("10142");
 //        List<String> years = new ArrayList<>();
 //        years.add("2010-2014");
