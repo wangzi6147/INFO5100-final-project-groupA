@@ -59,4 +59,32 @@ public class SpecialManagement {
     }
 
 
+    public void deleteSpecial(Special special){
+        MaintainSpecial ms = new MaintainSpecial();
+        ms.removeSpecial(special);
+    }
+
+    public Special getSpecialBySpecialID(String id){
+        SpecialQuery sq = new SpecialQuery();
+        Special result = null;
+        try {
+             result = sq.getSpecialByID(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+
+    public List<Special> getSpecialsByDealerID(String id){
+        SpecialQuery sq = new SpecialQuery();
+        List<Special> result = new ArrayList<>();
+        try {
+            result = sq.getAllSpecialsByDealerID(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
