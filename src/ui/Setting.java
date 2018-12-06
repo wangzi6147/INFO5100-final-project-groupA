@@ -5,19 +5,19 @@ import java.awt.*;
 public class Setting {
 
     public static final String[] SEARCH_VEHICLE_FILTER = {"Category", "Make", "Model", "Price", "Year", "Body Type", "Exterior Color", "Interior Color"};
-    // main fram
+    // main frame
     public static final Color MAIN_FRAM_COLOR = Color.white;
     public static final int MAIN_FRAM_X = 50;
     public static final int MAIN_FRAM_Y = 50;
-    public static final int MAIN_FRAM_WIDTH = 1500;
-    public static final int MAIN_FRAM_HEIGHT = 900;
+    public static final int MAIN_FRAM_WIDTH = 1000;
+    public static final int MAIN_FRAM_HEIGHT = 700;
 
     // main view panel
     public static final Color MAIN_VIEW_PANEL_COLOR = Color.white;
 
     // button
-    public static final Color CHECK_INVENTORY_BUTTON_COLOR_BEFORE = new Color(139, 227, 140);
-    public static final Color CHECK_INVENTORY_BUTTON_COLOR_PRESS = new Color(114, 206, 154);
+    public static final Color CHECK_INVENTORY_BUTTON_COLOR_BEFORE = new Color(73,160,174);
+//    public static final Color CHECK_INVENTORY_BUTTON_COLOR_PRESS = new Color(114, 206, 154);
     public static final int BUTTON_ICON_SIZE = 60;
 
     // menu bar
@@ -58,11 +58,11 @@ public class Setting {
 
 
 
-    public static final int BUTTON_V_GAP = 30;
+    public static final int BUTTON_V_GAP = 50;
     public static final int BUTTON_H_GAP = 0;
 
-    public static final String SEARCH_VEHICLE_BUTTON_NAME = "Search Vehicle";
-    public static final String SEARCH_DEALER_BUTTON_NAME = "Search Dealer";
+//    public static final String SEARCH_VEHICLE_BUTTON_NAME = "Search Vehicle";
+//    public static final String SEARCH_DEALER_BUTTON_NAME = "Search Dealer";
 
     // Search dealer button label size
     public static final int SEARCH_DEALER_LABEL_WIDTH = 60;
@@ -77,8 +77,8 @@ public class Setting {
     public static final Color DEALER_RECORD_BACKGROUND_COLOR = new Color(243, 243, 243);
 
     // image
-    public static final String PRE_BUTTON_IMAGE_PATH = "src/ui/resources/prev_button";
-    public static final String NEXT_BUTTON_IMAGE_PATH = "src/ui/resources/next_button";
+//    public static final String PRE_BUTTON_IMAGE_PATH = "src/ui/resources/prev_button";
+//    public static final String NEXT_BUTTON_IMAGE_PATH = "src/ui/resources/next_button";
 
 
 }

@@ -16,8 +16,6 @@ public class SingleDealerRecordPanel extends JPanel {
     public BeautifulLabel name;
     public BeautifulLabel address;
     public JButton checkInventory;
-    //public BeautifulLabel workTime;
-    //public BeautifulLabel phoneNumber;
     public String dealerId;
 
     public SingleDealerRecordPanel(Dealer dealer) {
@@ -73,8 +71,9 @@ public class SingleDealerRecordPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            MenuBarPanel.searchVehicleButton.setEnableIcon();
-            MenuBarPanel.searchDealerButton.setDisableIcon();
+
+            MenuBarPanel.searchDealerButton.setNormalIcon();
+            MenuBarPanel.searchVehicleButton.AftChangeIcon();
             VehicleSearchMainView.mainEastPanel.removeAll();
             VehicleSearchMainView.searchVehiclePanel.removeAll();
             VehicleSearchMainView.searchVehiclePanel.init(dealerId);
