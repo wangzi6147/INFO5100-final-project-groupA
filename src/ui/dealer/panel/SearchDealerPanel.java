@@ -28,13 +28,6 @@ public class SearchDealerPanel extends JPanel {
 
     }
 
-    public static void main(String[] args) {
-        JFrame window = new JFrame();
-        SearchDealerPanel searchDealerPanel = new SearchDealerPanel();
-        window.setContentPane(searchDealerPanel);
-        
-    }
-
     public static void refreshPageInfoPanel() {
         //pageInfoPanel = new JPanel();
         pageInfoPanel.removeAll();
@@ -76,10 +69,12 @@ public class SearchDealerPanel extends JPanel {
         allDealerRecordsPanel.setLayout(new GridLayout(20, 1, 0, 10));
 
 
-        JButton prePageButton = new BeautifulButton(Setting.PRE_BUTTON_IMAGE_PATH);
+        BeautifulButton prePageButton = new BeautifulButton("src/ui/resources/prev_button");
         prePageButton.addActionListener(new PrePageButtonActionListener());
-        JButton nextPageButton = new BeautifulButton(Setting.NEXT_BUTTON_IMAGE_PATH);
+        prePageButton.setNormalIcon();
+        BeautifulButton nextPageButton = new BeautifulButton("src/ui/resources/next_button");
         nextPageButton.addActionListener(new NextPageButtonActionListener());
+        nextPageButton.setNormalIcon();
 
         JPanel southPanel = new JPanel();
         this.pageInfoPanel = new JPanel();
