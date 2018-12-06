@@ -1,17 +1,19 @@
 package service;
-import dao.DealerQuery;
+import dao.DealerManagerImpl;
 import dto.DealerQueryResponse;
+
+import java.sql.SQLException;
 
 public class DealerListPage implements DealerListService {
 
-    private DealerQuery dealerQuery;
+    private DealerManagerImpl dealerManagerImpl;
 
     public DealerListPage() {
-        this.dealerQuery = new DealerQuery();
+        this.dealerManagerImpl = new DealerManagerImpl();
     }
 
-    public DealerQueryResponse getDealerList(String dealerName, String city, int pageNumber){
-        return dealerQuery.findDealersByNameAndCityWithPageNumber(dealerName, city, pageNumber);
+    public DealerQueryResponse getDealerList(String dealerName, String city, int pageNumber) throws SQLException {
+        return dealerManagerImpl.searchDealers(dealerName, city, pageNumber);
     }
 
 

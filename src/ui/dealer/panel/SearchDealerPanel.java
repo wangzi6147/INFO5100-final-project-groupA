@@ -28,6 +28,13 @@ public class SearchDealerPanel extends JPanel {
 
     }
 
+    public static void main(String[] args) {
+        JFrame window = new JFrame();
+        SearchDealerPanel searchDealerPanel = new SearchDealerPanel();
+        window.setContentPane(searchDealerPanel);
+        
+    }
+
     public static void refreshPageInfoPanel() {
         //pageInfoPanel = new JPanel();
         pageInfoPanel.removeAll();

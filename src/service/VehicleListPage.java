@@ -1,6 +1,6 @@
 package service;
 
-import dao.VehicleQuery;
+import dao.VehicleManagerImpl;
 import dto.*;
 
 import javax.imageio.ImageIO;
@@ -17,15 +17,11 @@ public class VehicleListPage {
     List<Vehicle> vehicles;
     VehicleFilterSelected parameter;
     int pageCount;
-    VehicleQuery vq;
+    VehicleManagerImpl vq;
 
     public VehicleListPage(){
 
-        try {
-            this.vq = new VehicleQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        this.vq = new VehicleManagerImpl();
     }
 
     public void Query(VehicleFilterSelected parameter) {

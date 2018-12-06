@@ -13,7 +13,7 @@ public class SpecialManagement {
     public void updateAll() {
 
         try {
-            List<String> dealerIDs = new DealerQuery().getAllDealerIDs();
+            List<String> dealerIDs = new DealerManagerImpl().getAllDealerIDs();
             if (dealerIDs == null || dealerIDs.isEmpty()) {
                 return;
             }
@@ -32,13 +32,13 @@ public class SpecialManagement {
     public void update(String dealerID) {
 
         try {
-            List<Special> specials = new SpecialQuery().getValidSpecialsByDealerID(dealerID);
+            List<Special> specials = new SpecialManagerImpl().getValidSpecialsByDealerID(dealerID);
             if (specials == null || specials.isEmpty()) {
                 return;
             }
 
             VehicleFilterSelected p = new VehicleFilterSelected(dealerID);
-            List<Vehicle> vehicles = new VehicleQuery().getAllVehiclesByFilter(p);
+            List<Vehicle> vehicles = new VehicleManagerImpl().getAllVehiclesByFilter(p);
 
             //@todo Assign different applicable specials to different vehicles.
             //this
@@ -46,7 +46,7 @@ public class SpecialManagement {
             //@todo inside different vehicle, calculate the minimum value, and remove those 'useless' specials.
 
 
-            new MaintainVehicle().updateFinalPriceAndDiscount(vehicles);
+            new VehicleManagerImpl().updateFinalPriceAndDiscount(vehicles);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,18 +54,18 @@ public class SpecialManagement {
     }
 
     public void storeSpecial(Special special) {
-        MaintainSpecial ms = new MaintainSpecial();
+        SpecialManagerImpl ms = new SpecialManagerImpl();
         ms.addSpecial(special);
     }
 
 
     public void deleteSpecial(Special special){
-        MaintainSpecial ms = new MaintainSpecial();
+        SpecialManagerImpl ms = new SpecialManagerImpl();
         ms.removeSpecial(special);
     }
 
     public Special getSpecialBySpecialID(String id){
-        SpecialQuery sq = new SpecialQuery();
+        SpecialManagerImpl sq = new SpecialManagerImpl();
         Special result = null;
         try {
              result = sq.getSpecialByID(id);
@@ -78,7 +78,7 @@ public class SpecialManagement {
 
 
     public List<Special> getSpecialsByDealerID(String id){
-        SpecialQuery sq = new SpecialQuery();
+        SpecialManagerImpl sq = new SpecialManagerImpl();
         List<Special> result = new ArrayList<>();
         try {
             result = sq.getAllSpecialsByDealerID(id);
