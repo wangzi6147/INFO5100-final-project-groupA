@@ -5,11 +5,6 @@ import java.util.*;
 
 public class VehicleManagerImpl implements VehicleManager {
 
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DBURL = "jdbc:mysql://localhost:3306/car";
-    private static final String USER = "user";
-    private static final String PASSWORD = "123456";
-
     Connection conn;
     Statement stmt;
     String dealerID;
