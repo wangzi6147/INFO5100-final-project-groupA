@@ -1,7 +1,7 @@
 package ui.menu;
 
-import com.sun.tools.javac.comp.Flow;
-import sun.tools.jps.Jps;
+//import com.sun.tools.javac.comp.Flow;
+//import sun.tools.jps.Jps;
 import ui.Setting;
 import ui.VehicleSearchMainView;
 import ui.button.BeautifulButton;
@@ -29,15 +29,21 @@ public class MenuBarPanel extends JPanel {
 
         buttonsPanel = new JPanel();
         buttonsPanel.setBackground(Setting.MENU_BAR_COLOR);
-        this.setBackground(Setting.MENU_BAR_COLOR);
-        //buttonsPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+//        this.setBackground(Setting.MENU_BAR_COLOR);
+//        buttonsPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, Setting.BUTTON_H_GAP, Setting.BUTTON_V_GAP));
-        searchDealerButton = new BeautifulButton("src/ui/resources/dealer");
+
+        searchDealerButton = new BeautifulButton("src/ui/resources/ddealer");
         searchDealerButton.setBackground(Setting.MENU_BAR_COLOR);
         searchDealerButton.setBorderPainted(false);// border invisible
-        searchVehicleButton = new BeautifulButton("src/ui/resources/car");
+        searchDealerButton.setNormalIcon();
+        searchDealerButton.setToolTipText("Click here to search Dealer ...");
+
+        searchVehicleButton = new BeautifulButton("src/ui/resources/ccar");
         searchVehicleButton.setBackground(Setting.MENU_BAR_COLOR);
         searchVehicleButton.setBorderPainted(false);// border invisible
+        searchVehicleButton.InitChangeIcon();
+        searchVehicleButton.setToolTipText("Please choose a dealer to search car ...");
 
         Dimension size = new Dimension(Setting.MENU_BAR_WIDTH, Setting.MAIN_FRAM_HEIGHT);
         this.setPreferredSize(size);
@@ -50,6 +56,7 @@ public class MenuBarPanel extends JPanel {
         windowControlPanel.setPreferredSize(new Dimension(Setting.MENU_BAR_WIDTH, 30));
         windowControlPanel.setBackground(Setting.MENU_BAR_COLOR);
         windowControlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+/*
         JButton closeButton = new BeautifulButton("src/ui/resources/close_button", 12, 12);
         closeButton.setBackground(Setting.MENU_BAR_COLOR);
         closeButton.setBorderPainted(false);
@@ -58,15 +65,11 @@ public class MenuBarPanel extends JPanel {
         JButton minimizeButton = new BeautifulButton("src/ui/resources/minimize", 12, 12);
         minimizeButton.setBackground(Setting.MENU_BAR_COLOR);
         minimizeButton.setBorderPainted(false);
-
-
-        minimizeButton.addActionListener(new MinimizeActionListener());
-
+        minimizeButton.addActionListener(new MinimizeActionListener()); //暂时有问题
 
         windowControlPanel.add(closeButton, FlowLayout.LEFT);
         windowControlPanel.add(minimizeButton, FlowLayout.CENTER);
-
-
+*/
         this.setLayout(new BorderLayout());
         this.setActionListener();
         this.add(windowControlPanel, BorderLayout.NORTH);
@@ -83,8 +86,8 @@ public class MenuBarPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            searchVehicleButton.setEnableIcon();
-            searchDealerButton.setDisableIcon();
+
+            searchVehicleButton.setToolTipText("just test test test ...");
             VehicleSearchMainView.mainEastPanel.removeAll();
             VehicleSearchMainView.mainEastPanel.repaint();
             VehicleSearchMainView.searchVehiclePanel.removeAll();
@@ -93,9 +96,6 @@ public class MenuBarPanel extends JPanel {
             VehicleSearchMainView.mainEastPanel.add(VehicleSearchMainView.searchVehiclePanel, BorderLayout.CENTER);
             VehicleSearchMainView.mainEastPanel.repaint();
             VehicleSearchMainView.mainEastPanel.revalidate();
-            //VehicleSearchMainView.mainEastPanel.updateUI();
-            //searchDealerButton.setEnabled(true);
-            //searchVehicleButton.setEnabled(false);
         }
     }
 
@@ -103,27 +103,27 @@ public class MenuBarPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            searchDealerButton.setEnableIcon();
-            searchVehicleButton.setDisableIcon();
+
+            searchDealerButton.setToolTipText("Click again to change Dealer ...");
+            searchDealerButton.AftChangeIcon();
+            searchVehicleButton.InitChangeIcon();
             VehicleSearchMainView.mainEastPanel.removeAll();
             VehicleSearchMainView.mainEastPanel.repaint();
             VehicleSearchMainView.searchDealerPanel.removeAll();
             VehicleSearchMainView.searchDealerPanel.init();
-            //VehicleSearchMainView.mainMenuBarPanel.buttonsPanel.setBackground(Setting.MENU_BAR_COLOR);
+//            VehicleSearchMainView.mainMenuBarPanel.buttonsPanel.setBackground(Setting.MENU_BAR_COLOR);
             VehicleSearchMainView.mainEastPanel.add(VehicleSearchMainView.searchDealerPanel, BorderLayout.CENTER);
             VehicleSearchMainView.mainEastPanel.repaint();
             VehicleSearchMainView.mainEastPanel.revalidate();
-            //VehicleSearchMainView.mainEastPanel.updateUI();
-            //searchDealerButton.setEnabled(false);
-            //searchVehicleButton.setEnabled(true);
         }
     }
-
-
+/*
+// 最小化有问题
     class MinimizeActionListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
             if (VehicleSearchMainView.mainFrame.getExtendedState() == JFrame.ICONIFIED) {
                 // restore
                 openFrame();
@@ -131,14 +131,17 @@ public class MenuBarPanel extends JPanel {
                 // minimize
                 VehicleSearchMainView.mainFrame.setExtendedState(JFrame.ICONIFIED);
             }
+
         }
     }
 
     class CloseActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+
             System.exit(0);
         }
     }
+*/
 }
 
