@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.List;
 
 public class SearchDealerPanel extends JPanel {
@@ -52,7 +53,12 @@ public class SearchDealerPanel extends JPanel {
 
     public static List<Dealer> queryDealRecords(String dealerName, String city, int pageNum) {
         DealerListPage dealerListPageService = new DealerListPage();
-        DealerQueryResponse response = dealerListPageService.getDealerList(dealerName, city, pageNum);
+        DealerQueryResponse response = null;
+        try {
+            response = dealerListPageService.getDealerList(dealerName, city, pageNum);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         List<Dealer> list = response.getDealerList();
         totalPageNumber = response.getTotalPageNumber();
         return list;
