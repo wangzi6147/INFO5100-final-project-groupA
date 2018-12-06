@@ -17,18 +17,17 @@ public class VehicleListPage {
     List<Vehicle> vehicles;
     VehicleFilterSelected parameter;
     int pageCount;
-    VehicleManagerImpl vq;
+    VehicleManagerImpl vehicleManager;
 
     public VehicleListPage(){
-
-        this.vq = new VehicleManagerImpl();
+        this.vehicleManager = new VehicleManagerImpl();
     }
 
     public void Query(VehicleFilterSelected parameter) {
 
         this.parameter = parameter;
         try {
-            vq.Query(parameter);
+            vehicleManager.Query(parameter);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -66,15 +65,15 @@ public class VehicleListPage {
 
 
     public VehicleFilterContent getFilterContent() {
-        return vq.getVehicleFilterContent();
+        return vehicleManager.getVehicleFilterContent();
     }
 
     public List<Vehicle> getVehicleList() {
-        return vq.getVehicles();
+        return vehicleManager.getVehicles();
     }
 
     public int getPageCount(){
-        return vq.getPageCount();
+        return vehicleManager.getPageCount();
     }
 
 }

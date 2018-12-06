@@ -383,9 +383,7 @@ public class VehicleManagerImpl implements VehicleManager {
         return sql.toString();
     }
 
-    /**
-     *  Maintain Vehicle
-     */
+
     private String sortTypeSql(SortType sortType) {
 
         if (sortType == null) {
@@ -413,6 +411,10 @@ public class VehicleManagerImpl implements VehicleManager {
         conn = DBconnect.connectDB();
     }
 
+    /**
+     *  Maintain Vehicle
+     */
+
     public void addVehicle(Vehicle v){
         try {
             PreparedStatement ps = conn.prepareStatement(
@@ -426,7 +428,6 @@ public class VehicleManagerImpl implements VehicleManager {
             ps.setString(7,  v.getInteriorColor());
             ps.setString(8,  v.getBodyType()==null? null : v.getBodyType().toString());
             ps.setString(9,  v.getMiles());
-
 
             if(v.getImages() != null &&  !v.getImages().isEmpty()){
                 StringBuilder sb = new StringBuilder();
