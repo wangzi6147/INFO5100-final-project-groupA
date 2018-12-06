@@ -83,6 +83,7 @@ public class VehicleManagerImpl implements VehicleManager {
         vehicles = new ArrayList<>();
         String cacheTableName = "cache" + p.getDealerID();
         String sql = generateConditionSQL(p);
+        stmt = conn.createStatement();
         stmt.executeUpdate("DROP TABLE IF EXISTS " + cacheTableName);
         stmt.execute("CREATE TEMPORARY TABLE " + cacheTableName + sql);
         ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM " + cacheTableName);
