@@ -245,7 +245,7 @@ public class VehicleManagerImpl implements VehicleManager {
         if (p.getInteriorColor() != null) sql.append(inColorSql(p.getInteriorColor()));
         if (p.getBodyType() != null) sql.append(typeSql(p.getBodyType()));
         if (p.getMiles() != null) sql.append(milesSql(p.getMiles()));
-        //System.out.println(sql);
+        System.out.println(sql);
 
         return sql.toString();
     }
