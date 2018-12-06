@@ -4,6 +4,7 @@ import dao.*;
 import dto.*;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class SpecialManagement {
@@ -40,11 +41,47 @@ public class SpecialManagement {
             VehicleFilterSelected p = new VehicleFilterSelected(dealerID);
             List<Vehicle> vehicles = new VehicleManagerImpl().getAllVehiclesByFilter(p);
 
-            //@todo Assign different applicable specials to different vehicles.
-            //this
-
-            //@todo inside different vehicle, calculate the minimum value, and remove those 'useless' specials.
-
+            HashSet<Special> appSpecials = new HashSet<>();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date =  new Date();
+            for(Vehicle v: vehicles){
+		        for(Special s : specials){
+		        	Date sDate = df.parse(s.getStartDate());
+		            Date eDate = df.parse(s.getEndDate());
+		            //if the special is Mutex, which is initialized as true
+		            //only consider one UNIQUEONE
+		            if(s.getScope().toString().equalsIgnoreCase("UNIQUEONE")) {
+		            	s.setMutex(false);
+		            }
+		            if(date.before(sDate)|| date.after(eDate)) 
+		            	continue;
+		            if(s.getScope().toString().equalsIgnoreCase("ALL"))
+		                appSpecials.add(s);
+		            if(s.getScope().toString().equalsIgnoreCase("BRAND"))
+		            	if(v.getBrand().equalsIgnoreCase(s.getScopeParameter()))
+		            		appSpecials.add(s);
+		            if(s.getScope().toString().equalsIgnoreCase("YEAR"))
+		                if(v.getYear().equalsIgnoreCase(s.getScopeParameter()))
+		                	appSpecials.add(s);
+		            if(s.getScope().toString().equalsIgnoreCase("NEWORUSED"))
+		                if((v.getIsNew() == true && s.getScopeParameter() == "NEW")||
+		                   (v.getIsNew() == false && s.getScopeParameter() == "USED"))
+		                	appSpecials.add(s);
+		            if(s.getScope().toString().equalsIgnoreCase("BODYTYPE"))
+		                if(v.getBodyType().toString().equalsIgnoreCase(s.getScopeParameter()))
+		                	appSpecials.add(s);
+		        }
+		        v.setSpecialIDs(null);
+		        Double max = Double.MIN_VALUE;
+		        for(Special s:appSpecials) {
+		        	double temp = Double.valueOf(s.getValue());
+		        	max = max > temp ? max : temp; 
+		        	v.getSpecialIDs().add(s.getId());
+		        }
+		        v.setDiscountRate(String.valueOf(max));
+		        //@todo inside different vehicle, calculate the minimum value, and remove those 'useless' specials.
+		      
+            }
 
             new VehicleManagerImpl().updateFinalPriceAndDiscount(vehicles);
 
