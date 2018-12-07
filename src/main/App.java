@@ -1,16 +1,12 @@
 package main;
 
-import dao.*;
 import dto.*;
-import service.DealerListPage;
-import service.VehicleListPage;
 
-import java.sql.SQLException;
 import java.util.*;
 
 public class App {
     public static void main(String[] args) {
-
+        
 //
 
 //        maintainVehicle mv = new maintainVehicle();
@@ -49,7 +45,7 @@ public class App {
 
 
 //        new InventoryView(new Dealer("zane"));
-        VehicleFilterSelected p = new VehicleFilterSelected("10142");
+//        VehicleFilterSelected p = new VehicleFilterSelected("10142");
 //        List<String> years = new ArrayList<>();
 //        years.add("2010-2014");
 //        years.add("2000-2009");
@@ -67,25 +63,25 @@ public class App {
 //        p.setPrice(prices);
 
 
-        VehicleListPage vlp = new VehicleListPage();
-        vlp.Query(p);
-        VehicleFilterContent Content = vlp.getFilterContent();
-
-        System.out.println(Content);
-        System.out.println(Content.getYears());
-        System.out.println(Content.getBrand());
-        System.out.println(Content.getDealerID());
-        System.out.println(Content.getMiles());
-        System.out.println(Content.getPrice());
-        System.out.println(vlp.getPageCount());
-
-        List<Vehicle> res = vlp.getVehicleList();
-        for (Vehicle v : res) {
-            System.out.println(v.getImages());
-        }
-
-
-        System.out.println("Hello project!");
+//        VehicleListPage vlp = new VehicleListPage();
+//        vlp.Query(p);
+//        VehicleFilterContent Content = vlp.getFilterContent();
+//
+//        System.out.println(Content);
+//        System.out.println(Content.getYears());
+//        System.out.println(Content.getBrand());
+//        System.out.println(Content.getDealerID());
+//        System.out.println(Content.getMiles());
+//        System.out.println(Content.getPrice());
+//        System.out.println(vlp.getPageCount());
+//
+//        List<Vehicle> res = vlp.getVehicleList();
+//        for (Vehicle v : res) {
+//            System.out.println(v.getImages());
+//        }
+//
+//
+//        System.out.println("Hello project!");
 
 
     }

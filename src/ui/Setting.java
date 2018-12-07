@@ -5,24 +5,23 @@ import java.awt.*;
 public class Setting {
 
     public static final String[] SEARCH_VEHICLE_FILTER = {"Category", "Make", "Model", "Price", "Year", "Body Type", "Exterior Color", "Interior Color"};
-    // main fram
+    // main frame
     public static final Color MAIN_FRAM_COLOR = Color.white;
     public static final int MAIN_FRAM_X = 50;
     public static final int MAIN_FRAM_Y = 50;
-    public static final int MAIN_FRAM_WIDTH = 1500;
-    public static final int MAIN_FRAM_HEIGHT = 900;
+    public static final int MAIN_FRAM_WIDTH = 1000;
+    public static final int MAIN_FRAM_HEIGHT = 700;
 
     // main view panel
     public static final Color MAIN_VIEW_PANEL_COLOR = Color.white;
 
     // button
-    public static final Color CHECK_INVENTORY_BUTTON_COLOR_BEFORE = new Color(139, 227, 140);
     public static final Color CHECK_INVENTORY_BUTTON_COLOR_PRESS = new Color(114, 206, 154);
     public static final int BUTTON_ICON_SIZE = 60;
 
     // menu bar
     public static final int MENU_BAR_WIDTH = 100;
-    public static final Color MENU_BAR_COLOR = Color.DARK_GRAY;//new Color(200, 76, 72)
+    public static final Color MENU_BAR_COLOR = Color.DARK_GRAY; //new Color(200, 76, 72)
 
     public static final int SEARCH_VEHICLE_PANEL_WIDTH = MAIN_FRAM_WIDTH - MENU_BAR_WIDTH;
     public static final int SEARCH_VEHICLE_PANEL_HEIGHT = MAIN_FRAM_HEIGHT;

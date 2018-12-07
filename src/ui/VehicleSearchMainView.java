@@ -6,6 +6,7 @@ import ui.button.BeautifulButton;
 import ui.dealer.panel.SearchDealerPanel;
 import ui.menu.MenuBarPanel;
 import ui.vehicle.panel.SearchVehiclePanel;
+import ui.vehicle.panel.SingleVehicleRecordPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,7 @@ public class VehicleSearchMainView {
     public static JPanel mainEastPanel;
     public static SearchDealerPanel searchDealerPanel;
     public static SearchVehiclePanel searchVehiclePanel;
+    public static SingleVehicleRecordPanel singleVehicleRecordPanel;
     public static JPanel mainViewPanel;
     public static JFrame mainFrame;
     private int x, y;
