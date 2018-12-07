@@ -53,17 +53,24 @@ public class VehicleManagerImpl implements VehicleManager {
     private List<Vehicle> vehicles;
     private VehicleFilterContent vehicleFilterContent;
 
+    public VehicleManagerImpl(){
+        conn = DBconnect.connectDB();
+    }
+
     /**
      *  Vehicle Query
      */
-    //A specified simplified query port ONLY used for apply specials.
-    public List<Vehicle> getAllVehiclesByFilter(VehicleFilterSelected p) throws SQLException{
+    public Vehicle findVehicleById(int vehicleId) throws SQLException {
+        stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM vehicle WHERE id=" + vehicleId);
+        rs.next();
+        return generatVehicleFromResultSet(rs);
+    }
 
-        List<Vehicle> res = new ArrayList<>();
-        String sql = generateConditionSQL(p);
-        ResultSet rs = stmt.executeQuery(sql.toString());
-        while(rs.next()){
-            Vehicle v = new Vehicle(rs.getString("id"), dealerID);
+    private Vehicle generatVehicleFromResultSet(ResultSet rs) {
+        Vehicle v = null;
+        try {
+            v = new Vehicle(rs.getString("id"), dealerID);
             v.setYear(rs.getString("year"));
             v.setBrand(rs.getString("brand"));
             v.setModel(rs.getString("model"));
@@ -73,6 +80,23 @@ public class VehicleManagerImpl implements VehicleManager {
             v.setInteriorColor(rs.getString("inColor"));
             v.setBodyType(BodyType.valueOf(rs.getString("type")));
             v.setMiles(String.valueOf(rs.getString("miles")));
+            v.setFeatures(Arrays.asList(String.valueOf(rs.getString("features")).split("\\n")));
+            v.setImages(Arrays.asList(String.valueOf(rs.getString("images")).split("\\n")));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            v = new Vehicle("-1", "-1");
+        }
+        return v;
+    }
+
+    //A specified simplified query port ONLY used for apply specials.
+    public List<Vehicle> getAllVehiclesByFilter(VehicleFilterSelected p) throws SQLException{
+
+        List<Vehicle> res = new ArrayList<>();
+        String sql = generateConditionSQL(p);
+        ResultSet rs = stmt.executeQuery(sql.toString());
+        while(rs.next()){
+            Vehicle v = generatVehicleFromResultSet(rs);
             res.add(v);
         }
         return res;
@@ -403,9 +427,6 @@ public class VehicleManagerImpl implements VehicleManager {
         return sql.toString();
     }
 
-    public VehicleManagerImpl(){
-        conn = DBconnect.connectDB();
-    }
 
     /**
      *  Maintain Vehicle

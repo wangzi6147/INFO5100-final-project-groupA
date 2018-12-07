@@ -12,14 +12,14 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
 
-public class VehicleListPage {
+public class VehicleServiceImpl implements VehicleService {
 
     List<Vehicle> vehicles;
     VehicleFilterSelected parameter;
     int pageCount;
     VehicleManagerImpl vehicleManager;
 
-    public VehicleListPage(){
+    public VehicleServiceImpl(){
         this.vehicleManager = new VehicleManagerImpl();
     }
 
@@ -76,4 +76,7 @@ public class VehicleListPage {
         return vehicleManager.getPageCount();
     }
 
+    public Vehicle findVehicleById(int vehicleId) throws SQLException {
+        return vehicleManager.findVehicleById(vehicleId);
+    }
 }

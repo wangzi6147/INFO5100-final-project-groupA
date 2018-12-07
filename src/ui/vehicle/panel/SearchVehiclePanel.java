@@ -2,7 +2,7 @@ package ui.vehicle.panel;
 
 import dto.Vehicle;
 import dto.VehicleFilterSelected;
-import service.VehicleListPage;
+import service.VehicleServiceImpl;
 import ui.Setting;
 import ui.button.BeautifulButton;
 
@@ -117,17 +117,17 @@ public class SearchVehiclePanel extends JPanel {
         //ALL部分没跑出来
         if ("All".equals(type)) {
             VehicleFilterSelected vehicleFilterSelected = new VehicleFilterSelected(dealerId);
-            VehicleListPage vehicleListPageService = new VehicleListPage();
-            vehicleListPageService.Query(vehicleFilterSelected);
-            List<Vehicle> list = vehicleListPageService.getVehicleList();
-            totalPageNumber = vehicleListPageService.getPageCount();
+            VehicleServiceImpl vehicleServiceServiceImpl = new VehicleServiceImpl();
+            vehicleServiceServiceImpl.Query(vehicleFilterSelected);
+            List<Vehicle> list = vehicleServiceServiceImpl.getVehicleList();
+            totalPageNumber = vehicleServiceServiceImpl.getPageCount();
             return list;
         } else {
             this.vehicleFilterSelected.setPageNumber(pageNumber);
-            VehicleListPage vehicleListPageService = new VehicleListPage();
-            vehicleListPageService.Query(vehicleFilterSelected);
-            List<Vehicle> list = vehicleListPageService.getVehicleList();
-            totalPageNumber = vehicleListPageService.getPageCount();
+            VehicleServiceImpl vehicleServiceServiceImpl = new VehicleServiceImpl();
+            vehicleServiceServiceImpl.Query(vehicleFilterSelected);
+            List<Vehicle> list = vehicleServiceServiceImpl.getVehicleList();
+            totalPageNumber = vehicleServiceServiceImpl.getPageCount();
             return list;
         }
 

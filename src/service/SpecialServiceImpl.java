@@ -4,10 +4,12 @@ import dao.*;
 import dto.*;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
-public class SpecialManagement {
+public class SpecialServiceImpl implements SpecialService {
 
 
     // Suggest one operation daily.
@@ -86,6 +88,8 @@ public class SpecialManagement {
             new VehicleManagerImpl().updateFinalPriceAndDiscount(vehicles);
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
     }

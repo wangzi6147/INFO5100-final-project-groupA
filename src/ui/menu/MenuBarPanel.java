@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import static org.springframework.web.socket.sockjs.frame.SockJsFrame.openFrame;
 
 public class MenuBarPanel extends JPanel {
 

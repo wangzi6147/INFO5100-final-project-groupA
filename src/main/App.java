@@ -1,11 +1,8 @@
 package main;
 
-import dao.*;
 import dto.*;
-import service.DealerListPage;
-import service.VehicleListPage;
+import service.VehicleServiceImpl;
 
-import java.sql.SQLException;
 import java.util.*;
 
 public class App {
@@ -67,7 +64,7 @@ public class App {
 //        p.setPrice(prices);
 
 
-        VehicleListPage vlp = new VehicleListPage();
+        VehicleServiceImpl vlp = new VehicleServiceImpl();
         vlp.Query(p);
         VehicleFilterContent Content = vlp.getFilterContent();
 

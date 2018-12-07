@@ -4,11 +4,11 @@ import dto.DealerQueryResponse;
 
 import java.sql.SQLException;
 
-public class DealerListPage implements DealerListService {
+public class DealerServiceImpl implements DealerService {
 
     private DealerManagerImpl dealerManagerImpl;
 
-    public DealerListPage() {
+    public DealerServiceImpl() {
         this.dealerManagerImpl = new DealerManagerImpl();
     }
 

@@ -3,10 +3,9 @@ package ui.dealer.panel;
 import dto.Address;
 import dto.Dealer;
 import dto.DealerQueryResponse;
-import service.DealerListPage;
+import service.DealerServiceImpl;
 import ui.Setting;
 import ui.button.BeautifulButton;
-import ui.vehicle.panel.SearchVehiclePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,10 +51,10 @@ public class SearchDealerPanel extends JPanel {
     }
 
     public static List<Dealer> queryDealRecords(String dealerName, String city, int pageNum) {
-        DealerListPage dealerListPageService = new DealerListPage();
+        DealerServiceImpl dealerListServiceImplService = new DealerServiceImpl();
         DealerQueryResponse response = null;
         try {
-            response = dealerListPageService.getDealerList(dealerName, city, pageNum);
+            response = dealerListServiceImplService.getDealerList(dealerName, city, pageNum);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,6 @@ import dto.DealerQueryResponse;
 
 import java.sql.SQLException;
 
-public interface DealerListService {
+public interface DealerService {
     DealerQueryResponse getDealerList(String dealerName, String city, int pageNumber) throws SQLException;
 }
