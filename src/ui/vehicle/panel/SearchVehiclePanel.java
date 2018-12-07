@@ -2,7 +2,7 @@ package ui.vehicle.panel;
 
 import dto.Vehicle;
 import dto.VehicleFilterSelected;
-import service.VehicleListPage;
+import service.VehicleServiceImpl;
 import ui.Setting;
 import ui.VehicleSearchMainView;
 import ui.button.BeautifulButton;
@@ -44,11 +44,14 @@ public class SearchVehiclePanel extends JPanel {
         this.recordListPanel = new JPanel();
         centerPanel = new JScrollPane(recordListPanel);
         refreshRecordListPanel(getVehicleList("All", 1));
+
         JPanel resultPanel = new JPanel();
         resultPanel.setLayout(new BorderLayout());
-        JButton prePageButton = new BeautifulButton(Setting.PRE_BUTTON_IMAGE_PATH);
+        BeautifulButton prePageButton = new BeautifulButton("src/ui/resources/prev_button");
         prePageButton.addActionListener(new PrePageButtonActionListener());
-        JButton nextPageButton = new BeautifulButton(Setting.NEXT_BUTTON_IMAGE_PATH);
+        prePageButton.setNormalIcon();
+        BeautifulButton nextPageButton = new BeautifulButton("src/ui/resources/next_button");
+        nextPageButton.setNormalIcon();
         nextPageButton.addActionListener(new NextPageButtonActionListener());
 
         JPanel southPanel = new JPanel();
@@ -117,19 +120,21 @@ public class SearchVehiclePanel extends JPanel {
     }
 
     public List<Vehicle> getVehicleList(String type, int pageNumber) {
+
+        //ALL部分没跑出来
         if ("All".equals(type)) {
             VehicleFilterSelected vehicleFilterSelected = new VehicleFilterSelected(dealerId);
-            VehicleListPage vehicleListPageService = new VehicleListPage();
-            vehicleListPageService.Query(vehicleFilterSelected);
-            List<Vehicle> list = vehicleListPageService.getVehicleList();
-            totalPageNumber = vehicleListPageService.getPageCount();
+            VehicleServiceImpl vehicleServiceServiceImpl = new VehicleServiceImpl();
+            vehicleServiceServiceImpl.Query(vehicleFilterSelected);
+            List<Vehicle> list = vehicleServiceServiceImpl.getVehicleList();
+            totalPageNumber = vehicleServiceServiceImpl.getPageCount();
             return list;
         } else {
             this.vehicleFilterSelected.setPageNumber(pageNumber);
-            VehicleListPage vehicleListPageService = new VehicleListPage();
-            vehicleListPageService.Query(vehicleFilterSelected);
-            List<Vehicle> list = vehicleListPageService.getVehicleList();
-            totalPageNumber = vehicleListPageService.getPageCount();
+            VehicleServiceImpl vehicleServiceServiceImpl = new VehicleServiceImpl();
+            vehicleServiceServiceImpl.Query(vehicleFilterSelected);
+            List<Vehicle> list = vehicleServiceServiceImpl.getVehicleList();
+            totalPageNumber = vehicleServiceServiceImpl.getPageCount();
             return list;
         }
 

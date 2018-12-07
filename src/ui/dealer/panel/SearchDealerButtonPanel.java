@@ -57,6 +57,7 @@ public class SearchDealerButtonPanel extends JPanel {
         inputLocation.setBackground(Setting.DEALER_RECORD_BACKGROUND_COLOR);
 
         JTextField inputZipCode = new JTextField();
+//        inputZipCode = new JTextField();
         inputZipCode.setPreferredSize(inputSize);
         inputZipCode.setBackground(Setting.DEALER_RECORD_BACKGROUND_COLOR);
 

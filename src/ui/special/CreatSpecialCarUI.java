@@ -65,7 +65,6 @@ public class CreatSpecialCarUI extends JDialog{
 		JLabel temp2 = new JLabel("      ");
 		JLabel temp3 = new JLabel("                  ");
 		
-		
 		{
 			GridLayout northLayout = new GridLayout(3, 2);
 			northPanel.setLayout(northLayout);
@@ -111,7 +110,6 @@ public class CreatSpecialCarUI extends JDialog{
 				add(centerLayout, temp2, centerConstraints, 0, 0, 1, 3, 0);
 				add(centerLayout, temp3, centerConstraints, 0, 0, 1, 4, 0);
 			}
-			
 			
 			{
 				JLabel discountType = new JLabel("*Discount Type:");
@@ -167,7 +165,6 @@ public class CreatSpecialCarUI extends JDialog{
 				
 			}
 			
-			
 			{
 				JLabel startDate = new JLabel("*Start Date:");
 				Date dateStart = new Date();
@@ -185,8 +182,6 @@ public class CreatSpecialCarUI extends JDialog{
 				datepickEnd.setMaximumSize(new Dimension(0, 30));
 				datepickEnd.setDate(dateEnd);
 				datepickEnd.setBounds(137, 83, 177, 24);
-
-				
 				
 				ButtonGroup bg = new ButtonGroup();
 				JRadioButton yes = new JRadioButton("YES");
@@ -203,11 +198,8 @@ public class CreatSpecialCarUI extends JDialog{
 				centerPanel.add(datepickEnd);
 				centerPanel.add(no);
 				
-
-				
 				add(centerLayout, startDate, centerConstraints, 0, 0, 1, 0, 2);
 				add(centerLayout, datepickStart, centerConstraints, 0, 0, 1, 1, 2);
-
 
 				add(centerLayout, endDate, centerConstraints, 0, 0, 1, 0, 3);
 				add(centerLayout, datepickEnd, centerConstraints, 0, 0, 1, 1, 3);
@@ -218,8 +210,7 @@ public class CreatSpecialCarUI extends JDialog{
 				add(centerLayout, no, centerConstraints, 0, 0, 0, 1, 5);
 				
 			}
-			
-			
+
 		}
 		
 		{

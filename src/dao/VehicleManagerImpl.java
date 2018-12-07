@@ -1,11 +1,9 @@
 package dao;
-
 import dto.*;
-
 import java.sql.*;
 import java.util.*;
 
-public class VehicleQuery {
+public class VehicleManagerImpl implements VehicleManager {
 
     Connection conn;
     Statement stmt;
@@ -55,22 +53,24 @@ public class VehicleQuery {
     private List<Vehicle> vehicles;
     private VehicleFilterContent vehicleFilterContent;
 
-    public VehicleQuery() throws SQLException {
-
+    public VehicleManagerImpl(){
         conn = DBconnect.connectDB();
-        stmt = conn.createStatement();
-        vehicleFilterContent = new VehicleFilterContent();
-        vehicles = new ArrayList<>();
     }
 
-    //A specified simplified query port ONLY used for apply specials.
-    public List<Vehicle> getAllVehiclesByFilter(VehicleFilterSelected p) throws SQLException{
+    /**
+     *  Vehicle Query
+     */
+    public Vehicle findVehicleById(int vehicleId) throws SQLException {
+        stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM vehicle WHERE id=" + vehicleId);
+        rs.next();
+        return generatVehicleFromResultSet(rs);
+    }
 
-        List<Vehicle> res = new ArrayList<>();
-        String sql = generateConditionSQL(p);
-        ResultSet rs = stmt.executeQuery(sql.toString());
-        while(rs.next()){
-            Vehicle v = new Vehicle(rs.getString("id"), dealerID);
+    private Vehicle generatVehicleFromResultSet(ResultSet rs) {
+        Vehicle v = null;
+        try {
+            v = new Vehicle(rs.getString("id"), dealerID);
             v.setYear(rs.getString("year"));
             v.setBrand(rs.getString("brand"));
             v.setModel(rs.getString("model"));
@@ -80,16 +80,34 @@ public class VehicleQuery {
             v.setInteriorColor(rs.getString("inColor"));
             v.setBodyType(BodyType.valueOf(rs.getString("type")));
             v.setMiles(String.valueOf(rs.getString("miles")));
+            v.setFeatures(Arrays.asList(String.valueOf(rs.getString("features")).split("\\n")));
+            v.setImages(Arrays.asList(String.valueOf(rs.getString("images")).split("\\n")));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            v = new Vehicle("-1", "-1");
+        }
+        return v;
+    }
+
+    //A specified simplified query port ONLY used for apply specials.
+    public List<Vehicle> getAllVehiclesByFilter(VehicleFilterSelected p) throws SQLException{
+
+        List<Vehicle> res = new ArrayList<>();
+        String sql = generateConditionSQL(p);
+        ResultSet rs = stmt.executeQuery(sql.toString());
+        while(rs.next()){
+            Vehicle v = generatVehicleFromResultSet(rs);
             res.add(v);
         }
         return res;
     }
 
     public void Query(VehicleFilterSelected p) throws SQLException {
-    	vehicleFilterContent = new VehicleFilterContent();
+        vehicleFilterContent = new VehicleFilterContent();
         vehicles = new ArrayList<>();
         String cacheTableName = "cache" + p.getDealerID();
         String sql = generateConditionSQL(p);
+        stmt = conn.createStatement();
         stmt.executeUpdate("DROP TABLE IF EXISTS " + cacheTableName);
         stmt.execute("CREATE TEMPORARY TABLE " + cacheTableName + sql);
         ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM " + cacheTableName);
@@ -247,18 +265,18 @@ public class VehicleQuery {
         if (p.getInteriorColor() != null) sql.append(inColorSql(p.getInteriorColor()));
         if (p.getBodyType() != null) sql.append(typeSql(p.getBodyType()));
         if (p.getMiles() != null) sql.append(milesSql(p.getMiles()));
-        //System.out.println(sql);
-       
+        System.out.println(sql);
+
         return sql.toString();
     }
     private String pageSql(int PageNumber){
-    	StringBuffer sql = new StringBuffer(" ");
-    	 int pageSplit_start=(PageNumber-1)*20;
- 		sql.append(" limit ");
- 		sql.append(pageSplit_start);
- 		sql.append(" , ");
- 		sql.append(20);
- 		 return sql.toString();
+        StringBuffer sql = new StringBuffer(" ");
+        int pageSplit_start=(PageNumber-1)*20;
+        sql.append(" limit ");
+        sql.append(pageSplit_start);
+        sql.append(" , ");
+        sql.append(20);
+        return sql.toString();
     }
     private String yearSql(List<String> years) {
         StringBuffer sql = new StringBuffer(" and (");
@@ -385,6 +403,7 @@ public class VehicleQuery {
         return sql.toString();
     }
 
+
     private String sortTypeSql(SortType sortType) {
 
         if (sortType == null) {
@@ -398,7 +417,7 @@ public class VehicleQuery {
             case PRICE_DSC:
                 sql.append("price desc ");break;
             case DISCOUNT:
-            	sql.append("discountRate desc ");break;
+                sql.append("discountRate desc ");break;
             case YEAR:
                 sql.append("year desc ");break;
             case MILES:
@@ -407,89 +426,114 @@ public class VehicleQuery {
         }
         return sql.toString();
     }
-    
-    /*
-    public void test() throws SQLException{
-    	VehicleFilterSelected  vs=new VehicleFilterSelected("10142");
-    	List<String> years=new ArrayList();
-    	years.add("2015");
-    	years.add("2017");
-    	years.add("2016");
-    	//years.add("2011--2014");
-    	//vs.setYears(years);
-    	List<String> brand=new ArrayList();
-    	//brand.add("Ford");
-    	//brand.add("Dodge");
-    	brand.add("Chevrolet");
-    	//brand.add("GMC");
-    	vs.setBrand(brand);
-    	List<String> price=new ArrayList();
-    	//price.add("32297.0");
-    	//vs.setPrice(price);
-    	List<String> bodyType=new ArrayList();
-    	//vs.setBodyType(bodyType);
-    	List<String> isNew =new ArrayList();
-    	isNew.add("Used");
-    	vs.setIsNew(isNew);
-    	List<String> miles = new ArrayList();
-    	miles.add("1--4999");
-    	//miles.add("90000--99999");
-    	//vs.setMiles(miles);
-    	List<String> prices = new ArrayList();
-    	prices.add("20000.0--29999.9");
-    	prices.add("60000.0--69999.9");
-    	//vs.setPrice(prices);
-    	vs.setPageNumber(1);
-    	this.Query(vs);
-    	System.out.println("Start");
-    	
-    	//String result=generateConditionSQL(vs);
-    	//System.out.println(result);
-    	
-    	List<Vehicle> v=vehicles;
-    	for(int i=0;i<v.size();i++){
-    		System.out.print(v.get(i).getId()+" ");
-    		System.out.print(v.get(i).getBrand()+" ");
-    		System.out.print(v.get(i).getDealerID()+" ");
-    		System.out.print(v.get(i).getExteriorColor()+" ");
-    		System.out.print(v.get(i).getInteriorColor()+" ");
-    		System.out.print(v.get(i).getIsNew()+" ");
-    		System.out.print(v.get(i).getMiles()+" ");
-    		System.out.print(v.get(i).getModel()+" ");
-    		System.out.print(v.get(i).getPrice()+" ");
-    		System.out.print(v.get(i).getYear()+" ");
-    		System.out.print(v.get(i).getBodyType()+" ");
-    		System.out.print(v.get(i).getFeatures()+" ");
-    		System.out.print(v.get(i).getImages()+" ");
-    		System.out.println();
-    	}
-    	//System.out.println(BodyType.SUV);
-    	//
-    	System.out.println("finish");
-    	Query(vs);
-    	VehicleFilterContent vc=vehicleFilterContent;
-    	System.out.println("DealerID ");
-    	System.out.println(vc.getDealerID());
-    	System.out.println("\n years ");
-    	for(int i=0;i<vc.getYears().size();i++) System.out.print(vc.getYears().get(i)+"  ");
-    	System.out.println("\n brand");
-    	for(int i=0;i<vc.getBrand().size();i++) System.out.print(vc.getBrand().get(i)+"  ");
-    	System.out.println("\n model");
-    	for(int i=0;i<vc.getModel().size();i++) System.out.print(vc.getModel().get(i)+"  ");
-    	System.out.println("\n is new");
-    	for(int i=0;i<vc.getIsNew().size();i++) System.out.print(vc.getIsNew().get(i)+"  ");
-    	System.out.println("\n price");
-    	for(int i=0;i<vc.getPrice().size();i++) System.out.print(vc.getPrice().get(i)+"  ");
-    	System.out.println("\n excolor");
-    	for(int i=0;i<vc.getExteriorColor().size();i++) System.out.print(vc.getExteriorColor().get(i)+"  ");
-    	System.out.println("\n incolor");
-    	for(int i=0;i<vc.getInteriorColor().size();i++) System.out.print(vc.getInteriorColor().get(i)+"  ");
-    	System.out.println("\n type");
-    	for(int i=0;i<vc.getBodyType().size();i++) System.out.print(vc.getBodyType().get(i)+"  ");
-    	System.out.println("\n miles");
-    	for(int i=0;i<vc.getMiles().size();i++) System.out.print(vc.getMiles().get(i)+"  ");
-    	System.out.println();
-    	
+
+
+    /**
+     *  Maintain Vehicle
+     */
+
+    public void addVehicle(Vehicle v){
+        try {
+            PreparedStatement ps = conn.prepareStatement(
+                    "INSERT INTO vehicle (id, year, brand, model, price, exColor, inColor, type, miles, images, dealerID, isNew, features ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            ps.setString(1,  v.getId());
+            ps.setString(2,  v.getYear());
+            ps.setString(3,  v.getBrand());
+            ps.setString(4,  v.getModel());
+            ps.setString(5,  v.getPrice());
+            ps.setString(6,  v.getExteriorColor());
+            ps.setString(7,  v.getInteriorColor());
+            ps.setString(8,  v.getBodyType()==null? null : v.getBodyType().toString());
+            ps.setString(9,  v.getMiles());
+
+            if(v.getImages() != null &&  !v.getImages().isEmpty()){
+                StringBuilder sb = new StringBuilder();
+                for(String s : v.getImages()) {
+                    sb.append(s + "\n");
+                }
+                ps.setString(10,  sb.toString()); // all images url compressed to one string.
+            }else{
+                ps.setString(10,  null);
+            }
+
+            ps.setString(11,  v.getDealerID());
+            ps.setBoolean(12,  v.getIsNew());
+
+            if(v.getImages() != null &&  !v.getImages().isEmpty()){
+                StringBuilder sb = new StringBuilder();
+                for(String s : v.getFeatures()){
+                    sb.append(s + "\n");
+                }
+                ps.setString(13,  sb.toString());
+            }else{
+                ps.setString(13,  null);
+            }
+
+            ps.executeUpdate();
+            ps.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
-    */
+
+    public void deleteVehicle(Vehicle v){
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "DELETE FROM vehicle WHERE id=" + v.getId());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void deleteVehicle(String id){
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "DELETE FROM vehicle WHERE id=" + id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void modifyVehicle(Vehicle oldVehicle, Vehicle newVehicle){
+
+        deleteVehicle(oldVehicle);
+        addVehicle(newVehicle);
+
+    }
+
+
+
+    public void updateFinalPriceAndDiscount(List<Vehicle> vehicles) throws SQLException{
+
+        Statement stmt = conn.createStatement();
+        StringBuffer sql = new StringBuffer("UPDATE vehicle SET finalPrice = CASE id ");
+        for(Vehicle v : vehicles){
+            sql.append(" when "+ v.getId() + " then " + v.getFinalPrice());
+        }
+        sql.append(" END, discountRate = CASE id");
+        for(Vehicle v : vehicles){
+            sql.append(" when "+ v.getId() + " then " + v.getDiscountRate());
+        }
+        sql.append( " END where id in (");
+        for(Vehicle v :vehicles){
+            sql.append(v.getId() + ",");
+        }
+        sql.deleteCharAt(sql.length()-1);
+        sql.append(")");
+        System.out.println(sql);
+        stmt.executeUpdate(sql.toString());
+        stmt.close();
+    }
+
 }

@@ -1,6 +1,6 @@
 package service;
 
-import dao.VehicleQuery;
+import dao.VehicleManagerImpl;
 import dto.*;
 
 import javax.imageio.ImageIO;
@@ -12,27 +12,22 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
 
-public class VehicleListPage {
+public class VehicleServiceImpl implements VehicleService {
 
     List<Vehicle> vehicles;
     VehicleFilterSelected parameter;
     int pageCount;
-    VehicleQuery vq;
+    VehicleManagerImpl vehicleManager;
 
-    public VehicleListPage(){
-
-        try {
-            this.vq = new VehicleQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public VehicleServiceImpl(){
+        this.vehicleManager = new VehicleManagerImpl();
     }
 
     public void Query(VehicleFilterSelected parameter) {
 
         this.parameter = parameter;
         try {
-            vq.Query(parameter);
+            vehicleManager.Query(parameter);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -70,15 +65,18 @@ public class VehicleListPage {
 
 
     public VehicleFilterContent getFilterContent() {
-        return vq.getVehicleFilterContent();
+        return vehicleManager.getVehicleFilterContent();
     }
 
     public List<Vehicle> getVehicleList() {
-        return vq.getVehicles();
+        return vehicleManager.getVehicles();
     }
 
     public int getPageCount(){
-        return vq.getPageCount();
+        return vehicleManager.getPageCount();
     }
 
+    public Vehicle findVehicleById(int vehicleId) throws SQLException {
+        return vehicleManager.findVehicleById(vehicleId);
+    }
 }

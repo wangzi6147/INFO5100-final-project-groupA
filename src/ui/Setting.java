@@ -17,6 +17,8 @@ public class Setting {
 
     // button
     public static final Color CHECK_INVENTORY_BUTTON_COLOR_PRESS = new Color(114, 206, 154);
+    public static final Color CHECK_INVENTORY_BUTTON_COLOR_BEFORE = new Color(73,160,174);
+//    public static final Color CHECK_INVENTORY_BUTTON_COLOR_PRESS = new Color(114, 206, 154);
     public static final int BUTTON_ICON_SIZE = 60;
 
     // menu bar
@@ -57,11 +59,11 @@ public class Setting {
 
 
 
-    public static final int BUTTON_V_GAP = 30;
+    public static final int BUTTON_V_GAP = 50;
     public static final int BUTTON_H_GAP = 0;
 
-    public static final String SEARCH_VEHICLE_BUTTON_NAME = "Search Vehicle";
-    public static final String SEARCH_DEALER_BUTTON_NAME = "Search Dealer";
+//    public static final String SEARCH_VEHICLE_BUTTON_NAME = "Search Vehicle";
+//    public static final String SEARCH_DEALER_BUTTON_NAME = "Search Dealer";
 
     // Search dealer button label size
     public static final int SEARCH_DEALER_LABEL_WIDTH = 60;
@@ -76,8 +78,8 @@ public class Setting {
     public static final Color DEALER_RECORD_BACKGROUND_COLOR = new Color(243, 243, 243);
 
     // image
-    public static final String PRE_BUTTON_IMAGE_PATH = "src/ui/resources/prev_button";
-    public static final String NEXT_BUTTON_IMAGE_PATH = "src/ui/resources/next_button";
+//    public static final String PRE_BUTTON_IMAGE_PATH = "src/ui/resources/prev_button";
+//    public static final String NEXT_BUTTON_IMAGE_PATH = "src/ui/resources/next_button";
 
 
 }

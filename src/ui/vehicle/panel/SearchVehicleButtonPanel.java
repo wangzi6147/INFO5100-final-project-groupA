@@ -1,9 +1,8 @@
 package ui.vehicle.panel;
 
-import dto.BodyType;
 import dto.VehicleFilterContent;
 import dto.VehicleFilterSelected;
-import service.VehicleListPage;
+import service.VehicleServiceImpl;
 import ui.Setting;
 
 import javax.swing.*;
@@ -12,7 +11,7 @@ import java.util.List;
 
 public class SearchVehicleButtonPanel extends JPanel {
 
-    private static VehicleListPage vehicleListPageService;
+    private static VehicleServiceImpl vehicleServiceServiceImpl;
     public static VehicleFilterSelected vehicleFilterSelected;
     private int indexFlag = 0;
 
@@ -20,22 +19,22 @@ public class SearchVehicleButtonPanel extends JPanel {
     public SearchVehicleButtonPanel(String dealerId) {
 
         vehicleFilterSelected = new VehicleFilterSelected(dealerId);
-        vehicleListPageService = new VehicleListPage();
-        //this.vehicleListPageService.Query(vehicleFilterSelected);
+        vehicleServiceServiceImpl = new VehicleServiceImpl();
+        //this.vehicleServiceServiceImpl.Query(vehicleFilterSelected);
         SingleFilterBlockPanel.refresh();
         initialize("All");
     }
 
     // for JCheckBox ActionListener, this method will refresh part of contains.
     public void refresh(String name) {
-        //this.vehicleListPageService.Query(vehicleFilterSelected);
+        //this.vehicleServiceServiceImpl.Query(vehicleFilterSelected);
         initialize(name);
     }
 
     private void initialize(String name) {
-        vehicleListPageService.Query(vehicleFilterSelected);
-        VehicleFilterContent vehicleFilterContent = vehicleListPageService.getFilterContent();
-        SearchVehiclePanel.totalPageNumber = vehicleListPageService.getPageCount();
+        vehicleServiceServiceImpl.Query(vehicleFilterSelected);
+        VehicleFilterContent vehicleFilterContent = vehicleServiceServiceImpl.getFilterContent();
+        SearchVehiclePanel.totalPageNumber = vehicleServiceServiceImpl.getPageCount();
         SingleFilterBlockPanel.totalHeight = 0;
 
         int refreshMethod = 1;

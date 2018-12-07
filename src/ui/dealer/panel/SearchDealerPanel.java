@@ -3,15 +3,15 @@ package ui.dealer.panel;
 import dto.Address;
 import dto.Dealer;
 import dto.DealerQueryResponse;
-import service.DealerListPage;
+import service.DealerServiceImpl;
 import ui.Setting;
 import ui.button.BeautifulButton;
-import ui.vehicle.panel.SearchVehiclePanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.List;
 
 public class SearchDealerPanel extends JPanel {
@@ -51,8 +51,13 @@ public class SearchDealerPanel extends JPanel {
     }
 
     public static List<Dealer> queryDealRecords(String dealerName, String city, int pageNum) {
-        DealerListPage dealerListPageService = new DealerListPage();
-        DealerQueryResponse response = dealerListPageService.getDealerList(dealerName, city, pageNum);
+        DealerServiceImpl dealerListServiceImplService = new DealerServiceImpl();
+        DealerQueryResponse response = null;
+        try {
+            response = dealerListServiceImplService.getDealerList(dealerName, city, pageNum);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         List<Dealer> list = response.getDealerList();
         totalPageNumber = response.getTotalPageNumber();
         return list;
@@ -69,10 +74,12 @@ public class SearchDealerPanel extends JPanel {
         allDealerRecordsPanel.setLayout(new GridLayout(20, 1, 0, 10));
 
 
-        JButton prePageButton = new BeautifulButton(Setting.PRE_BUTTON_IMAGE_PATH);
+        BeautifulButton prePageButton = new BeautifulButton("src/ui/resources/prev_button");
         prePageButton.addActionListener(new PrePageButtonActionListener());
-        JButton nextPageButton = new BeautifulButton(Setting.NEXT_BUTTON_IMAGE_PATH);
+        prePageButton.setNormalIcon();
+        BeautifulButton nextPageButton = new BeautifulButton("src/ui/resources/next_button");
         nextPageButton.addActionListener(new NextPageButtonActionListener());
+        nextPageButton.setNormalIcon();
 
         JPanel southPanel = new JPanel();
         this.pageInfoPanel = new JPanel();
