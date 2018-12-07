@@ -67,6 +67,8 @@ public class VehicleManagerImpl implements VehicleManager {
         return generatVehicleFromResultSet(rs);
     }
 
+
+
     private Vehicle generatVehicleFromResultSet(ResultSet rs) {
         Vehicle v = null;
         try {
@@ -87,6 +89,22 @@ public class VehicleManagerImpl implements VehicleManager {
             v = new Vehicle("-1", "-1");
         }
         return v;
+    }
+
+    public List<Vehicle> findAllVehiclesByDealerId(String dealerId) throws SQLException {
+        List<Vehicle> res = new ArrayList<>();
+        this.dealerID = dealerId;
+        String sql = "SELECT * FROM vehicle WHERE dealerID=" + dealerId;
+        stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        try {
+            while (rs.next()) {
+                res.add(generatVehicleFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 
     //A specified simplified query port ONLY used for apply specials.

@@ -79,4 +79,9 @@ public class VehicleServiceImpl implements VehicleService {
     public Vehicle findVehicleById(int vehicleId) throws SQLException {
         return vehicleManager.findVehicleById(vehicleId);
     }
+
+    @Override
+    public List<Vehicle> findAllVehiclesByDealerId(String dealerId) throws SQLException {
+        return vehicleManager.findAllVehiclesByDealerId(dealerId);
+    }
 }
