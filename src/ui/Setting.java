@@ -16,13 +16,14 @@ public class Setting {
     public static final Color MAIN_VIEW_PANEL_COLOR = Color.white;
 
     // button
+    public static final Color CHECK_INVENTORY_BUTTON_COLOR_PRESS = new Color(114, 206, 154);
     public static final Color CHECK_INVENTORY_BUTTON_COLOR_BEFORE = new Color(73,160,174);
 //    public static final Color CHECK_INVENTORY_BUTTON_COLOR_PRESS = new Color(114, 206, 154);
     public static final int BUTTON_ICON_SIZE = 60;
 
     // menu bar
     public static final int MENU_BAR_WIDTH = 100;
-    public static final Color MENU_BAR_COLOR = Color.DARK_GRAY;//new Color(200, 76, 72)
+    public static final Color MENU_BAR_COLOR = Color.DARK_GRAY; //new Color(200, 76, 72)
 
     public static final int SEARCH_VEHICLE_PANEL_WIDTH = MAIN_FRAM_WIDTH - MENU_BAR_WIDTH;
     public static final int SEARCH_VEHICLE_PANEL_HEIGHT = MAIN_FRAM_HEIGHT;

@@ -1,13 +1,15 @@
 package main;
 
 import dto.*;
+
 import service.VehicleServiceImpl;
+
 
 import java.util.*;
 
 public class App {
     public static void main(String[] args) {
-
+        
 //
 
 //        maintainVehicle mv = new maintainVehicle();
@@ -62,6 +64,7 @@ public class App {
 //        prices.add("1000-5000");
 //        prices.add("10000-50000");
 //        p.setPrice(prices);
+
 
 
         VehicleServiceImpl vlp = new VehicleServiceImpl();

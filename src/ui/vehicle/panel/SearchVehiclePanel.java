@@ -4,12 +4,12 @@ import dto.Vehicle;
 import dto.VehicleFilterSelected;
 import service.VehicleServiceImpl;
 import ui.Setting;
+import ui.VehicleSearchMainView;
 import ui.button.BeautifulButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.List;
 
 public class SearchVehiclePanel extends JPanel {
@@ -99,6 +99,10 @@ public class SearchVehiclePanel extends JPanel {
 
     }
 
+    public String getDealerId() {
+        return dealerId;
+    }
+
     public void refreshRecordListPanel(List<Vehicle> list) {
         this.recordListPanel.removeAll();
         GridLayout gridLayout = new GridLayout(20 >= list.size() ? list.size() : 20, 1);
@@ -106,8 +110,11 @@ public class SearchVehiclePanel extends JPanel {
         this.recordListPanel.setBackground(Setting.DEALER_RECORD_BACKGROUND_COLOR);
         this.recordListPanel.setOpaque(true);
         this.recordListPanel.setLayout(gridLayout);
+
         for (int i = 0; i < 20 && i < list.size(); i++) {
-            this.recordListPanel.add(new SingleVehicleRecordPanel(list.get(i)));
+            SingleVehicleRecordPanel vehicleRecordPanel = new SingleVehicleRecordPanel(list.get(i));
+            vehicleRecordPanel.addMouseListener(new ClickActionListener(list.get(i)));
+            this.recordListPanel.add(vehicleRecordPanel);
         }
         centerPanel.getVerticalScrollBar().setValue(0);
     }
@@ -177,5 +184,25 @@ public class SearchVehiclePanel extends JPanel {
             }
         }
     }
+
+    class ClickActionListener extends MouseAdapter {
+        private Vehicle vehicle;
+
+        public ClickActionListener (Vehicle vehicle) {
+            this.vehicle = vehicle;
+        }
+        public void mouseClicked(MouseEvent me) {
+            if (me.getClickCount() == 2) {
+                VehicleSearchMainView.mainEastPanel.removeAll();
+                SingleVehicleRecordPanel singleVehicleRecordPanel = new SingleVehicleRecordPanel(vehicle);
+                singleVehicleRecordPanel.addReturnButton();
+                singleVehicleRecordPanel.resetLayout();
+                VehicleSearchMainView.singleVehicleRecordPanel = singleVehicleRecordPanel;
+                VehicleSearchMainView.mainEastPanel.add(VehicleSearchMainView.singleVehicleRecordPanel, BorderLayout.EAST);
+                VehicleSearchMainView.mainEastPanel.updateUI();
+            }
+        }
+    }
+
 
 }

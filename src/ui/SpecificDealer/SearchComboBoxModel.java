@@ -8,7 +8,7 @@ import java.util.List;
 public class SearchComboBoxModel implements ComboBoxModel {
     private List<String> list;
 
-    public SearchComboBoxModel() {
+    public SearchComboBoxModel() { // ?????
         this.list = new ArrayList<String>();
         list.add("1");
         list.add("2");
