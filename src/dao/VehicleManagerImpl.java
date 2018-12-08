@@ -510,21 +510,20 @@ public class VehicleManagerImpl implements VehicleManager {
 
     }
 
-    public void deleteVehicle(String id){
-
+    public boolean deleteVehicle(String vehicleId){
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(
-                    "DELETE FROM vehicle WHERE id=" + id);
+                    "DELETE FROM vehicle WHERE id=" + vehicleId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-
+        return true;
     }
 
     public void modifyVehicle(Vehicle oldVehicle, Vehicle newVehicle){
-
         deleteVehicle(oldVehicle);
         addVehicle(newVehicle);
 

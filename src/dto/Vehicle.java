@@ -21,6 +21,11 @@ public class Vehicle {
     private List<String> images;
     private List<String> specialIDs;
 
+    public Vehicle() {}
+
+    public Vehicle(String dealerID) {
+        this.dealerID = dealerID;
+    }
 
     public Vehicle(String id, String dealerID) {
         this.id = id;

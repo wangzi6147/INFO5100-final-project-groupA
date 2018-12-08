@@ -8,14 +8,14 @@ public class Special {
     private String title;
     private String description;
     private String disclaimer;
-//    private SpecialScope scope;
-//    private String scopeParameter;
+    private SpecialScope scope;
+    private String scopeParameter;
     private String year;
     private String brand;
     private BodyType bodyType;
     private boolean isNew;
     
-//    private boolean isMutex;
+    private boolean isMutex;
     private String value;
     private ValueType valueType;
 
@@ -35,6 +35,9 @@ public class Special {
         this.bodyType = bodyType;
         this.value = value;
         this.valueType = valueType;
+    }
+
+    public Special(String dealerID, String endDate, String title, SpecialScope scope, String scopeParameter, boolean isMutex, String value, ValueType valueType) {
     }
 
     public void setId(String id){ this.id = id; }
@@ -143,5 +146,37 @@ public class Special {
 
     public void setValueType(ValueType valueType) {
         this.valueType = valueType;
+    }
+
+    public SpecialScope getScope() {
+        return scope;
+    }
+
+    public void setScope(SpecialScope scope) {
+        this.scope = scope;
+    }
+
+    public String getScopeParameter() {
+        return scopeParameter;
+    }
+
+    public void setScopeParameter(String scopeParameter) {
+        this.scopeParameter = scopeParameter;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
+    }
+
+    public boolean isMutex() {
+        return isMutex;
+    }
+
+    public void setMutex(boolean mutex) {
+        isMutex = mutex;
     }
 }

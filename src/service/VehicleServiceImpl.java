@@ -84,4 +84,21 @@ public class VehicleServiceImpl implements VehicleService {
     public List<Vehicle> findAllVehiclesByDealerId(String dealerId) throws SQLException {
         return vehicleManager.findAllVehiclesByDealerId(dealerId);
     }
+    // add Vehicle
+    // delete by ID
+    // modify vehicle by ID
+
+    public String saveOrUpdateVehicleByDealerId(Vehicle vehicle) throws SQLException {
+        return "";
+    }
+
+    public boolean deleteVehicleByDealerId(String vehicleId) throws SQLException {
+        return false;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        VehicleService vehicleService = new VehicleServiceImpl();
+        List<Vehicle> res = vehicleService.findAllVehiclesByDealerId("10153");
+        System.out.println(res);
+    }
 }

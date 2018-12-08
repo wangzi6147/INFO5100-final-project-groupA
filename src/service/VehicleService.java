@@ -9,4 +9,6 @@ public interface VehicleService {
 
     Vehicle findVehicleById(int vehicleId) throws SQLException;
     List<Vehicle> findAllVehiclesByDealerId(String dealerId) throws SQLException;
+    String saveOrUpdateVehicleByDealerId(Vehicle vehicle) throws SQLException;
+    boolean deleteVehicleByDealerId(String vehicleId) throws SQLException;
 }
