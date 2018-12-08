@@ -10,9 +10,37 @@ import java.util.*;
 import java.util.Date;
 
 public class SpecialServiceImpl implements SpecialService {
-
-
+	
+/*
+ * 
+ * The following methods used memory to manage specials
+ * 
+ */
+	
+	@Override
+	public List<Vehicle> addSpecial(Special special, List<Vehicle> vehicles) {
+		
+	}
+	
+	private boolean isMatch(Vehicle v, Special s) {
+		
+	}
+	
+	private boolean isYearMatch(String VYear, String SYear) {
+		VYear = VYear.trim();
+		if(VYear.equals(SYear)) return true;
+	}
+	
+	
+	
+/*
+ * 
+ * The following methods used database to manage specials
+ * 
+ */
     // Suggest one operation daily.
+	
+/*
     public void updateAll() {
 
         try {
@@ -128,4 +156,8 @@ public class SpecialServiceImpl implements SpecialService {
         }
         return result;
     }
+
+*/
+
+	
 }

@@ -8,8 +8,8 @@ public class Special {
     private String title;
     private String description;
     private String disclaimer;
-    //private SpecialScope scope;
-    //private String scopeParameter;
+    private SpecialScope scope;
+    private String scopeParameter;
     private String year;
     private String brand;
     private BodyType bodyType;
