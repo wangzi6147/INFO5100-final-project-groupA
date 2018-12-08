@@ -19,7 +19,7 @@ public class Special {
      *    
      *    Sorry for the change and thanks for readers' understanding.
      */
-   
+    
     //private SpecialScope scope;
     //private String scopeParameter;
     private String year;
