@@ -54,7 +54,6 @@ public class SpecialServiceImpl implements SpecialService {
 		return deleteNumber;
 	}
 	
-	@Override
     public Special getSpecialBySpecialID(String id){
         SpecialManagerImpl sq = new SpecialManagerImpl();
         Special result = null;
