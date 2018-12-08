@@ -89,7 +89,7 @@ public class VehicleServiceImpl implements VehicleService {
     // modify vehicle by ID
 
     public String saveOrUpdateVehicle(Vehicle vehicle) throws SQLException {
-        return "";
+        return vehicleManager.saveOrUpdateVehicle(vehicle);
     }
 
     public boolean deleteVehicleByVehicleId(String vehicleId) throws SQLException {
@@ -97,8 +97,10 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     public static void main(String[] args) throws SQLException {
-        VehicleService vehicleService = new VehicleServiceImpl();
-        List<Vehicle> res = vehicleService.findAllVehiclesByDealerId("10153");
-        System.out.println(res);
+//        VehicleService vehicleService = new VehicleServiceImpl();
+//        Vehicle addV = new Vehicle("10153", "2018", "GTR", "GTR2000", true, "1", "red", "black", BodyType.CAR, "100");
+//        addV.setId("976487684");
+//        String res = vehicleService.saveOrUpdateVehicle(addV);
+//        System.out.println(res);
     }
 }

@@ -32,8 +32,7 @@ public class Vehicle {
         this.dealerID = dealerID;
     }
 
-    public Vehicle(String id, String dealerID, String year, String brand, String model, boolean isNew, String price, String exteriorColor, String interiorColor, BodyType bodyType) {
-        this.id = id;
+    public Vehicle(String dealerID, String year, String brand, String model, boolean isNew, String price, String exteriorColor, String interiorColor, BodyType bodyType, String miles) {
         this.dealerID = dealerID;
         this.year = year;
         this.brand = brand;
@@ -44,8 +43,12 @@ public class Vehicle {
         this.interiorColor = interiorColor;
         this.bodyType = bodyType;
         this.features = new ArrayList<>();
-        this.miles = "";
+        this.miles = miles;
         this.images = new ArrayList<>();
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getId() {

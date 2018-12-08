@@ -451,9 +451,41 @@ public class VehicleManagerImpl implements VehicleManager {
      */
 
     public void addVehicle(Vehicle v){
+        generateVehicleBySQL("INSERT INTO vehicle " +
+                "( year, brand, model, price, exColor, inColor, type, miles, images, dealerID, isNew, features ) " +
+                "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", v);
+    }
+
+    // 2018.12.7 Add saveOrUpdate
+    public String saveOrUpdateVehicle(Vehicle vehicle) {
+        if (vehicle.getId() == null) {
+            generateVehicleBySQL("INSERT INTO vehicle " +
+                    "( year, brand, model, price, exColor, inColor, type, miles, images, dealerID, isNew, features ) " +
+                    "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", vehicle);
+            return getLastInsertID();
+        } else {
+            generateVehicleBySQL("UPDATE vehicle SET " +
+                    "year = ?, brand = ?, model = ?, price = ?, exColor = ?, " +
+                    "inColor = ?, type = ?, miles = ?, images = ?, dealerID = ?, isNew = ?, features = ? WHERE id = "+ vehicle.getId() , vehicle);
+            return vehicle.getId();
+        }
+    }
+
+    private String getLastInsertID() {
         try {
-            PreparedStatement ps = conn.prepareStatement(
-                    "INSERT INTO vehicle ( year, brand, model, price, exColor, inColor, type, miles, images, dealerID, isNew, features ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement ps = conn.prepareStatement("SELECT LAST_INSERT_ID();");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getString(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "10153"; // a random default ID
+        }
+    }
+
+    public void generateVehicleBySQL(String sql, Vehicle v){
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
 //            ps.setString(1,  v.getId());
             ps.setString(1,  v.getYear());
             ps.setString(2,  v.getBrand());
@@ -486,22 +518,14 @@ public class VehicleManagerImpl implements VehicleManager {
             }else{
                 ps.setString(12,  null);
             }
-
             ps.executeUpdate();
             ps.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 
-    // 2018.12.7 Add saveOrUpdate
-//    public String saveOrUpdateVehicleByVehicle
-
-
-    public void deleteVehicle(Vehicle v){
+    public void deleteVehicle(Vehicle v) {
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "DELETE FROM vehicle WHERE id=" + v.getId());

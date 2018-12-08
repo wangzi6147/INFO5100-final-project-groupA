@@ -100,21 +100,21 @@ public class Special {
         this.value = value;
     }
 
-    public SpecialScope getScope() { return scope; }
-
-    public void setScope(SpecialScope scope){ this.scope = scope; }
-
-    public String getScopeParameter(){ return scopeParameter;    }
-
-    public void setScopeParameter(String scopeParameter){ this.scopeParameter = scopeParameter;}
-
-    public boolean isMutex() {
-        return isMutex;
-    }
-
-    public void setMutex(boolean mutex) {
-        isMutex = mutex;
-    }
+//    public SpecialScope getScope() { return scope; }
+//
+//    public void setScope(SpecialScope scope){ this.scope = scope; }
+//
+//    public String getScopeParameter(){ return scopeParameter;    }
+//
+//    public void setScopeParameter(String scopeParameter){ this.scopeParameter = scopeParameter;}
+//
+//    public boolean isMutex() {
+//        return isMutex;
+//    }
+//
+//    public void setMutex(boolean mutex) {
+//        isMutex = mutex;
+//    }
     public String getYear() {
     	return year;
     }
