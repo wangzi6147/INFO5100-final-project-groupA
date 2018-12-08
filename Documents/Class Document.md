@@ -73,6 +73,10 @@ Methods :getter, setter
 | description | String           | description of a special     |
 | disclaimer  | String           | disclaimer of a special      |
 | value  | String           | how much discount the dealer want to give ,  CANNOT be null   |
+| year   | String           | match to the year of the vehicle  |
+| brand   | String           | match to the brand of the vehicle  |
+| bodytype   | String           | match to the bodytype of the vehicle  |
+| isNew   | String           | match to the isNew of the vehicle  |
 | scope   | SpecialScope | the granularity of this special      |
 | scopeParameter   | String | together with scope, they can define the special. Like  scope = BRAND, and scopeParameter = Chevrolet  , or, scope = YEAR and scopeParameter = 2016  |
 
