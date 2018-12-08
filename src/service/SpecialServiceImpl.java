@@ -23,13 +23,17 @@ public class SpecialServiceImpl implements SpecialService {
 	}
 	
 	private boolean isMatch(Vehicle v, Special s) {
-		
+		return isYearMatch(v.getYear(),s.getYear()) && isBrandMatch(v.getBrand(),s.getBrand())
+			&& isNewMatch(v.getIsNew(),s.getIsNew()) && isBodyTypeMatch(v.getBodyType(),s.getBodyType());
 	}
 	
 	private boolean isYearMatch(String VYear, String SYear) {
 		VYear = VYear.trim();
-		if(VYear.equals(SYear)) return true;
+		SYear = SYear.trim();
+		if(VYear.equals(SYear) || SYear.equals("")) return true;
+		return false;
 	}
+	
 	private boolean isBrandMatch(String VBrand, String SBrand) {
 		SBrand = SBrand.trim();
 		VBrand = VBrand.trim();
@@ -42,6 +46,12 @@ public class SpecialServiceImpl implements SpecialService {
 			return true;
 		return false;
 	}
+	
+	private boolean isBodyTypeMatch(BodyType VBodyType, BodyType SBodyType) {
+		if(VBodyType == SBodyType || SBodyType == null) return true;
+		return false;
+	}
+	
 	
 	
 	
