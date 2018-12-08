@@ -64,11 +64,14 @@ public class SpecialManagerImpl implements SpecialManager {
 
     private Special createSpecialFromRS(ResultSet rs) throws SQLException {
 
-        Special s = new Special(rs.getString("dealerID"),rs.getString("endDate"),rs.getString("title"),
-                SpecialScope.valueOf(rs.getString("scope")),rs.getString("scopeParameter"),
-                rs.getBoolean("isMutex"), rs.getString("value"),ValueType.valueOf(rs.getString("valueType")));
-        s.setId(rs.getString("id"));
-        s.setStartDate(rs.getString("startDate"));
+//        Special s = new Special(rs.getString("dealerID"),rs.getString("endDate"),rs.getString("title"),
+//                SpecialScope.valueOf(rs.getString("scope")),rs.getString("scopeParameter"),
+//                rs.getBoolean("isMutex"), rs.getString("value"),ValueType.valueOf(rs.getString("valueType")));
+    	Special s = new Special(rs.getString("id"), rs.getString("dealerID"), rs.getString("startDate"), rs.getString("endDate"), 
+    			    rs.getString("title"), rs.getString("brand"), rs.getString("year"), rs.getBoolean("isNew"), 
+    			    BodyType.valueOf(rs.getString("bodyType")), rs.getString("value"), ValueType.valueOf(rs.getString("valueType")));
+//    	s.setId(rs.getString("id"));
+//      s.setStartDate(rs.getString("startDate"));
         s.setDescription(rs.getString("description"));
         s.setDisclaimer(rs.getString("disclaimer"));
         return s;
