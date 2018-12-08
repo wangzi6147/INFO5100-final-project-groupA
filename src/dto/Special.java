@@ -8,7 +8,7 @@ public class Special {
     private String title;
     private String description;
     private String disclaimer;
-    private SpecialScope scope;
+    //private SpecialScope scope;
     private String scopeParameter;
     private String year;
     private String brand;
@@ -18,12 +18,15 @@ public class Special {
     private boolean isMutex;
     private String value;
     private ValueType valueType;
-
-
-    public Special(String dealerID, String endDate, String title, String brand, String year, boolean isNew,
+    
+    //
+    //
+    public Special(String id, String dealerID, String startDate, String endDate, String title, String brand, String year, boolean isNew,
                    BodyType bodyType, String value, ValueType valueType) {
-
+    	
+    	this.id = id;
         this.dealerID = dealerID;
+        this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;
 //        this.scopeParameter = scopeParameter;

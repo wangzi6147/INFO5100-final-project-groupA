@@ -45,6 +45,7 @@ public class Vehicle {
         this.features = new ArrayList<>();
         this.miles = miles;
         this.images = new ArrayList<>();
+        this.specialIDs = new ArrayList<>();
     }
 
     public void setId(String id) {
