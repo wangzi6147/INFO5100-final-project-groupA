@@ -1,6 +1,5 @@
 package service;
 
-import dao.*;
 import dto.*;
 
 import java.sql.*;
@@ -8,6 +7,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
+
+import dao.SpecialManagerImpl;
+
+
 
 public class SpecialServiceImpl implements SpecialService {
 	
@@ -18,10 +21,73 @@ public class SpecialServiceImpl implements SpecialService {
  */
 	
 	@Override
-	public List<Vehicle> addSpecial(Special special, List<Vehicle> vehicles) {
-		
+	public int addSpecial(Special special, List<Vehicle> vehicles) {
+		int addNumber = 0;
+		try {
+			for(Vehicle v:vehicles) {
+				if(isMatch(v,special)) {
+					++addNumber;
+					v.getSpecialIDs().add(special.getId());
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return addNumber;
 	}
 	
+
+	@Override
+	public int deleteSpecial(Special special, List<Vehicle> vehicles) {
+		int deleteNumber = 0;
+		try {
+			for(Vehicle v:vehicles) {
+				if(isMatch(v,special)) {
+					++deleteNumber;
+					String id = special.getId();
+					v.getSpecialIDs().remove(id);
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return deleteNumber;
+	}
+	
+	@Override
+    public Special getSpecialBySpecialID(String id){
+        SpecialManagerImpl sq = new SpecialManagerImpl();
+        Special result = null;
+        try {
+             result = sq.getSpecialByID(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+	
+	@Override
+	public List<Vehicle> associateSpecials(List<Vehicle> vehicles, List<Special> specials) throws ParseException {
+		if(specials.size() == 0 || specials == null) return vehicles;
+		for(Vehicle v:vehicles) {
+			HashSet<Special> matchSpecials = new HashSet<>();
+			for(Special s:specials) {
+				if(isMatch(v,s)) matchSpecials.add(s);
+			}
+			List<String> SpecialIds = new ArrayList<>();
+			Double MaxDiscount = Double.MIN_VALUE;
+			for(Special s:matchSpecials) {
+				SpecialIds.add(s.getId());
+				Double value = Double.valueOf(s.getValue());
+				MaxDiscount = MaxDiscount > value ? MaxDiscount : value;
+			}
+			v.setSpecialIDs(SpecialIds);
+			v.setDiscountRate(String.valueOf(MaxDiscount));
+		}
+		
+		return vehicles;
+	}
+    
 	private boolean isMatch(Vehicle v, Special s) {
 		return isYearMatch(v.getYear(),s.getYear()) && isBrandMatch(v.getBrand(),s.getBrand())
 			&& isNewMatch(v.getIsNew(),s.getIsNew()) && isBodyTypeMatch(v.getBodyType(),s.getBodyType());
@@ -41,6 +107,7 @@ public class SpecialServiceImpl implements SpecialService {
 			return true;
 		return false;
 	}
+	
 	private boolean isNewMatch (boolean VIsNew, boolean SIsNew) {
 		if(VIsNew == SIsNew)
 			return true;
@@ -51,9 +118,7 @@ public class SpecialServiceImpl implements SpecialService {
 		if(VBodyType == SBodyType || SBodyType == null) return true;
 		return false;
 	}
-	
-	
-	
+
 	
 /*
  * 
@@ -93,48 +158,7 @@ public class SpecialServiceImpl implements SpecialService {
             VehicleFilterSelected p = new VehicleFilterSelected(dealerID);
             List<Vehicle> vehicles = new VehicleManagerImpl().getAllVehiclesByFilter(p);
 
-            HashSet<Special> appSpecials = new HashSet<>();
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date =  new Date();
-            for(Vehicle v: vehicles){
-		        for(Special s : specials){
-		        	Date sDate = df.parse(s.getStartDate());
-		            Date eDate = df.parse(s.getEndDate());
-		            //if the special is Mutex, which is initialized as true
-		            //only consider one UNIQUEONE
-		            if(s.getScope().toString().equalsIgnoreCase("UNIQUEONE")) {
-		            	s.setMutex(false);
-		            }
-		            if(date.before(sDate)|| date.after(eDate)) 
-		            	continue;
-		            if(s.getScope().toString().equalsIgnoreCase("ALL"))
-		                appSpecials.add(s);
-		            if(s.getScope().toString().equalsIgnoreCase("BRAND"))
-		            	if(v.getBrand().equalsIgnoreCase(s.getScopeParameter()))
-		            		appSpecials.add(s);
-		            if(s.getScope().toString().equalsIgnoreCase("YEAR"))
-		                if(v.getYear().equalsIgnoreCase(s.getScopeParameter()))
-		                	appSpecials.add(s);
-		            if(s.getScope().toString().equalsIgnoreCase("NEWORUSED"))
-		                if((v.getIsNew() == true && s.getScopeParameter() == "NEW")||
-		                   (v.getIsNew() == false && s.getScopeParameter() == "USED"))
-		                	appSpecials.add(s);
-		            if(s.getScope().toString().equalsIgnoreCase("BODYTYPE"))
-		                if(v.getBodyType().toString().equalsIgnoreCase(s.getScopeParameter()))
-		                	appSpecials.add(s);
-		        }
-		        v.setSpecialIDs(null);
-		        Double max = Double.MIN_VALUE;
-		        for(Special s:appSpecials) {
-		        	double temp = Double.valueOf(s.getValue());
-		        	max = max > temp ? max : temp; 
-		        	v.getSpecialIDs().add(s.getId());
-		        }
-		        v.setDiscountRate(String.valueOf(max));
-		        //@todo inside different vehicle, calculate the minimum value, and remove those 'useless' specials.
-		      
-            }
-
+          
             new VehicleManagerImpl().updateFinalPriceAndDiscount(vehicles);
 
         } catch (SQLException e) {
@@ -153,30 +177,6 @@ public class SpecialServiceImpl implements SpecialService {
     public void deleteSpecial(Special special){
         SpecialManagerImpl ms = new SpecialManagerImpl();
         ms.removeSpecial(special);
-    }
-
-    public Special getSpecialBySpecialID(String id){
-        SpecialManagerImpl sq = new SpecialManagerImpl();
-        Special result = null;
-        try {
-             result = sq.getSpecialByID(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
-
-    public List<Special> getSpecialsByDealerID(String id){
-        SpecialManagerImpl sq = new SpecialManagerImpl();
-        List<Special> result = new ArrayList<>();
-        try {
-            result = sq.getAllSpecialsByDealerID(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
     }
 
 */
