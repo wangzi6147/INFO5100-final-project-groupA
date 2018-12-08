@@ -32,7 +32,7 @@ public class Special {
     private ValueType valueType;
     
     
-    
+    //
     public Special(String id, String dealerID, String startDate, String endDate, String title, String brand, String year, boolean isNew,
                    BodyType bodyType, String value, ValueType valueType) {
     	
