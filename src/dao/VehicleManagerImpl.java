@@ -453,38 +453,38 @@ public class VehicleManagerImpl implements VehicleManager {
     public void addVehicle(Vehicle v){
         try {
             PreparedStatement ps = conn.prepareStatement(
-                    "INSERT INTO vehicle (id, year, brand, model, price, exColor, inColor, type, miles, images, dealerID, isNew, features ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            ps.setString(1,  v.getId());
-            ps.setString(2,  v.getYear());
-            ps.setString(3,  v.getBrand());
-            ps.setString(4,  v.getModel());
-            ps.setString(5,  v.getPrice());
-            ps.setString(6,  v.getExteriorColor());
-            ps.setString(7,  v.getInteriorColor());
-            ps.setString(8,  v.getBodyType()==null? null : v.getBodyType().toString());
-            ps.setString(9,  v.getMiles());
+                    "INSERT INTO vehicle ( year, brand, model, price, exColor, inColor, type, miles, images, dealerID, isNew, features ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+//            ps.setString(1,  v.getId());
+            ps.setString(1,  v.getYear());
+            ps.setString(2,  v.getBrand());
+            ps.setString(3,  v.getModel());
+            ps.setString(4,  v.getPrice());
+            ps.setString(5,  v.getExteriorColor());
+            ps.setString(6,  v.getInteriorColor());
+            ps.setString(7,  v.getBodyType()==null? null : v.getBodyType().toString());
+            ps.setString(8,  v.getMiles());
 
             if(v.getImages() != null &&  !v.getImages().isEmpty()){
                 StringBuilder sb = new StringBuilder();
                 for(String s : v.getImages()) {
                     sb.append(s + "\n");
                 }
-                ps.setString(10,  sb.toString()); // all images url compressed to one string.
+                ps.setString(9,  sb.toString()); // all images url compressed to one string.
             }else{
-                ps.setString(10,  null);
+                ps.setString(9,  null);
             }
 
-            ps.setString(11,  v.getDealerID());
-            ps.setBoolean(12,  v.getIsNew());
+            ps.setString(10,  v.getDealerID());
+            ps.setBoolean(11,  v.getIsNew());
 
             if(v.getImages() != null &&  !v.getImages().isEmpty()){
                 StringBuilder sb = new StringBuilder();
                 for(String s : v.getFeatures()){
                     sb.append(s + "\n");
                 }
-                ps.setString(13,  sb.toString());
+                ps.setString(12,  sb.toString());
             }else{
-                ps.setString(13,  null);
+                ps.setString(12,  null);
             }
 
             ps.executeUpdate();
@@ -497,8 +497,11 @@ public class VehicleManagerImpl implements VehicleManager {
 
     }
 
-    public void deleteVehicle(Vehicle v){
+    // 2018.12.7 Add saveOrUpdate
+//    public String saveOrUpdateVehicleByVehicle
 
+
+    public void deleteVehicle(Vehicle v){
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "DELETE FROM vehicle WHERE id=" + v.getId());
