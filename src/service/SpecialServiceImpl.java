@@ -30,6 +30,18 @@ public class SpecialServiceImpl implements SpecialService {
 		VYear = VYear.trim();
 		if(VYear.equals(SYear)) return true;
 	}
+	private boolean isBrandMatch(String VBrand, String SBrand) {
+		SBrand = SBrand.trim();
+		VBrand = VBrand.trim();
+		if(SBrand.equals("") || SBrand.equals(VBrand))
+			return true;
+		return false;
+	}
+	private boolean isNewMatch (boolean VIsNew, boolean SIsNew) {
+		if(VIsNew == SIsNew)
+			return true;
+		return false;
+	}
 	
 	
 	
