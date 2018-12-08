@@ -82,6 +82,8 @@ public class SpecialServiceImpl implements SpecialService {
 			}
 			v.setSpecialIDs(SpecialIds);
 			v.setDiscountRate(String.valueOf(MaxDiscount));
+			Double finalPrice = MaxDiscount * Double.valueOf(v.getPrice());
+			v.setFinalPrice(String.valueOf(finalPrice));
 		}
 		
 		return vehicles;
