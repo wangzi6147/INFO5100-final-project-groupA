@@ -8,8 +8,20 @@ public class Special {
     private String title;
     private String description;
     private String disclaimer;
+    /*
+     * PS:the scope and scopeParameter is a not smart definition. Take an example: we cannot add a
+     *    special both have the year and brand attributes or even more, which means the special
+     *    definition is too single. This problem was caused by the enumerate method of scope, thus
+     *    we add year, brand, bodytype, isNew attributes separately in this class rather than use enum
+     *    that can only set one attribute.
+     *    
+     *    So any group used scope or scopeParameter, I think it is better to change the code.
+     *    
+     *    Sorry for the change and thanks for readers' understanding.
+     */
+   
     //private SpecialScope scope;
-    private String scopeParameter;
+    //private String scopeParameter;
     private String year;
     private String brand;
     private BodyType bodyType;
