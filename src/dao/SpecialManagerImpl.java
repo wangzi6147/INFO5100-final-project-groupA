@@ -80,7 +80,7 @@ public class SpecialManagerImpl implements SpecialManager {
         try {
             PreparedStatement ps = conn.prepareStatement(
                     "INSERT INTO special (dealerID, startDate, endDate, title, description, disclaimer, value, brand, isNew, year, type, isMutex, valueType ) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1,  s.getDealerID());
             ps.setString(2,  s.getStartDate());
             ps.setString(3,  s.getEndDate());
@@ -130,5 +130,5 @@ public class SpecialManagerImpl implements SpecialManager {
             e.printStackTrace();
         }
     }
-    
+
 }
