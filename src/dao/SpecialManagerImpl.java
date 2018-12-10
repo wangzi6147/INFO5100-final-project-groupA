@@ -64,11 +64,10 @@ public class SpecialManagerImpl implements SpecialManager {
 
     private Special createSpecialFromRS(ResultSet rs) throws SQLException {
 
-        Special s = new Special(rs.getString("dealerID"),rs.getString("endDate"),rs.getString("title"),
-                SpecialScope.valueOf(rs.getString("scope")),rs.getString("scopeParameter"),
-                rs.getBoolean("isMutex"), rs.getString("value"),ValueType.valueOf(rs.getString("valueType")));
-        s.setId(rs.getString("id"));
-        s.setStartDate(rs.getString("startDate"));
+    	Special s = new Special(rs.getString("id"), rs.getString("dealerID"), rs.getString("startDate"), rs.getString("endDate"), 
+    			    rs.getString("title"), rs.getString("brand"), rs.getString("year"), rs.getBoolean("isNew"), 
+    			    BodyType.valueOf(rs.getString("type")), rs.getString("value"), ValueType.valueOf(rs.getString("valueType")));
+
         s.setDescription(rs.getString("description"));
         s.setDisclaimer(rs.getString("disclaimer"));
         return s;
@@ -80,8 +79,8 @@ public class SpecialManagerImpl implements SpecialManager {
     public void addSpecial(Special s){
         try {
             PreparedStatement ps = conn.prepareStatement(
-                    "INSERT INTO special (dealerID, startDate, endDate, title, description, disclaimer, value, scope, scopeParameter, isMutex, valueType ) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO special (dealerID, startDate, endDate, title, description, disclaimer, value, brand, isNew, year, type, isMutex, valueType ) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1,  s.getDealerID());
             ps.setString(2,  s.getStartDate());
             ps.setString(3,  s.getEndDate());
@@ -89,10 +88,12 @@ public class SpecialManagerImpl implements SpecialManager {
             ps.setString(5,  s.getDescription());
             ps.setString(6,  s.getDisclaimer());
             ps.setString(7,  s.getValue());
-            ps.setString(8,  s.getScope()==null? null :s.getScope().toString());
-            ps.setString(9,  s.getScopeParameter());
-            ps.setBoolean(10,  s.isMutex());
-            ps.setString(11,  s.getValueType().toString());
+            ps.setString(8,s.getBrand());
+            ps.setBoolean(9,s.getIsNew());
+            ps.setString(10,s.getYear());
+            ps.setString(11,s.getBodyType().toString());
+            ps.setBoolean(12,  s.isMutex());
+            ps.setString(13,  s.getValueType().toString());
             ps.executeUpdate();
             ps.close();
             Statement stm = conn.createStatement();
@@ -129,26 +130,5 @@ public class SpecialManagerImpl implements SpecialManager {
             e.printStackTrace();
         }
     }
-
-//    public void modifySpecial(Special oldSpecial, Special newSpecial){
-//
-//        try {
-//            PreparedStatement ps = conn.prepareStatement(
-//                    "UPDATE dealer SET dealerID=?, startDate=?, endDate=?, title=?, description=?, disclaimer=?, value=?, scope=?, parameter=? WHERE id="+oldSpecial.getId());
-//            ps.setString(1,  newSpecial.getDealerID());
-//            ps.setString(2,  newSpecial.getStartDate());
-//            ps.setString(3,  newSpecial.getEndDate());
-//            ps.setString(4,  newSpecial.getTitle());
-//            ps.setString(5,  newSpecial.getDescription());
-//            ps.setString(6,  newSpecial.getDisclaimer());
-//            ps.setString(7,  newSpecial.getValue());
-//            ps.setString(8,  newSpecial.getScope()==null? null :newSpecial.getScope().toString());
-//            ps.setString(9,  newSpecial.getScopeParameter());
-//            ps.executeUpdate();
-//            ps.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 }

@@ -8,8 +8,20 @@ public class Special {
     private String title;
     private String description;
     private String disclaimer;
-    private SpecialScope scope;
-    private String scopeParameter;
+    /*
+     * PS:the scope and scopeParameter is a not smart definition. Take an example: we cannot add a
+     *    special both have the year and brand attributes or even more, which means the special
+     *    definition is too single. This problem was caused by the enumerate method of scope, thus
+     *    we add year, brand, bodytype, isNew attributes separately in this class rather than use enum
+     *    that can only set one attribute.
+     *    
+     *    So any group used scope or scopeParameter, I think it is better to change the code.
+     *    
+     *    Sorry for the change and thanks for readers' understanding.
+     */
+    
+    //private SpecialScope scope;
+    //private String scopeParameter;
     private String year;
     private String brand;
     private BodyType bodyType;
@@ -18,12 +30,15 @@ public class Special {
     private boolean isMutex;
     private String value;
     private ValueType valueType;
-
-
-    public Special(String dealerID, String endDate, String title, String brand, String year, boolean isNew,
+    
+    
+    
+    public Special(String id, String dealerID, String startDate, String endDate, String title, String brand, String year, boolean isNew,
                    BodyType bodyType, String value, ValueType valueType) {
-
+    	
+    	this.id = id;
         this.dealerID = dealerID;
+        this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;
 //        this.scopeParameter = scopeParameter;
@@ -146,22 +161,6 @@ public class Special {
 
     public void setValueType(ValueType valueType) {
         this.valueType = valueType;
-    }
-
-    public SpecialScope getScope() {
-        return scope;
-    }
-
-    public void setScope(SpecialScope scope) {
-        this.scope = scope;
-    }
-
-    public String getScopeParameter() {
-        return scopeParameter;
-    }
-
-    public void setScopeParameter(String scopeParameter) {
-        this.scopeParameter = scopeParameter;
     }
 
     public boolean isNew() {
