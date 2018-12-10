@@ -483,7 +483,7 @@ public class VehicleManagerImpl implements VehicleManager {
         }
     }
 
-    public void generateVehicleBySQL(String sql, Vehicle v){
+    private void generateVehicleBySQL(String sql, Vehicle v){
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
 //            ps.setString(1,  v.getId());
