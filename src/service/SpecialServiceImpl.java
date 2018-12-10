@@ -16,7 +16,7 @@ public class SpecialServiceImpl implements SpecialService {
     public void updateAll() {
 
         try {
-            List<String> dealerIDs = new DealerManagerImpl().getAllDealerIDs();
+            List<String> dealerIDs = new DealerManagerImplementation().getAllDealerIDs();
             if (dealerIDs == null || dealerIDs.isEmpty()) {
                 return;
             }
