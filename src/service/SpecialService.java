@@ -1,5 +1,6 @@
 package service;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface SpecialService {
 	
 	//get the whole specials, according to the dealerID to query specials that match to the dealerID
 	List<Special> querySpecials(List<Special> specials, String dealerID);
+	
+	List<Special> getAllSpecialsByDealerID(String dealerID) throws SQLException;
 }
