@@ -82,10 +82,10 @@ public class VehicleManagerImpl implements VehicleManager {
             v.setExteriorColor(rs.getString("exColor"));
             v.setInteriorColor(rs.getString("inColor"));
             v.setBodyType(BodyType.valueOf(rs.getString("type")));
-            v.setMiles(String.valueOf(rs.getString("miles")));
-            v.setFeatures(Arrays.asList(String.valueOf(rs.getString("features")).split("\\n")));
-            v.setImages(Arrays.asList(String.valueOf(rs.getString("images")).split("\\n")));
-        } catch (SQLException e) {
+            v.setMiles(rs.getString("miles"));
+            v.setFeatures(Arrays.asList(rs.getString("features").split("\\n")));
+            v.setImages(Arrays.asList(rs.getString("images").split("\\n")));
+        } catch (Exception e) {
             e.printStackTrace();
             v = new Vehicle("-1", "-1");
         }
@@ -100,7 +100,10 @@ public class VehicleManagerImpl implements VehicleManager {
         ResultSet rs = stmt.executeQuery(sql);
         try {
             while (rs.next()) {
-                res.add(generatVehicleFromResultSet(rs));
+                Vehicle v = generatVehicleFromResultSet(rs);
+                // check if v is invalid
+                if (v.getId().equals("-1")) continue;
+                res.add(v);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,6 +116,7 @@ public class VehicleManagerImpl implements VehicleManager {
 
         List<Vehicle> res = new ArrayList<>();
         String sql = generateConditionSQL(p);
+        stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql.toString());
         while(rs.next()){
             Vehicle v = generatVehicleFromResultSet(rs);
