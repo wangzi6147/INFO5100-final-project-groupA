@@ -72,7 +72,8 @@ public class VehicleManagerImpl implements VehicleManager {
     private Vehicle generatVehicleFromResultSet(ResultSet rs) {
         Vehicle v = null;
         try {
-            v = new Vehicle(rs.getString("id"), dealerID);
+            v = new Vehicle(rs.getString("id"),"");
+            v.setDealerID(rs.getString("dealerId"));
             v.setYear(rs.getString("year"));
             v.setBrand(rs.getString("brand"));
             v.setModel(rs.getString("model"));
