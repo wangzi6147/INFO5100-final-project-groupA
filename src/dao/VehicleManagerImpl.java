@@ -63,8 +63,11 @@ public class VehicleManagerImpl implements VehicleManager {
     public Vehicle findVehicleById(int vehicleId) throws SQLException {
         stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM vehicle WHERE id=" + vehicleId);
-        rs.next();
-        return generatVehicleFromResultSet(rs);
+        if (rs.next()) {
+            return generatVehicleFromResultSet(rs);
+        } else {
+            return new Vehicle("-1","-1");
+        }
     }
 
 
