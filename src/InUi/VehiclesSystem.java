@@ -25,7 +25,7 @@ public class VehiclesSystem{
     private JTextField enterDealerID;
     private JLabel vehicleDetails;
     private String selectedID = "-1";
-    private String theDealerID ;
+    private String theDealerID  ;
     private JLabel toEnterDealerID;
     public Vehicles vehicles;
     public VTableModel model;
@@ -68,13 +68,10 @@ public class VehiclesSystem{
         add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (selectedID == "-1"){
-                    JOptionPane.showMessageDialog(frame,"Select a Row" + selectedID);
-                }
-                else{
-                    JOptionPane.showMessageDialog(frame,"You can move to next page" + selectedID);
-
-                }
+                
+                	 AddPage addPage = new AddPage();
+                	 addPage.setAddPageLayout(theDealerID);
+               
 
             }
         });
@@ -88,10 +85,11 @@ public class VehiclesSystem{
             public void actionPerformed(ActionEvent e) {
                 if (selectedID == "-1"){
                     JOptionPane.showMessageDialog(frame,"Select a Row" + selectedID);
-                }
-                else{
-                    JOptionPane.showMessageDialog(frame,"You can move to next page" + selectedID);
-
+//                }else if (theDealerID == "-1") {
+//                	JOptionPane.showMessageDialog(frame,"input dealerID first");
+                }else{
+                	ViewPage viewPage = new ViewPage();
+                	viewPage.setViewOrModifyPageLayout(selectedID);
                 }
 
             }
@@ -105,9 +103,12 @@ public class VehiclesSystem{
             public void actionPerformed(ActionEvent e) {
                 if (selectedID == "-1"){
                     JOptionPane.showMessageDialog(frame,"Select a Row" + selectedID);
+//                }else if (theDealerID == "-1") {
+//                	JOptionPane.showMessageDialog(frame,"input dealerID first");
                 }
                 else{
-                    JOptionPane.showMessageDialog(frame,"You can move to next page" + selectedID);
+                	ModifyPage modifyPage = new ModifyPage();
+                	modifyPage.setViewOrModifyPageLayout(selectedID);
 
                 }
 
