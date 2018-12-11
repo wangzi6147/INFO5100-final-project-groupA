@@ -95,12 +95,16 @@ public class SpecialServiceImpl implements SpecialService {
 			Double MaxDiscount = Double.MIN_VALUE;
 			for(Special s:matchSpecials) {
 				SpecialIds.add(s.getId());
-				Double value = Double.valueOf(s.getValue());
-				MaxDiscount = MaxDiscount > value ? MaxDiscount : value;
+				if(!s.getValue().equals("")) {
+					Double value = Double.valueOf(s.getValue());
+					MaxDiscount = MaxDiscount > value ? MaxDiscount : value;
+				}
 			}
 			v.setSpecialIDs(SpecialIds);
 			v.setDiscountRate(String.valueOf(MaxDiscount));
-			Double finalPrice = MaxDiscount * Double.valueOf(v.getPrice());
+			Double finalPrice = 0.0;
+			if(!v.getPrice().equals(""))
+				finalPrice = MaxDiscount * Double.valueOf(v.getPrice());
 			v.setFinalPrice(String.valueOf(finalPrice));
 		}
 		
@@ -153,7 +157,7 @@ public class SpecialServiceImpl implements SpecialService {
     public void updateAll() {
 
         try {
-            List<String> dealerIDs = new DealerManagerImpl().getAllDealerIDs();
+            List<String> dealerIDs = new DealerManagerImplementation().getAllDealerIDs();
             if (dealerIDs == null || dealerIDs.isEmpty()) {
                 return;
             }
