@@ -24,7 +24,6 @@ public class SingleVehicleRecordPanel extends JPanel {
     private JPanel infoPanel;
     private JPanel priceAndMilesPanel;
     private JPanel titlePanel;
-    private JPanel colorPanel;
     private JPanel checkVehicleDetailPanel;
     private JButton vehicleDetailReturnButton;
 

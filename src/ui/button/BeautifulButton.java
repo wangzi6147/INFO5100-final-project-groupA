@@ -8,8 +8,6 @@ public class BeautifulButton extends JButton {
 
     private ImageIcon imageIcon0;
     private ImageIcon imageIcon1;
-//    private Color color0;
-//    private Color color1;
 
     public BeautifulButton(String imagePath) {
 

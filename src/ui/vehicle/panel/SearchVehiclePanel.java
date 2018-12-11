@@ -16,9 +16,9 @@ public class SearchVehiclePanel extends JPanel {
 
     public static SearchVehicleButtonPanel buttonPanel;
     public static int totalPageNumber;
-    public static JScrollPane centerPanel;
     private static int currentPageNumber;
     private static JPanel pageInfoPanel;
+    private JScrollPane centerPanel;
     private JPanel recordListPanel;
     private String dealerId;
     private VehicleFilterSelected vehicleFilterSelected;
@@ -28,9 +28,9 @@ public class SearchVehiclePanel extends JPanel {
     }
 
     public static void refreshPageInfoPanel() {
-        //pageInfoPanel = new JPanel();
         pageInfoPanel.removeAll();
-        JLabel jLabel = new JLabel(currentPageNumber + " / " + totalPageNumber);
+        int showTotalPageNumber = totalPageNumber == 0 ? 1 : totalPageNumber;
+        JLabel jLabel = new JLabel(currentPageNumber + " / " + showTotalPageNumber);
         jLabel.setFont(Setting.PAGE_INFO_LABEL_FONT);
         pageInfoPanel.add(jLabel);
         pageInfoPanel.repaint();
@@ -40,7 +40,6 @@ public class SearchVehiclePanel extends JPanel {
     public void init(String dealerId) {
         currentPageNumber = 1;
         this.dealerId = dealerId;
-        //this.vehicleTable = new JTable(this.inventoryTableModel);
         this.recordListPanel = new JPanel();
         centerPanel = new JScrollPane(recordListPanel);
         refreshRecordListPanel(getVehicleList("All", 1));
@@ -56,9 +55,6 @@ public class SearchVehiclePanel extends JPanel {
 
         JPanel southPanel = new JPanel();
         this.pageInfoPanel = new JPanel();
-        /*JLabel jLabel = new JLabel(currentPageNumber + " / " + totalPageNumber);
-        jLabel.setFont(Setting.PAGE_INFO_LABEL_FONT);
-        pageInfoPanel.add(jLabel);*/
         refreshPageInfoPanel();
         southPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 60, 5));
         southPanel.add(prePageButton);
@@ -66,14 +62,12 @@ public class SearchVehiclePanel extends JPanel {
         southPanel.add(nextPageButton);
         southPanel.setPreferredSize(new Dimension(Setting.VEHICLE_SEARCH_RESULT_NAVIGATOR_BAR_WIDTH, Setting.VEHICLE_SEARCH_RESULT_NAVIGATOR_BAR_HEIGHT));
 
-        //this.southPanel.setLayout(new ScrollPaneLayout());
         this.setLayout(new BorderLayout());
 
         Dimension size = new Dimension(Setting.SEARCH_VEHICLE_PANEL_WIDTH, Setting.SEARCH_VEHICLE_PANEL_HEIGHT);
         this.setPreferredSize(size);
         Dimension vehicleTableSize = new Dimension(Setting.VEHICLE_TABLE_WIDTH, Setting.VEHICLE_TABLE_HEIGHT);
         centerPanel.setBorder(null);
-        //this.centerPanel.setBackground(Setting.DEALER_RECORD_BACKGROUND_COLOR);
         centerPanel.setSize(vehicleTableSize);
 
         resultPanel.add(centerPanel, BorderLayout.CENTER);
@@ -97,10 +91,6 @@ public class SearchVehiclePanel extends JPanel {
         this.add(resultPanel, BorderLayout.CENTER);
         this.add(westPanel, BorderLayout.WEST);
 
-    }
-
-    public String getDealerId() {
-        return dealerId;
     }
 
     public void refreshRecordListPanel(List<Vehicle> list) {
@@ -188,9 +178,10 @@ public class SearchVehiclePanel extends JPanel {
     class ClickActionListener extends MouseAdapter {
         private Vehicle vehicle;
 
-        public ClickActionListener (Vehicle vehicle) {
+        public ClickActionListener(Vehicle vehicle) {
             this.vehicle = vehicle;
         }
+
         public void mouseClicked(MouseEvent me) {
             if (me.getClickCount() == 2) {
                 VehicleSearchMainView.mainEastPanel.removeAll();

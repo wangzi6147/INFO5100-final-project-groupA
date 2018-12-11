@@ -9,8 +9,8 @@ public class Setting {
     public static final Color MAIN_FRAM_COLOR = Color.white;
     public static final int MAIN_FRAM_X = 50;
     public static final int MAIN_FRAM_Y = 50;
-    public static final int MAIN_FRAM_WIDTH = 1000;
-    public static final int MAIN_FRAM_HEIGHT = 700;
+    public static final int MAIN_FRAM_WIDTH = 1600;
+    public static final int MAIN_FRAM_HEIGHT = 900;
 
     // main view panel
     public static final Color MAIN_VIEW_PANEL_COLOR = Color.white;

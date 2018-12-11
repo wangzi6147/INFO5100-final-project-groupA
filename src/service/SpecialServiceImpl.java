@@ -8,12 +8,18 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 
+import dao.DBconnect;
 import dao.SpecialManagerImpl;
 
 
 
 public class SpecialServiceImpl implements SpecialService {
 	
+	Connection conn;
+	
+	public SpecialServiceImpl() {
+		conn = DBconnect.connectDB();
+	}
 /*
  * 
  * The following methods used memory to manage specials
@@ -54,16 +60,21 @@ public class SpecialServiceImpl implements SpecialService {
 		return deleteNumber;
 	}
 	
-    public Special getSpecialBySpecialID(String id){
-        SpecialManagerImpl sq = new SpecialManagerImpl();
-        Special result = null;
-        try {
-             result = sq.getSpecialByID(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+    @Override
+    public List<Special> querySpecials(List<Special> specials, String dealerID) {
+		List<Special> res = new ArrayList<>();
+		try {
+			for(Special s:specials) {
+				if(s.getDealerID().equalsIgnoreCase(dealerID.trim()))
+					res.add(s);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+		
+	}
+
 	
 	@Override
 	public List<Vehicle> associateSpecials(List<Vehicle> vehicles, List<Special> specials) throws ParseException {
@@ -77,12 +88,16 @@ public class SpecialServiceImpl implements SpecialService {
 			Double MaxDiscount = Double.MIN_VALUE;
 			for(Special s:matchSpecials) {
 				SpecialIds.add(s.getId());
-				Double value = Double.valueOf(s.getValue());
-				MaxDiscount = MaxDiscount > value ? MaxDiscount : value;
+				if(!s.getValue().equals("")) {
+					Double value = Double.valueOf(s.getValue());
+					MaxDiscount = MaxDiscount > value ? MaxDiscount : value;
+				}
 			}
 			v.setSpecialIDs(SpecialIds);
 			v.setDiscountRate(String.valueOf(MaxDiscount));
-			Double finalPrice = MaxDiscount * Double.valueOf(v.getPrice());
+			Double finalPrice = 0.0;
+			if(!v.getPrice().equals(""))
+				finalPrice = MaxDiscount * Double.valueOf(v.getPrice());
 			v.setFinalPrice(String.valueOf(finalPrice));
 		}
 		
@@ -120,6 +135,42 @@ public class SpecialServiceImpl implements SpecialService {
 		return false;
 	}
 
+
+	//the following method searching in database
+    public Special getSpecialBySpecialID(String id){
+        SpecialManagerImpl sq = new SpecialManagerImpl();
+        Special result = null;
+        try {
+             result = sq.getSpecialByID(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    public List<Special> getAllSpecialsByDealerID(String dealerID) throws SQLException{
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM special WHERE dealerID=" + dealerID );
+        List<Special> res = new ArrayList<>();
+        while(rs.next()){
+            Special sp = createSpecialFromRS(rs);
+            res.add(sp);
+        }
+        return res;
+    }
+    
+    public Special createSpecialFromRS(ResultSet rs) throws SQLException {
+
+    	Special s = new Special(rs.getString("id"), rs.getString("dealerID"), rs.getString("startDate"), rs.getString("endDate"), 
+    			    rs.getString("title"), rs.getString("brand"), rs.getString("year"), rs.getBoolean("isNew"), 
+    			    BodyType.valueOf(rs.getString("type")), rs.getString("value"), ValueType.valueOf(rs.getString("valueType")));
+
+        s.setDescription(rs.getString("description"));
+        s.setDisclaimer(rs.getString("disclaimer"));
+        return s;
+    }
+    
+	
 	
 /*
  * 
@@ -132,7 +183,7 @@ public class SpecialServiceImpl implements SpecialService {
     public void updateAll() {
 
         try {
-            List<String> dealerIDs = new DealerManagerImpl().getAllDealerIDs();
+            List<String> dealerIDs = new DealerManagerImplementation().getAllDealerIDs();
             if (dealerIDs == null || dealerIDs.isEmpty()) {
                 return;
             }

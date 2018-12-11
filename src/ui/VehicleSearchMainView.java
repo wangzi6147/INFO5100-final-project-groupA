@@ -15,13 +15,13 @@ import java.util.Enumeration;
 
 public class VehicleSearchMainView {
 
-    public static MenuBarPanel mainMenuBarPanel;
     public static JPanel mainEastPanel;
     public static SearchDealerPanel searchDealerPanel;
     public static SearchVehiclePanel searchVehiclePanel;
     public static SingleVehicleRecordPanel singleVehicleRecordPanel;
-    public static JPanel mainViewPanel;
-    public static JFrame mainFrame;
+    private JFrame mainFrame;
+    private JPanel mainViewPanel;
+    private MenuBarPanel mainMenuBarPanel;
     private int x, y;
 
     public VehicleSearchMainView(Dealer dealer) {

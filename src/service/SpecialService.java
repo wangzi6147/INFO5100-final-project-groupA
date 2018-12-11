@@ -1,5 +1,6 @@
 package service;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -18,4 +19,9 @@ public interface SpecialService {
 	
 	//associate a list of Specials to a list of vehicles, and then return assigned vehicles
 	List<Vehicle> associateSpecials(List<Vehicle> vehicles, List<Special> specials) throws ParseException;
+	
+	//get the whole specials, according to the dealerID to query specials that match to the dealerID
+	List<Special> querySpecials(List<Special> specials, String dealerID);
+	
+	List<Special> getAllSpecialsByDealerID(String dealerID) throws SQLException;
 }

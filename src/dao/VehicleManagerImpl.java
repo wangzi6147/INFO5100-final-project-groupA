@@ -224,7 +224,7 @@ public class VehicleManagerImpl implements VehicleManager {
         }
         vehicleFilterContent.setMiles(miles);
 
-        rs = stmt.executeQuery("SELECT * FROM " + cacheTableName + sortTypeSql(p.getSortType()) + " LIMIT " + (p.getPageNumber() * pageSize) + " , " + pageSize);
+        rs = stmt.executeQuery("SELECT * FROM " + cacheTableName + sortTypeSql(p.getSortType()) + " LIMIT " + ((p.getPageNumber() -1) * pageSize) + " , " + pageSize);
         while (rs.next()) {
             Vehicle v = new Vehicle(rs.getString("id"), rs.getString("dealerID"));
             v.setYear(rs.getString("year"));
