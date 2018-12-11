@@ -1,5 +1,7 @@
 package dao;
+
 import dto.*;
+
 import java.sql.*;
 import java.util.*;
 
@@ -53,7 +55,7 @@ public class VehicleManagerImpl implements VehicleManager {
     private List<Vehicle> vehicles;
     private VehicleFilterContent vehicleFilterContent;
 
-    public VehicleManagerImpl(){
+    public VehicleManagerImpl() {
         conn = DBconnect.connectDB();
     }
 
@@ -69,8 +71,6 @@ public class VehicleManagerImpl implements VehicleManager {
             return new Vehicle("-1","-1");
         }
     }
-
-
 
     private Vehicle generatVehicleFromResultSet(ResultSet rs) {
         Vehicle v = null;
@@ -458,14 +458,14 @@ public class VehicleManagerImpl implements VehicleManager {
      *  Maintain Vehicle
      */
 
-    public void addVehicle(Vehicle v){
-        generateVehicleBySQL("INSERT INTO vehicle " +
-                "( year, brand, model, price, exColor, inColor, type, miles, images, dealerID, isNew, features ) " +
-                "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", v);
-    }
-
-    // 2018.12.7 Add saveOrUpdate
-    public String saveOrUpdateVehicle(Vehicle vehicle) {
+    /**
+     *
+     * method to Insert or Update Vehicle
+     * @param vehicle
+     * @return
+     */
+    @Override
+    public String maintainVehicle(Vehicle vehicle) {
         if (vehicle.getId() == null) {
             generateVehicleBySQL("INSERT INTO vehicle " +
                     "( year, brand, model, price, exColor, inColor, type, miles, images, dealerID, isNew, features ) " +
@@ -483,12 +483,15 @@ public class VehicleManagerImpl implements VehicleManager {
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT LAST_INSERT_ID();");
             ResultSet rs = ps.executeQuery();
-            rs.next();
-            return rs.getString(1);
+            if (rs.next())  {
+                return rs.getString(1);
+            }
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            return "10153"; // a random default ID
         }
+        // when catch an exception or empty result set
+        return "-1";
     }
 
     public void generateVehicleBySQL(String sql, Vehicle v){
@@ -533,18 +536,12 @@ public class VehicleManagerImpl implements VehicleManager {
         }
     }
 
-    public void deleteVehicle(Vehicle v) {
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(
-                    "DELETE FROM vehicle WHERE id=" + v.getId());
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
+    /**
+     * method to delete vehicle
+     * @param vehicleId
+     * @return
+     */
+    @Override
     public boolean deleteVehicle(String vehicleId){
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(
@@ -557,14 +554,6 @@ public class VehicleManagerImpl implements VehicleManager {
         }
         return true;
     }
-
-    public void modifyVehicle(Vehicle oldVehicle, Vehicle newVehicle){
-        deleteVehicle(oldVehicle);
-        addVehicle(newVehicle);
-
-    }
-
-
 
     public void updateFinalPriceAndDiscount(List<Vehicle> vehicles) throws SQLException{
 

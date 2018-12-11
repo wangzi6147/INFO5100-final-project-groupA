@@ -89,7 +89,7 @@ public class VehicleServiceImpl implements VehicleService {
     // modify vehicle by ID
 
     public String saveOrUpdateVehicle(Vehicle vehicle) throws SQLException {
-        return vehicleManager.saveOrUpdateVehicle(vehicle);
+        return vehicleManager.maintainVehicle(vehicle);
     }
 
     public boolean deleteVehicleByVehicleId(String vehicleId) throws SQLException {
