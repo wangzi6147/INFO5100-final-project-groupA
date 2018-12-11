@@ -54,6 +54,7 @@ public class SpecialServiceImpl implements SpecialService {
 		return deleteNumber;
 	}
 	
+	//the following method searching in database
     public Special getSpecialBySpecialID(String id){
         SpecialManagerImpl sq = new SpecialManagerImpl();
         Special result = null;
@@ -64,6 +65,23 @@ public class SpecialServiceImpl implements SpecialService {
         }
         return result;
     }
+    
+    //the following method searching in memory
+    @Override
+    public List<Special> querySpecials(List<Special> specials, String dealerID) {
+		List<Special> res = new ArrayList<>();
+		try {
+			for(Special s:specials) {
+				if(s.getDealerID().equalsIgnoreCase(dealerID.trim()))
+					res.add(s);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+		
+	}
+
 	
 	@Override
 	public List<Vehicle> associateSpecials(List<Vehicle> vehicles, List<Special> specials) throws ParseException {
@@ -120,6 +138,9 @@ public class SpecialServiceImpl implements SpecialService {
 		return false;
 	}
 
+
+	
+	
 	
 /*
  * 
