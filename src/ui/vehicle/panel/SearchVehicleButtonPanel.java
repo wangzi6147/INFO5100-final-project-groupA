@@ -7,12 +7,15 @@ import ui.Setting;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SearchVehicleButtonPanel extends JPanel {
 
-    private static VehicleServiceImpl vehicleServiceServiceImpl;
     public static VehicleFilterSelected vehicleFilterSelected;
+    private static VehicleServiceImpl vehicleServiceServiceImpl;
     private int indexFlag = 0;
 
     // for new SearchVehicleButtonPanel, this method will clear all contains.
@@ -42,40 +45,48 @@ public class SearchVehicleButtonPanel extends JPanel {
                 case "All":
                     this.removeAll();
                     List<String> isNew = vehicleFilterContent.getIsNew();
+                    vehicleFilterSelected.setIsNew(getDuplicateElement(vehicleFilterSelected.getIsNew(), isNew));
                     SingleFilterBlockPanel category = new SingleFilterBlockPanel("Category", isNew);
                     this.add(category);
                 case "Category":
                     List<String> makeList = vehicleFilterContent.getBrand();
+                    vehicleFilterSelected.setBrand(getDuplicateElement(vehicleFilterSelected.getBrand(), makeList));
                     SingleFilterBlockPanel make = new SingleFilterBlockPanel("Make", makeList);
                     clear(name, 1);//1
                     this.add(make);
                 case "Make":
                     List<String> modelList = vehicleFilterContent.getModel();
+                    vehicleFilterSelected.setModel(getDuplicateElement(vehicleFilterSelected.getModel(), modelList));
                     SingleFilterBlockPanel model = new SingleFilterBlockPanel("Model", modelList);
                     clear(name, 2);
                     this.add(model);
                 case "Model":
                     List<String> priceList = vehicleFilterContent.getPrice();
+                    vehicleFilterSelected.setPrice(getDuplicateElement(vehicleFilterSelected.getPrice(), priceList));
                     SingleFilterBlockPanel price = new SingleFilterBlockPanel("Price", priceList);
                     clear(name, 3);
                     this.add(price);
                 case "Price":
                     List<String> yearList = vehicleFilterContent.getYears();
+                    vehicleFilterSelected.setYears(getDuplicateElement(vehicleFilterSelected.getYears(), yearList));
                     SingleFilterBlockPanel year = new SingleFilterBlockPanel("Year", yearList);
                     clear(name, 4);
                     this.add(year);
                 case "Year":
                     List<String> bodyTypeList = vehicleFilterContent.getBodyType();
+                    vehicleFilterSelected.setBodyType(getDuplicateElement(vehicleFilterSelected.getBodyType(), bodyTypeList));
                     SingleFilterBlockPanel bodyType = new SingleFilterBlockPanel("Body Type", bodyTypeList);
                     clear(name, 5);
                     this.add(bodyType);
                 case "Body Type":
                     List<String> exteriorColorList = vehicleFilterContent.getExteriorColor();
+                    vehicleFilterSelected.setExteriorColor(getDuplicateElement(vehicleFilterSelected.getExteriorColor(), exteriorColorList));
                     SingleFilterBlockPanel exteriorColor = new SingleFilterBlockPanel("Exterior", exteriorColorList);
                     clear(name, 6);
                     this.add(exteriorColor);
                 case "Exterior":
                     List<String> interiorColorList = vehicleFilterContent.getInteriorColor();
+                    vehicleFilterSelected.setInteriorColor(getDuplicateElement(vehicleFilterSelected.getInteriorColor(), interiorColorList));
                     SingleFilterBlockPanel interiorColor = new SingleFilterBlockPanel("Interior", interiorColorList);
                     clear(name, 7);
                     this.add(interiorColor);
@@ -143,5 +154,31 @@ public class SearchVehicleButtonPanel extends JPanel {
             this.repaint();
             this.updateUI();
         }
+    }
+
+    private List<String> listTransform(List<String> list) {
+        if (list == null || list.size() == 0)
+            return null;
+        else
+            return list;
+    }
+
+    private List<String> getDuplicateElement(List<String> list1, List<String> list2) {
+        if (list1 == null || list1.size() == 0 || list2 == null || list2.size() == 0)
+            return null;
+        Set<String> set = new HashSet<>();
+        List<String> result = new ArrayList<>();
+        for (String s : list1) {
+            set.add(s);
+        }
+
+        for (String s : list2) {
+            if (set.contains(s)) {
+                result.add(s);
+            }
+        }
+        if (result.size() == 0)
+            return null;
+        return result;
     }
 }
