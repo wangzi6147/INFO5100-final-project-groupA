@@ -13,10 +13,10 @@ import java.awt.event.ActionListener;
 
 public class SingleDealerRecordPanel extends JPanel {
 
-    public BeautifulLabel name;
-    public BeautifulLabel address;
-    public JButton checkInventory;
-    public String dealerId;
+    private BeautifulLabel name;
+    private BeautifulLabel address;
+    private JButton checkInventory;
+    private String dealerId;
 
     public SingleDealerRecordPanel(Dealer dealer) {
 

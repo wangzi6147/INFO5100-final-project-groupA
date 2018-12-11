@@ -20,14 +20,12 @@ public class SearchVehicleButtonPanel extends JPanel {
 
         vehicleFilterSelected = new VehicleFilterSelected(dealerId);
         vehicleServiceServiceImpl = new VehicleServiceImpl();
-        //this.vehicleServiceServiceImpl.Query(vehicleFilterSelected);
         SingleFilterBlockPanel.refresh();
         initialize("All");
     }
 
     // for JCheckBox ActionListener, this method will refresh part of contains.
     public void refresh(String name) {
-        //this.vehicleServiceServiceImpl.Query(vehicleFilterSelected);
         initialize(name);
     }
 

@@ -2,6 +2,7 @@ package ui.menu;
 
 //import com.sun.tools.javac.comp.Flow;
 //import sun.tools.jps.Jps;
+
 import ui.Setting;
 import ui.VehicleSearchMainView;
 import ui.button.BeautifulButton;
@@ -19,6 +20,7 @@ public class MenuBarPanel extends JPanel {
     public static BeautifulButton searchDealerButton;
     public static BeautifulButton searchVehicleButton;
     public JPanel buttonsPanel;
+    private String dealerId;
 
     public MenuBarPanel() {
         initialize();
@@ -28,8 +30,6 @@ public class MenuBarPanel extends JPanel {
 
         buttonsPanel = new JPanel();
         buttonsPanel.setBackground(Setting.MENU_BAR_COLOR);
-//        this.setBackground(Setting.MENU_BAR_COLOR);
-//        buttonsPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, Setting.BUTTON_H_GAP, Setting.BUTTON_V_GAP));
 
         searchDealerButton = new BeautifulButton("src/ui/resources/ddealer");
@@ -55,20 +55,6 @@ public class MenuBarPanel extends JPanel {
         windowControlPanel.setPreferredSize(new Dimension(Setting.MENU_BAR_WIDTH, 30));
         windowControlPanel.setBackground(Setting.MENU_BAR_COLOR);
         windowControlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-/*
-        JButton closeButton = new BeautifulButton("src/ui/resources/close_button", 12, 12);
-        closeButton.setBackground(Setting.MENU_BAR_COLOR);
-        closeButton.setBorderPainted(false);
-        closeButton.addActionListener(new CloseActionListener());
-
-        JButton minimizeButton = new BeautifulButton("src/ui/resources/minimize", 12, 12);
-        minimizeButton.setBackground(Setting.MENU_BAR_COLOR);
-        minimizeButton.setBorderPainted(false);
-        minimizeButton.addActionListener(new MinimizeActionListener()); //暂时有问题
-
-        windowControlPanel.add(closeButton, FlowLayout.LEFT);
-        windowControlPanel.add(minimizeButton, FlowLayout.CENTER);
-*/
         this.setLayout(new BorderLayout());
         this.setActionListener();
         this.add(windowControlPanel, BorderLayout.NORTH);
@@ -91,7 +77,6 @@ public class MenuBarPanel extends JPanel {
             VehicleSearchMainView.mainEastPanel.repaint();
             VehicleSearchMainView.searchVehiclePanel.removeAll();
             VehicleSearchMainView.searchVehiclePanel.init(null);
-            //VehicleSearchMainView.mainMenuBarPanel.buttonsPanel.setBackground(Setting.MENU_BAR_COLOR);
             VehicleSearchMainView.mainEastPanel.add(VehicleSearchMainView.searchVehiclePanel, BorderLayout.CENTER);
             VehicleSearchMainView.mainEastPanel.repaint();
             VehicleSearchMainView.mainEastPanel.revalidate();
@@ -110,37 +95,10 @@ public class MenuBarPanel extends JPanel {
             VehicleSearchMainView.mainEastPanel.repaint();
             VehicleSearchMainView.searchDealerPanel.removeAll();
             VehicleSearchMainView.searchDealerPanel.init();
-//            VehicleSearchMainView.mainMenuBarPanel.buttonsPanel.setBackground(Setting.MENU_BAR_COLOR);
             VehicleSearchMainView.mainEastPanel.add(VehicleSearchMainView.searchDealerPanel, BorderLayout.CENTER);
             VehicleSearchMainView.mainEastPanel.repaint();
             VehicleSearchMainView.mainEastPanel.revalidate();
         }
     }
-/*
-// 最小化有问题
-    class MinimizeActionListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            if (VehicleSearchMainView.mainFrame.getExtendedState() == JFrame.ICONIFIED) {
-                // restore
-                openFrame();
-            } else {
-                // minimize
-                VehicleSearchMainView.mainFrame.setExtendedState(JFrame.ICONIFIED);
-            }
-
-        }
-    }
-
-    class CloseActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            System.exit(0);
-        }
-    }
-*/
 }
 
