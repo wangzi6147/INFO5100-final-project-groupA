@@ -29,7 +29,8 @@ public class SearchVehiclePanel extends JPanel {
 
     public static void refreshPageInfoPanel() {
         pageInfoPanel.removeAll();
-        JLabel jLabel = new JLabel(currentPageNumber + " / " + totalPageNumber);
+        int showTotalPageNumber = totalPageNumber == 0 ? 1 : totalPageNumber;
+        JLabel jLabel = new JLabel(currentPageNumber + " / " + showTotalPageNumber);
         jLabel.setFont(Setting.PAGE_INFO_LABEL_FONT);
         pageInfoPanel.add(jLabel);
         pageInfoPanel.repaint();
