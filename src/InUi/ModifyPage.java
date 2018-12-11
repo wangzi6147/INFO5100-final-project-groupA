@@ -6,6 +6,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.LayoutManager;
+import java.sql.SQLException;
+
+import javax.swing.JFrame;
 
 /**
  * Created by LynnTeng on 2018/12/7.
@@ -13,21 +16,27 @@ import java.awt.LayoutManager;
 public class ModifyPage extends BasePage {
 
     @Override
-    public void setSpecificPageLayout () {
+    public void setViewOrModifyPageLayout (String vehicleId)  {
 
-        super.initComponents();
+        try {
+			super.initViewOrModifyComponents(vehicleId);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         super.setLabelConfig();
         super.setButtonConfig();
-        
-        super.setModel();
         super.setLayoutConfig();
-        super.addListeners();
+        
         setModifyPageConfig();
+        super.addListeners();
     }
 
     public void setModifyPageConfig() {
-        //super.buttonPanel.add(modifyButton);
-    	//LayoutManager layout = super.container.getLayout();
+
         GridBagConstraints c = new GridBagConstraints();
 
         c.fill= GridBagConstraints.HORIZONTAL;
@@ -44,6 +53,13 @@ public class ModifyPage extends BasePage {
 
     public static void main(String args[]) {
         ModifyPage modifyPage = new ModifyPage();
-        modifyPage.setSpecificPageLayout();
+        String vehicleId = "791179263";
+        modifyPage.setViewOrModifyPageLayout(vehicleId);
     }
+
+	@Override
+	public void setAddPageLayout(String dealerID) {
+		// TODO Auto-generated method stub
+		
+	}
 }
