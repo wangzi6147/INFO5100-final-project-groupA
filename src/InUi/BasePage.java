@@ -101,7 +101,10 @@ public abstract class BasePage extends JFrame {
 	// initialize base page component based on existing vehicleID and its
 	// information
 	public void initViewOrModifyComponents(String vehicleId) throws NumberFormatException, SQLException {
+		
+		
 		vehicle = vehicleService.findVehicleById(Integer.parseInt(vehicleId));
+		this.vehicleId = vehicleId;
 		initialLabel();
 		initialTextfield();
 		setTextfield();
@@ -113,13 +116,14 @@ public abstract class BasePage extends JFrame {
 		initialImageList();
 		setImageList();
 
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		
 	}
 
 
 	// Initialize base page component with new vehicle
 	public void initAddComponents(String dealerID) {
 
+		
 		vehicle = new Vehicle();
 		vehicle.setDealerID(dealerID);
 		initialLabel();
@@ -132,7 +136,7 @@ public abstract class BasePage extends JFrame {
 
 
 
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
 	}
 
 
@@ -173,11 +177,12 @@ public abstract class BasePage extends JFrame {
 		container.add(featurePanel, c);
 
 
-		frame.setDefaultLookAndFeelDecorated(true);
+		//frame.setDefaultLookAndFeelDecorated(true);
 		frame.setSize(960, 800);
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.add(container);
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
 
 		// set infoPanel Layout
 		setComponentGridBagLayOut(infoPanel, dealerIdLabel, 0, 0);

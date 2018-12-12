@@ -1,8 +1,10 @@
 package InUi;
 
 import service.VehicleService;
+
 import service.VehicleServiceImpl;
 import dto.Vehicle;
+
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.plaf.DimensionUIResource;
@@ -15,11 +17,12 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class VehiclesSystem{
 
+	
+	
     public JTable vehicleTable;
     private JButton add, view, modify, search;
     private JTextField enterDealerID;
@@ -176,7 +179,15 @@ public class VehiclesSystem{
     }
 
     public static void main(String[] args) throws SQLException {
-        Vehicles v = new Vehicles();
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException |
+                IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            throw new RuntimeException("Test Failed. MetalLookAndFeel not set "
+                    + "for frame");
+        }
+    	
+    	Vehicles v = new Vehicles();
 //        v.addVehicle(new Vehicle(001, "KE", "BMW", "1"));
 //        v.addVehicle(new Vehicle(002, "AE", "VM", "1"));
 //        v.addVehicle(new Vehicle(003, "GE", "TOYOTA", "1"));
@@ -188,6 +199,8 @@ public class VehiclesSystem{
 
 
     }
+    
+
 }
 
 class Vehicles {
@@ -323,4 +336,7 @@ class VTableModel implements TableModel {
     public void removeTableModelListener(TableModelListener l) {
 
     }
+    
+  
+
 }
