@@ -8,7 +8,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import InUi.PictureList.PitureListRenderer;
+//import InUi.PictureList.PitureListRenderer;
 import dto.BodyType;
 import dto.Vehicle;
 
