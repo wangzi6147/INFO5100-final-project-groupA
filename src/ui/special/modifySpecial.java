@@ -4,11 +4,12 @@ import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Date;
-
 
 public class modifySpecial extends JDialog{
 
@@ -20,9 +21,18 @@ public class modifySpecial extends JDialog{
     private GridBagLayout centerLayout;
     private GridBagConstraints centerConstraints;
     private ArrayList<JComboBox> flList;
+    private String dealerId;
+    private JComboBox Brand = new JComboBox();
 
-    public modifySpecial(JFrame parent) {
+
+    private JButton modify = new JButton("Modify Special");
+    private JButton delete = new JButton("Delete Special");
+
+
+    public modifySpecial(JFrame parent, String dealerId) {
         super(parent, true);
+        this.dealerId = dealerId;
+        setupListeners();
         initData();
         initUI();
         //setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -70,21 +80,41 @@ public class modifySpecial extends JDialog{
             centerConstraints.fill = GridBagConstraints.BOTH;
 
             {
-                JLabel scope = new JLabel("*Scope:");
-                JComboBox scopeContent = new JComboBox(new String[] {"---Select Brand---",
-                        "Bentley",
-                        "BMW",
-                        "Aston Martin",
-                        "Maybach"});
+                JLabel scope = new JLabel("Brand:");
 
-                scopeContent.setSize(new Dimension(10, 30));
+                Brand = new JComboBox();
+                Brand.addItem("---Select Brand---");
+                Brand.addItem("All");
+                Brand.addItem("Acura");
+                Brand.addItem("Audi");
+                Brand.addItem("Bentley");
+                Brand.addItem("BMW");
+                Brand.addItem("Chevrolet");
+                Brand.addItem("Dodge");
+                Brand.addItem("Ferrari");
+                Brand.addItem("Ford");
+                Brand.addItem("GMC");
+                Brand.addItem("Honda");
+                Brand.addItem("Infiniti");
+                Brand.addItem("Jeep");
+                Brand.addItem("Kia");
+                Brand.addItem("Mercedes");
+                Brand.addItem("Nissan");
+                Brand.addItem("Porsche");
+                Brand.addItem("Subaru");
+                Brand.addItem("Tesla");
+                Brand.addItem("Toyota");
+
+                Brand.addItem("Maybach");
+
+                Brand.setSize(new Dimension(10, 30));
                 centerPanel.add(scope);
-                centerPanel.add(scopeContent);
+                centerPanel.add(Brand);
                 centerPanel.add(temp1);
                 centerPanel.add(temp2);
                 centerPanel.add(temp3);
                 add(centerLayout, scope, centerConstraints, 0, 0, 1, 0, 0);
-                add(centerLayout, scopeContent, centerConstraints, 1, 0, 1, 1, 0);
+                add(centerLayout, Brand, centerConstraints, 1, 0, 1, 1, 0);
                 add(centerLayout, temp1, centerConstraints, 0, 0, 1, 2, 0);
                 add(centerLayout, temp2, centerConstraints, 0, 0, 1, 3, 0);
                 add(centerLayout, temp3, centerConstraints, 0, 0, 1, 4, 0);
@@ -195,8 +225,8 @@ public class modifySpecial extends JDialog{
         {
             GridLayout southLayout = new GridLayout(1, 2);
             southPanel.setLayout(southLayout);
-            JButton modify = new JButton("Modify Special");
-            JButton delete = new JButton("Delete Special");
+
+
             southPanel.add(modify);
             southPanel.add(delete);
 
@@ -220,6 +250,68 @@ public class modifySpecial extends JDialog{
         }
 
     }
+
+    private void setupListeners(){
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                //String title = titleText.getText();
+                //Special special = new Special();
+                //special.setTitle(title);
+                //String strid = "1";
+                //String title = titleText.getText();
+                //Special special = new Special();
+                //special.setTitle(title);
+                //String strid = "1";
+
+                //String sd = startDate.toString();
+               // String ed = endDate.toString();
+                //String title = titleText.getText();
+                //String brand = String.valueOf(Brand.getSelectedItem());
+                //String year = "2018";
+                //Boolean isNew = true;
+                //BodyType bodyType = SUV;
+                //String value = "10000";
+                //ValueType valueType = CASHBACKEACH;
+                //Boolean isMutex = false;
+
+                //String description = descriptionText.getText();
+               // String disclaimer = disclaimerText.getText();
+                //String value = valueText.getText();
+
+
+                //Special special = new Special(dealerId,sd,ed,title,description,disclaimer,"value",brand,isNew,"2018",
+                        //bodyType,isMutex,valueType);
+
+                //String dealerID, String startDate, String endDate, String title, String description, String disclaimer, String value,
+                // String brand, Boolean isNew,String year, BodyType bodyType, Boolean isMutex, ValueType valueType
+                //System.out.println(dealerId);
+
+
+                //specialManagerImpl.addSpecial(special);
+
+
+
+
+
+                //String dealerID, String startDate, String endDate, String title, String description, String disclaimer, String value,
+                // String brand, Boolean isNew,String year, BodyType bodyType, Boolean isMutex, ValueType valueType
+                //System.out.println(dealerId);
+
+
+                //specialManagerImpl.addSpecial(special);
+                JOptionPane.showMessageDialog(null,"Special deleted for dealerId:"+dealerId);
+            }
+
+
+
+
+
+
+        });
+    }
+
 
     private void add(GridBagLayout layout,
                      Component c,
