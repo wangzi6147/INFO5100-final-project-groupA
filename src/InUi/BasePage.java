@@ -8,6 +8,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import InUi.PictureList.PitureListRenderer;
 import dto.BodyType;
 import dto.Vehicle;
 
@@ -27,8 +28,8 @@ import static java.awt.Image.SCALE_SMOOTH;
 public abstract class BasePage extends JFrame {
 
 	private static final int TEXT_FIELD_COLUMNS = 20;
-	private static final int LABEL_WITDTH = 200;
-	private static final int LABEL_HEIGHT = 50;
+	private static final int LABEL_WITDTH = 20;
+	private static final int LABEL_HEIGHT = 10;
 
 	JLabel modelLabel;
 	JLabel intColorLabel;
@@ -37,12 +38,13 @@ public abstract class BasePage extends JFrame {
 	JLabel makeLabel;
 	JLabel milesLabel;
 	JLabel pictureLabel;
-	JLabel priceLabel;
+	JLabel imageLabel;
 	JLabel featureLabel;
 	JLabel vehicleIdLabel;
 	JLabel vehicleTypeLabel;
 	JLabel yearLabel;
 	JLabel dealerIdLabel;
+	JLabel priceLabel;
 
 	JTextField makeTextfield;
 	JTextField extColorTextfield;
@@ -58,6 +60,7 @@ public abstract class BasePage extends JFrame {
 	JComboBox<String> vehicleCombobox;
 
 	JScrollPane featureJSP;
+	JScrollPane imageJSP;
 
 	JButton addButton;
 	JButton modifyButton;
@@ -66,9 +69,15 @@ public abstract class BasePage extends JFrame {
 
 	// adding feature list
 	JList featureList;
-	DefaultListModel listModel;
+	DefaultListModel featureListModel;
 	JButton addFeature, deleteFeature;
 	JTextField featureTextfield;
+
+	// adding feature list
+	JList imageList;
+	DefaultListModel imageListModel;
+	JButton addImage, deleteImage;
+	JTextField imageTextfield;
 
 	Container container = getContentPane();
 
@@ -76,14 +85,19 @@ public abstract class BasePage extends JFrame {
 
 	JPanel infoPanel = new JPanel(new GridBagLayout());
 	JPanel featurePanel = new JPanel(new BorderLayout());
-	JPanel picturePanel = new JPanel(new GridLayout(1, 2));
+	JPanel imagePanel = new JPanel(new BorderLayout());
 	JPanel buttonPanel = new JPanel(new GridLayout(1, 3));
-	JPanel addAnddeletePanel = new JPanel();
+	JPanel addAndDeleteButtonFeaturePanel = new JPanel();
+	JPanel addAndDeleteButtonImagePanel = new JPanel();
 
 	Vehicle vehicle;
 	String vehicleId;
 	VehicleService vehicleService = new VehicleServiceImpl();
 
+	public abstract void setViewOrModifyPageLayout(String vehicleId);
+
+	public abstract void setAddPageLayout(String dealerID);
+	
 	// initialize base page component based on existing vehicleID and its
 	// information
 	public void initViewOrModifyComponents(String vehicleId) throws NumberFormatException, SQLException {
@@ -96,12 +110,16 @@ public abstract class BasePage extends JFrame {
 		initialButton();
 		initialFeatureList();
 		setFeaturelist();
+		initialImageList();
+		setImageList();
 
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
+
 	// Initialize base page component with new vehicle
 	public void initAddComponents(String dealerID) {
+
 		vehicle = new Vehicle();
 		vehicle.setDealerID(dealerID);
 		initialLabel();
@@ -110,19 +128,17 @@ public abstract class BasePage extends JFrame {
 		initialComboBox();
 		initialButton();
 		initialFeatureList();
+		initialImageList();
+
+
 
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
-	// add action listeners to buttons
-	public void addListeners() {
-		addFeatureListBehaviors();
-		ModifyAndADDVehicleBehaviors();
-		deleteVehicleBehaviors();
 
-	}
 
 	public void setLayoutConfig() {
+
 		container.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -130,11 +146,11 @@ public abstract class BasePage extends JFrame {
 		c.gridx = 0;
 		c.gridy = 1;
 		c.weightx = 0.5;
-		c.weighty = 1;
+		c.weighty = 0.5;
 		c.gridwidth = 5;
 		c.gridheight = 5;
 		c.insets = new Insets(10, 10, 10, 10);
-		container.add(picturePanel, c);
+		container.add(imagePanel, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 5;
@@ -144,7 +160,6 @@ public abstract class BasePage extends JFrame {
 		c.gridwidth = 5;
 		c.gridheight = 5;
 		c.insets = new Insets(10, 10, 10, 10);
-
 		container.add(infoPanel, c);
 
 		c.fill = GridBagConstraints.BOTH;
@@ -157,26 +172,9 @@ public abstract class BasePage extends JFrame {
 		c.insets = new Insets(10, 10, 10, 10);
 		container.add(featurePanel, c);
 
-		// TODO: Modify the sample url to specific url iterate from UrlList according to
-		// search result.
-		String sampleUrlA = "https://www.gstatic.com/webp/gallery/2.jpg";
-		String sampleUrlB = "https://www.gstatic.com/webp/gallery/2.jpg";
-		String sampleUrlC = "https://www.gstatic.com/webp/gallery/2.jpg";
-		List<String> urlList = new ArrayList<>();
-		urlList.add(sampleUrlA);
-		urlList.add(sampleUrlB);
-		urlList.add(sampleUrlC);
-		for (String stringUrl : urlList) {
-			try {
-				URL url = new URL(stringUrl);
-				picturePanel.add(new JLabel(publishImage(150, 150, url)), FlowLayout.LEFT);
-			} catch (MalformedURLException mex) {
-				System.out.println("Url Unavailable");
-			}
-		}
 
 		frame.setDefaultLookAndFeelDecorated(true);
-		frame.setSize(800, 800);
+		frame.setSize(960, 800);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.add(container);
@@ -206,24 +204,40 @@ public abstract class BasePage extends JFrame {
 		setComponentGridBagLayOut(infoPanel, bodyTypeCombobox, 1, 11);
 
 		// set feature panel Layout
-		// JPanel addAnddeletePanel = new JPanel();
+		addAndDeleteButtonFeaturePanel.setLayout(new BoxLayout(addAndDeleteButtonFeaturePanel, BoxLayout.LINE_AXIS));
+		addAndDeleteButtonFeaturePanel.add(deleteFeature);
+		addAndDeleteButtonFeaturePanel.add(Box.createHorizontalStrut(5));
+		addAndDeleteButtonFeaturePanel.add(new JSeparator(SwingConstants.VERTICAL));
+		addAndDeleteButtonFeaturePanel.add(Box.createHorizontalStrut(5));
+		addAndDeleteButtonFeaturePanel.add(featureTextfield);
+		addAndDeleteButtonFeaturePanel.add(addFeature);
+		addAndDeleteButtonFeaturePanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-		addAnddeletePanel.setLayout(new BoxLayout(addAnddeletePanel, BoxLayout.LINE_AXIS));
-		addAnddeletePanel.add(deleteFeature);
-		addAnddeletePanel.add(Box.createHorizontalStrut(5));
-		addAnddeletePanel.add(new JSeparator(SwingConstants.VERTICAL));
-		addAnddeletePanel.add(Box.createHorizontalStrut(5));
-		addAnddeletePanel.add(featureTextfield);
-		addAnddeletePanel.add(addFeature);
-		addAnddeletePanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
+		
 		featurePanel.add(featureLabel, BorderLayout.PAGE_START);
 		featurePanel.add(featureJSP, BorderLayout.CENTER);
-		featurePanel.add(addAnddeletePanel, BorderLayout.PAGE_END);
+		featurePanel.add(addAndDeleteButtonFeaturePanel, BorderLayout.PAGE_END);
+		
+		
+		//set imagePanel Layout
+		addAndDeleteButtonImagePanel.setLayout(new BoxLayout(addAndDeleteButtonImagePanel, BoxLayout.LINE_AXIS));
+		addAndDeleteButtonImagePanel.add(deleteImage);
+		addAndDeleteButtonImagePanel.add(Box.createHorizontalStrut(5));
+		addAndDeleteButtonImagePanel.add(new JSeparator(SwingConstants.VERTICAL));
+		addAndDeleteButtonImagePanel.add(Box.createHorizontalStrut(5));
+		addAndDeleteButtonImagePanel.add(imageTextfield);
+		addAndDeleteButtonImagePanel.add(addImage);
+		addAndDeleteButtonImagePanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+		imagePanel.add(imageLabel, BorderLayout.PAGE_START);
+		imagePanel.add(imageJSP, BorderLayout.CENTER);
+		imagePanel.add(addAndDeleteButtonImagePanel, BorderLayout.PAGE_END);
+		
 	}
 
 	// Add Label text and size.
 	public void setLabelConfig() {
+
 		setLabelTextAndSize(vehicleIdLabel, "Vehicle ID", LABEL_WITDTH, LABEL_HEIGHT);
 		setLabelTextAndSize(vehicleTypeLabel, "Vehicle Type", LABEL_WITDTH, LABEL_HEIGHT);
 		setLabelTextAndSize(yearLabel, "Years", LABEL_WITDTH, LABEL_HEIGHT);
@@ -236,15 +250,28 @@ public abstract class BasePage extends JFrame {
 		setLabelTextAndSize(bodyTypeLabel, "Body Type", LABEL_WITDTH, LABEL_HEIGHT);
 		setLabelTextAndSize(featureLabel, "Feature", LABEL_WITDTH, LABEL_HEIGHT);
 		setLabelTextAndSize(dealerIdLabel, "Dealer ID", LABEL_WITDTH, LABEL_HEIGHT);
+		setLabelTextAndSize(imageLabel, "Image", LABEL_WITDTH, LABEL_HEIGHT);
 
 	}
 
 	// Add button text and size.
 	public void setButtonConfig() {
+
 		addButton.setText("Add");
 		viewButton.setText("View");
 		modifyButton.setText("Modify");
 		deleteButton.setText("Delete");
+	}
+	
+	
+	// add action listeners to buttons
+	public void addListeners() {
+
+		addFeatureListBehaviors();
+		addImageListBehaviors();
+		ModifyAndADDVehicleBehaviors();
+		deleteVehicleBehaviors();
+
 	}
 
 	// Publish image from url
@@ -255,15 +282,13 @@ public abstract class BasePage extends JFrame {
 		Image originImage = imageIcon.getImage();
 		Image resizedImage = originImage.getScaledInstance(w, h, SCALE_SMOOTH);
 		imageIcon = new ImageIcon(resizedImage);
-		pictureLabel.setIcon(imageIcon);
 		return imageIcon;
 	}
 
-	public abstract void setViewOrModifyPageLayout(String vehicleId);
 
-	public abstract void setAddPageLayout(String dealerID);
 
 	private void setComponentGridBagLayOut(JPanel panel, JComponent component, int gridx, int gridy) {
+
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = gridx;
@@ -281,16 +306,18 @@ public abstract class BasePage extends JFrame {
 	}
 
 	private void setLabelTextAndSize(JLabel label, String text, int width, int height) {
+
 		label.setText(text);
 		label.setSize(width, height);
 	}
 
 	private void initialLabel() {
+
 		vehicleIdLabel = new JLabel();
 		yearLabel = new JLabel();
 		makeLabel = new JLabel();
 		modelLabel = new JLabel();
-		priceLabel = new JLabel();
+		imageLabel = new JLabel();
 		milesLabel = new JLabel();
 		intColorLabel = new JLabel();
 		extColorLabel = new JLabel();
@@ -299,9 +326,11 @@ public abstract class BasePage extends JFrame {
 		pictureLabel = new JLabel();
 		featureLabel = new JLabel();
 		dealerIdLabel = new JLabel();
+		priceLabel = new JLabel();
 	}
 
 	private void initialTextfield() {
+
 
 		dealerIdTextfield = new JTextField(TEXT_FIELD_COLUMNS);
 		dealerIdTextfield.setEditable(false);
@@ -319,8 +348,52 @@ public abstract class BasePage extends JFrame {
 		makeTextfield = new JTextField(TEXT_FIELD_COLUMNS);
 
 	}
+	
+	private void initialComboBox() {
+
+		vehicleCombobox = new JComboBox<>();
+		vehicleCombobox.setModel(new DefaultComboBoxModel<>(new String[] { "--Select Vehicle Type--", "Used", "New" }));
+
+		bodyTypeCombobox = new JComboBox<>();
+		bodyTypeCombobox.setModel(
+				new DefaultComboBoxModel<>(new String[] { "--Select Body Type--", "VAN", "SUV", "CAR", "TRUCK" }));
+
+	}
+	
+
+	private void initialFeatureList() {
+
+		featureListModel = new DefaultListModel();
+		featureList = new JList(featureListModel);
+		addFeature = new JButton("Add");
+		deleteFeature = new JButton("Delete");
+		featureTextfield = new JTextField(TEXT_FIELD_COLUMNS);
+
+		featureJSP = new JScrollPane(featureList);
+	}
+	
+	
+	private void initialImageList() {
+
+		imageListModel = new DefaultListModel();
+		imageList = new JList(imageListModel);
+		addImage = new JButton("Add");
+		deleteImage = new JButton("Delete");
+		imageTextfield = new JTextField(TEXT_FIELD_COLUMNS);
+		imageJSP = new JScrollPane(imageList);
+		
+	}
+	
+	private void initialButton() {
+
+		addButton = new JButton();
+		viewButton = new JButton();
+		modifyButton = new JButton();
+		deleteButton = new JButton();
+	}
 
 	private void setTextfield() {
+
 		makeTextfield.setText(vehicle.getBrand());
 		vehicleIdTextfield.setText(vehicle.getId());
 		yearTextfield.setText(vehicle.getYear());
@@ -332,17 +405,10 @@ public abstract class BasePage extends JFrame {
 
 	}
 
-	private void initialComboBox() {
-		vehicleCombobox = new JComboBox<>();
-		vehicleCombobox.setModel(new DefaultComboBoxModel<>(new String[] { "--Select Vehicle Type--", "Used", "New" }));
 
-		bodyTypeCombobox = new JComboBox<>();
-		bodyTypeCombobox.setModel(
-				new DefaultComboBoxModel<>(new String[] { "--Select Body Type--", "VAN", "SUV", "CAR", "TRUCK" }));
-
-	}
 
 	private void setComboBox() {
+
 		boolean isNew = vehicle.getIsNew();
 		if (isNew) {
 			vehicleCombobox.setSelectedIndex(1);
@@ -362,51 +428,47 @@ public abstract class BasePage extends JFrame {
 
 	}
 
-	private void initialButton() {
-		addButton = new JButton();
-		viewButton = new JButton();
-		modifyButton = new JButton();
-		deleteButton = new JButton();
-	}
 
-	private void initialFeatureList() {
-		listModel = new DefaultListModel();
-//        List<String> featureListString = vehicle.getFeatures();
-//        
-//        for(String s : featureListString) {
-//        	listModel.addElement(s);
-//
-//        }
 
-		featureList = new JList(listModel);
-		addFeature = new JButton("Add Feature");
-		deleteFeature = new JButton("Delete Feature");
-		featureTextfield = new JTextField(TEXT_FIELD_COLUMNS);
-
-		featureJSP = new JScrollPane(featureList);
-	}
-
+	
 	private void setFeaturelist() {
 		List<String> featureListString = vehicle.getFeatures();
 
 		for (String s : featureListString) {
-			listModel.addElement(s);
+			featureListModel.addElement(s);
 
 		}
 	}
+	
+
+
+	private void setImageList() {
+
+		List<String> imageListString = vehicle.getImages();
+		
+		for(String s : imageListString) {
+			imageListModel.addElement(s);
+		}
+		
+	}
+		
 
 	private void deleteVehicleBehaviors() {
+
 		DeleteButtonListener deleteButtonListener = new DeleteButtonListener();
 		deleteButton.addActionListener(deleteButtonListener);
 	}
 
 	private void ModifyAndADDVehicleBehaviors() {
+
 		ModifyAndADDButtonListener modifyAndADDButtonListener = new ModifyAndADDButtonListener();
 		modifyButton.addActionListener(modifyAndADDButtonListener);
 		addButton.addActionListener(modifyAndADDButtonListener);
 	}
 
+	//implement feature list behaviors
 	private void addFeatureListBehaviors() {
+
 		FeatureListSelectionListener featureListSelectionListener = new FeatureListSelectionListener();
 		featureList.addListSelectionListener(featureListSelectionListener);
 		featureList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -423,21 +485,72 @@ public abstract class BasePage extends JFrame {
 		featureTextfield.addActionListener(addFeatureListener);
 		featureTextfield.getDocument().addDocumentListener(addFeatureListener);
 	}
+	
+	
+	//implement image list behaviors
+		private void addImageListBehaviors() {
+
+			ImageListSelectionListener imageListSelectionListener = new ImageListSelectionListener();
+			imageList.addListSelectionListener(imageListSelectionListener);
+			imageList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			imageList.setSelectedIndex(0);
+			imageList.setVisibleRowCount(5);
+			imageList.setCellRenderer(new PitureListRenderer());
+
+			DeleteImageListener deleteImageListener = new DeleteImageListener();
+			deleteImage.addActionListener(deleteImageListener);
+
+			AddImageListener addImageListener = new AddImageListener(addImage);
+			addImage.addActionListener(addImageListener);
+			addImage.setEnabled(false);
+
+			imageTextfield.addActionListener(addImageListener);
+			imageTextfield.getDocument().addDocumentListener(addImageListener);
+			
+		}
+	
+	
 
 	class DeleteFeatureListener implements ActionListener {
 
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
+
 			int index = featureList.getSelectedIndex();
 			System.out.println(index);
-			listModel.remove(index);
+			featureListModel.remove(index);
 
-			int size = listModel.getSize();
+			int size = featureListModel.getSize();
 
 			if (size == 0) {
 				deleteFeature.setEnabled(false);
 			} else {
-				if (index == listModel.getSize()) {
+				if (index == featureListModel.getSize()) {
+					index--;
+				}
+
+				featureList.setSelectedIndex(index);
+				featureList.ensureIndexIsVisible(index);
+			}
+		}
+
+	}
+	
+	class DeleteImageListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int index = featureList.getSelectedIndex();
+			imageListModel.remove(index);
+
+			int size = imageListModel.getSize();
+
+			if (size == 0) {
+				deleteFeature.setEnabled(false);
+			} else {
+				if (index == imageListModel.getSize()) {
+					// removed item in last position
 					index--;
 				}
 
@@ -452,6 +565,7 @@ public abstract class BasePage extends JFrame {
 
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
+
 			if (e.getValueIsAdjusting() == false) {
 
 				if (featureList.getSelectedIndex() == -1) {
@@ -464,12 +578,119 @@ public abstract class BasePage extends JFrame {
 
 		}
 	}
+	
+	class ImageListSelectionListener implements ListSelectionListener {
 
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			if (e.getValueIsAdjusting() == false) {
+
+				if (imageList.getSelectedIndex() == -1) {
+					// No selection, disable fire button.
+					deleteImage.setEnabled(false);
+
+				} else {
+					// Selection, enable the fire button.
+					deleteImage.setEnabled(true);
+				}
+			}
+		}
+
+	}
+	
+
+	//add behavior to add feature at feature list & add DocumentListener to feature list 
 	class AddFeatureListener implements ActionListener, DocumentListener {
+
 		private boolean alreadyEnabled = false;
 		private JButton button;
 
 		public AddFeatureListener(JButton button) {
+
+			this.button = button;
+		}
+
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+
+			if (!handleEmptyTextField(e)) {
+				enableButton();
+			}
+		}
+
+		@Override
+		public void insertUpdate(DocumentEvent e) {
+
+			enableButton();
+
+		}
+
+		@Override
+		public void removeUpdate(DocumentEvent e) {
+			handleEmptyTextField(e);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			String name = featureTextfield.getText();
+
+			// User didn't type in a unique name...
+			if (name.equals("") || alreadyInList(name)) {
+				Toolkit.getDefaultToolkit().beep();
+				featureTextfield.requestFocusInWindow();
+				featureTextfield.selectAll();
+				return;
+			}
+
+			int index = featureList.getSelectedIndex();
+			if (index == -1) {
+				index = 0;
+			} else {
+				index++;
+			}
+
+			featureListModel.addElement(featureTextfield.getText());
+
+			featureTextfield.requestFocusInWindow();
+			featureTextfield.setText("");
+
+			featureList.setSelectedIndex(index);
+			featureList.ensureIndexIsVisible(index);
+		}
+
+		protected boolean alreadyInList(String name) {
+
+			return featureListModel.contains(name);
+		}
+
+		private void enableButton() {
+
+			if (!alreadyEnabled) {
+				button.setEnabled(true);
+			}
+		}
+
+		private boolean handleEmptyTextField(DocumentEvent e) {
+
+			if (e.getDocument().getLength() <= 0) {
+				button.setEnabled(false);
+				alreadyEnabled = false;
+				return true;
+			}
+			return false;
+		}
+
+	}
+	
+	
+
+
+	class AddImageListener implements ActionListener, DocumentListener {
+		private boolean alreadyEnabled = false;
+		private JButton button;
+
+		public AddImageListener(JButton button) {
 			this.button = button;
 		}
 
@@ -493,34 +714,36 @@ public abstract class BasePage extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String name = featureTextfield.getText();
+			String name = imageTextfield.getText();
 
 			// User didn't type in a unique name...
 			if (name.equals("") || alreadyInList(name)) {
 				Toolkit.getDefaultToolkit().beep();
-				featureTextfield.requestFocusInWindow();
-				featureTextfield.selectAll();
+				imageTextfield.requestFocusInWindow();
+				imageTextfield.selectAll();
 				return;
 			}
 
-			int index = featureList.getSelectedIndex();
-			if (index == -1) {
+			int index = imageList.getSelectedIndex(); 
+			if (index == -1) { 
 				index = 0;
-			} else {
+			} else { 
 				index++;
 			}
 
-			listModel.addElement(featureTextfield.getText());
+			imageListModel.addElement(imageTextfield.getText());
 
-			featureTextfield.requestFocusInWindow();
-			featureTextfield.setText("");
+			// Reset the text field.
+			imageTextfield.requestFocusInWindow();
+			imageTextfield.setText("");
 
-			featureList.setSelectedIndex(index);
-			featureList.ensureIndexIsVisible(index);
+			// Select the new item and make it visible.
+			imageList.setSelectedIndex(index);
+			imageList.ensureIndexIsVisible(index);
 		}
 
 		protected boolean alreadyInList(String name) {
-			return listModel.contains(name);
+			return imageListModel.contains(name);
 		}
 
 		private void enableButton() {
@@ -540,10 +763,17 @@ public abstract class BasePage extends JFrame {
 
 	}
 
+	
+	
+
+	//modify & add vehicle action Listener
 	class ModifyAndADDButtonListener implements ActionListener {
+
+
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+
 			vehicle.setInteriorColor(intColorTextfield.getText());
 			vehicle.setBrand(makeTextfield.getText());
 			vehicle.setExteriorColor(extColorTextfield.getText());
@@ -568,61 +798,106 @@ public abstract class BasePage extends JFrame {
 				vehicle.setBodyType(BodyType.TRUCK);
 			}
 
-			List<String> newFeatureList = Arrays
-					.asList((Arrays.copyOf(listModel.toArray(), listModel.toArray().length, String[].class)));
+			List<String> newFeatureList = Arrays.asList(
+					(Arrays.copyOf(featureListModel.toArray(), featureListModel.toArray().length, String[].class)));
 			vehicle.setFeatures(newFeatureList);
+			
+			List<String> newImageList = Arrays.asList(
+					(Arrays.copyOf(imageListModel.toArray(), imageListModel.toArray().length, String[].class)));
+			vehicle.setImages(newImageList);
 
-			System.out.println("id = " + vehicle.getId());
-			System.out.println("year = " + vehicle.getYear());
-			System.out.println("brand = " + vehicle.getBrand());
-			System.out.println("model = " + vehicle.getModel());
-			System.out.println("isNew = " + vehicle.getIsNew());
-			System.out.println("price = " + vehicle.getPrice());
-			System.out.println("extColor = " + vehicle.getExteriorColor());
-			System.out.println("intColor = " + vehicle.getInteriorColor());
-			System.out.println("featurelist = " + Arrays.toString(vehicle.getFeatures().toArray()));
-			System.out.println("miles = " + vehicle.getMiles());
-			System.out.println("bodytype = " + vehicle.getBodyType());
-			System.out.println("dealerID = " + vehicle.getDealerID());
+//			System.out.println("id = " + vehicle.getId());
+//			System.out.println("year = " + vehicle.getYear());
+//			System.out.println("brand = " + vehicle.getBrand());
+//			System.out.println("model = " + vehicle.getModel());
+//			System.out.println("isNew = " + vehicle.getIsNew());
+//			System.out.println("price = " + vehicle.getPrice());
+//			System.out.println("extColor = " + vehicle.getExteriorColor());
+//			System.out.println("intColor = " + vehicle.getInteriorColor());
+//			System.out.println("featurelist = " + Arrays.toString(vehicle.getFeatures().toArray()));
+//			System.out.println("miles = " + vehicle.getMiles());
+//			System.out.println("bodytype = " + vehicle.getBodyType());
+//			System.out.println("dealerID = " + vehicle.getDealerID());
 
-
-
-				try {
-					String result = vehicleService.maintainVehicle(vehicle);
-					if (!result.equals(null)&& e.getSource() == addButton) {
-						JOptionPane.showMessageDialog(frame,"You have successfully add this vehicle, this vehicle id is " + result);
-						frame.dispose();
-					}else if ( !result.equals(null)&& e.getSource() == modifyButton) {
-						JOptionPane.showMessageDialog(frame,"You have successfully modify this vehicle");
-						frame.dispose();
-					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+			try {
+				String result = vehicleService.maintainVehicle(vehicle);
+				if (!result.equals(null) && e.getSource() == addButton) {
+					JOptionPane.showMessageDialog(frame,
+							"You have successfully add this vehicle, this vehicle id is " + result);
+					frame.dispose();
+				} else if (!result.equals(null) && e.getSource() == modifyButton) {
+					JOptionPane.showMessageDialog(frame, "You have successfully modify this vehicle");
+					frame.dispose();
 				}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 		}
 
 	}
 
+	//delete vehicle action Listener 
 	class DeleteButtonListener implements ActionListener {
+
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 
+
 			try {
 				Boolean isDeleted = vehicleService.deleteVehicleByVehicleId(vehicleId);
 				if (isDeleted) {
-					JOptionPane.showMessageDialog(frame,"You have successfully delete this vehicle!");
+					JOptionPane.showMessageDialog(frame, "You have successfully delete this vehicle!");
 					frame.dispose();
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 
 		}
 
 	}
+	
+	//set custom render for imageList 
+	class PitureListRenderer extends DefaultListCellRenderer {
+		 
+		@Override
+		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
+				boolean cellHasFocus) {
+
+			JLabel label = (JLabel) super.getListCellRendererComponent(
+                    list, value, index, isSelected, cellHasFocus);
+
+	
+			String urlString = (String) imageListModel.toArray()[index];
+
+			try {
+				URL url = new URL(urlString);
+				ImageIcon icon = publishImage(200,150,url);
+				
+				if (icon == null||icon.getIconHeight()!= 150) {
+//					setText(" (no image available)");
+					label.setText("(no image available!)");
+				}else {
+					label.setText("Image" + index);
+					label.setIcon(icon);
+				}
+				
+
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+
+			label.setOpaque(true);
+			return label;
+		}
+
+	}
+	
+
 }

@@ -1,37 +1,16 @@
 package ui.special;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import org.jdesktop.swingx.JXDatePicker;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.JTree;
 
-import org.jdesktop.swingx.JXDatePicker;
-
-
-public class CreatSpecialCarUI extends JDialog{
+public class addSpecial extends JDialog{
 	
 	private static final long serialVersionUID = -279332465989743454L;
 	private JPanel northPanel;
@@ -42,7 +21,7 @@ public class CreatSpecialCarUI extends JDialog{
 	private GridBagConstraints centerConstraints;
 	private ArrayList<JComboBox> flList;
 	
-	public CreatSpecialCarUI(JFrame parent) {
+	public addSpecial(JFrame parent) {
 		super(parent, true);
 		initData();
 		initUI();
@@ -217,9 +196,9 @@ public class CreatSpecialCarUI extends JDialog{
 			GridLayout southLayout = new GridLayout(1, 2);
 			southPanel.setLayout(southLayout);
 			JButton add = new JButton("Add New Special");
-			JButton modify = new JButton("Modify New Special");
+			//JButton modify = new JButton("Modify Special");
 			southPanel.add(add);
-			southPanel.add(modify);
+			//southPanel.add(modify);
 		}
 		
 		getContentPane().add(northPanel, BorderLayout.NORTH);

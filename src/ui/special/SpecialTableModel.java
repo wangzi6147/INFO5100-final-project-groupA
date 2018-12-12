@@ -1,27 +1,38 @@
 package ui.special;
-import javax.swing.*;
+import dto.Special;
+import service.SpecialServiceImpl;
+
 import javax.swing.event.TableModelListener;
-import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.TableModel;
-import java.awt.*;
-import java.io.File;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
+
+
+
 
 public class SpecialTableModel implements TableModel{
 
+    public static SpecialServiceImpl specialServiceImpl;
 
-    public static final String[] ColumnName = {"Title", "Description", "Disclaimer", "Scope", "Value", "Start Date", "End Date"};
-    private List list;
 
-    public SpecialTableModel() {
-        this.list = new ArrayList();
+    public static final String[] ColumnName = {"Title", "Description", "Disclaimer", "Value", "Start Date", "End Date"};
+    private List<Special> list;
+
+    public SpecialTableModel(String dealerId) {
+        specialServiceImpl = new SpecialServiceImpl();
+        try {
+            this.list = specialServiceImpl.getAllSpecialsByDealerID(dealerId);
+        }
+        catch(SQLException se){
+            se.printStackTrace();
+        }
+
     }
 
     @Override
     public int getRowCount() {
-        //return list.size();
-        return 10;
+        return list.size();
+        //return 10;
     }
 
     @Override
@@ -47,20 +58,22 @@ public class SpecialTableModel implements TableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
 
+
+        //List<Special> list = new ArrayList<>();
+
+        Special record = list.get(rowIndex);
         if (columnIndex == 0) {
-            return "Thanksgiving Sale";
+            return record.getTitle();
         } else if (columnIndex == 1) {
-            return "Happy Thanksgiving";
+            return record.getDescription();
         } else if (columnIndex == 2) {
-            return "All rights reserved";
+            return record.getDisclaimer();
         } else if (columnIndex == 3) {
-            return "Voks Wagon";
+            return record.getValue();
         } else if (columnIndex == 4) {
-            return "10% off";
-        } else if (columnIndex == 5) {
-            return "11-20-2018";
+            return record.getStartDate();
         } else{
-            return "11-25-2018";
+            return record.getEndDate();
         }
     }
 

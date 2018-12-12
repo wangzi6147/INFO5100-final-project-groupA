@@ -6,8 +6,10 @@ import dto.Dealer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class SpecialView{
     private JFrame jFrame;
@@ -21,10 +23,11 @@ public class SpecialView{
     private String[] ColumnName;
 
     private Dealer dealer;
-
+    private String dealerId;
     // Constructor
-    public SpecialView(Dealer dealer) {
+    public SpecialView(String dealerId) {
         this.dealer = dealer;
+        this.dealerId = dealerId;
 
         String[] temp = {"Title", "Description", "Disclaimer", "Scope", "Value", "Start Date", "End Date"};
         this.ColumnName = temp;
@@ -42,7 +45,7 @@ public class SpecialView{
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CreatSpecialCarUI c = new CreatSpecialCarUI(null);
+                addSpecial c = new addSpecial(null);
             }
         });
     }
@@ -62,7 +65,7 @@ public class SpecialView{
         this.jFrame = new JFrame("Special");
         this.addButton = new JButton("Add new special");
         this.note = new JLabel("Double click on a special to modify or delete.");
-        this.SpecialTableModel = new SpecialTableModel();
+        this.SpecialTableModel = new SpecialTableModel(dealerId);
         this.jTable = new JTable(this.SpecialTableModel);
         this.resultPane = new JScrollPane(this.jTable);
         this.addPane = new JPanel();
@@ -107,19 +110,14 @@ public class SpecialView{
     class DoubleClick extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
+                modifySpecial c = new modifySpecial(null);
+                /*
+
                 JTable target = (JTable) e.getSource();
                 int row = target.getSelectedRow();
                 JFrame detailFrame = new JFrame();
                 Container detailFramePane = detailFrame.getContentPane();
                 SpringLayout springLayout = new SpringLayout();
-
-/*
-                JPanel p = new JPanel();
-                JButton m = new JButton("Modify");
-                JButton d = new JButton("Delete");
-                p.add(m,d);
-                detailFrame.setContentPane(p);
-*/
 
                 for (int i = 0; i < ColumnName.length; i++) {
                     JLabel title = new JLabel(ColumnName[i]);
@@ -136,6 +134,15 @@ public class SpecialView{
                 detailFrame.setLayout(springLayout);
                 detailFrame.setVisible(true);
                 detailFrame.setBounds(800, 200, 500, 900);
+
+
+                */
+
+
+
+
+
+
             }
         }
     }

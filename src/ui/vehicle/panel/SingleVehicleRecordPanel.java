@@ -109,7 +109,7 @@ public class SingleVehicleRecordPanel extends JPanel {
 
     public void addReturnButton() {
         vehicleDetailReturnButton = new JButton("Return to Vehicle List");
-        vehicleDetailReturnButton.setBackground(Setting.CHECK_INVENTORY_BUTTON_COLOR_PRESS);
+        vehicleDetailReturnButton.setBackground(Setting.CHECK_INVENTORY_BUTTON_COLOR_BEFORE);
         vehicleDetailReturnButton.setBorderPainted(false);
         vehicleDetailReturnButton.setOpaque(true);
         vehicleDetailReturnButton.addActionListener(new ReturnButtonActionListener());
