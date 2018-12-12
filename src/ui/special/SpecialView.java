@@ -29,8 +29,7 @@ public class SpecialView{
         this.dealer = dealer;
         this.dealerId = dealerId;
 
-        String[] temp = {"Title", "Description", "Disclaimer", "Scope", "Value", "Start Date", "End Date"};
-        this.ColumnName = temp;
+
 
         this.createComponents();
         this.setLayout();
@@ -45,7 +44,10 @@ public class SpecialView{
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addSpecial c = new addSpecial(null);
+
+                //JOptionPane.showMessageDialog(null,dealerId);
+                addSpecial c = new addSpecial(null,dealerId);
+
             }
         });
     }
@@ -62,10 +64,16 @@ public class SpecialView{
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-        this.jFrame = new JFrame("Special");
+        this.jFrame = new JFrame("Special for DealerID: "+ dealerId);
         this.addButton = new JButton("Add new special");
         this.note = new JLabel("Double click on a special to modify or delete.");
         this.SpecialTableModel = new SpecialTableModel(dealerId);
+
+
+
+        System.out.println(SpecialTableModel.getlistsize());
+
+
         this.jTable = new JTable(this.SpecialTableModel);
         this.resultPane = new JScrollPane(this.jTable);
         this.addPane = new JPanel();
@@ -110,7 +118,7 @@ public class SpecialView{
     class DoubleClick extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
-                modifySpecial c = new modifySpecial(null);
+                modifySpecial c = new modifySpecial(null,dealerId);
                 /*
 
                 JTable target = (JTable) e.getSource();
