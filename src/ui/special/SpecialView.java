@@ -45,7 +45,7 @@ public class SpecialView{
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CreatSpecialCarUI c = new CreatSpecialCarUI(null);
+                addSpecial c = new addSpecial(null);
             }
         });
     }
@@ -110,7 +110,7 @@ public class SpecialView{
     class DoubleClick extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
-                CreatSpecialCarUI c = new CreatSpecialCarUI(null);
+                modifySpecial c = new modifySpecial(null);
                 /*
 
                 JTable target = (JTable) e.getSource();
