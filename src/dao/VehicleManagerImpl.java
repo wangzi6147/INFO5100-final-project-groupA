@@ -72,6 +72,12 @@ public class VehicleManagerImpl implements VehicleManager {
         }
     }
 
+    private String checkIfNull(String column) {
+        if (column == null)
+            return "null";
+        return column;
+    }
+
     private Vehicle generatVehicleFromResultSet(ResultSet rs) {
         Vehicle v = null;
         try {
@@ -86,8 +92,8 @@ public class VehicleManagerImpl implements VehicleManager {
             v.setInteriorColor(rs.getString("inColor"));
             v.setBodyType(BodyType.valueOf(rs.getString("type")));
             v.setMiles(rs.getString("miles"));
-            v.setFeatures(Arrays.asList(rs.getString("features").split("\\n")));
-            v.setImages(Arrays.asList(rs.getString("images").split("\\n")));
+            v.setFeatures(Arrays.asList(checkIfNull(rs.getString("features")).split("\\n")));
+            v.setImages(Arrays.asList(checkIfNull(rs.getString("images")).split("\\n")));
         } catch (Exception e) {
             e.printStackTrace();
             v = new Vehicle("-1", "-1");
@@ -521,8 +527,9 @@ public class VehicleManagerImpl implements VehicleManager {
                 for (String s : v.getImages())
                     sb.append(s + "\n");
                 ps.setString(9, sb.toString()); // all images url compressed to one string.
-            } else
-                ps.setString(9, null);
+            } else {
+                ps.setString(9, "null");
+            }
             ps.setString(10, v.getDealerID());
             ps.setBoolean(11, v.getIsNew());
             if (v.getFeatures() != null && !v.getFeatures().isEmpty()) {
@@ -530,8 +537,9 @@ public class VehicleManagerImpl implements VehicleManager {
                 for (String s : v.getFeatures())
                     sb.append(s + "\n");
                 ps.setString(12, sb.toString());
-            } else
-                ps.setString(12, null);
+            } else {
+                ps.setString(12, "null");
+            }
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
