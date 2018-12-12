@@ -13,10 +13,11 @@ import java.util.List;
 public class SpecialTableModel implements TableModel{
 
     public static SpecialServiceImpl specialServiceImpl;
-
-
-    public static final String[] ColumnName = {"Title", "Description", "Disclaimer", "Value", "Start Date", "End Date"};
     private List<Special> list;
+
+    public static final String[] ColumnName = {"Title", "Start Date", "End Date","brand","discount Info", "Description",
+            "Disclaimer"};
+
 
     public SpecialTableModel(String dealerId) {
         specialServiceImpl = new SpecialServiceImpl();
@@ -28,11 +29,13 @@ public class SpecialTableModel implements TableModel{
         }
 
     }
-
+    public int getlistsize(){
+        return list.size();
+    }
     @Override
     public int getRowCount() {
         return list.size();
-        //return 10;
+        //return 4;
     }
 
     @Override
@@ -57,7 +60,77 @@ public class SpecialTableModel implements TableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-
+        /*
+        if (rowIndex == 0) {
+            if (columnIndex == 0) {
+                return "Christmas Sale";
+            } else if (columnIndex == 1) {
+                return "2018-12-20";
+            } else if (columnIndex == 2) {
+                return "2018-12-30";
+            } else if (columnIndex == 3) {
+                return "BMW";
+            } else if (columnIndex == 4) {
+                return "15% off";
+            } else if (columnIndex == 5) {
+                return "Marry Christmas";
+            } else {
+                return "All rights reserved";
+            }
+        }
+        if (rowIndex == 1) {
+            if (columnIndex == 0) {
+                return "Thanks Giving Sale";
+            } else if (columnIndex == 1) {
+                return "2018-11-20";
+            } else if (columnIndex == 2) {
+                return "2018-11-24";
+            } else if (columnIndex == 3) {
+                return "All";
+            } else if (columnIndex == 4) {
+                return "1000 off every 12000";
+            } else if (columnIndex == 5) {
+                return "Happy Thanks Giving";
+            } else {
+                return "All rights reserved";
+            }
+        }
+        if (rowIndex == 2) {
+            if (columnIndex == 0) {
+                return "All year Sale";
+            } else if (columnIndex == 1) {
+                return "2018-01-01";
+            } else if (columnIndex == 2) {
+                return "2018-12-31";
+            } else if (columnIndex == 3) {
+                return "Ford";
+            } else if (columnIndex == 4) {
+                return "5% off";
+            } else if (columnIndex == 5) {
+                return "Ford year";
+            } else {
+                return "All rights reserved";
+            }
+        }
+        if (rowIndex == 3) {
+            if (columnIndex == 0) {
+                return "Winter Sale";
+            } else if (columnIndex == 1) {
+                return "2018-11-01";
+            } else if (columnIndex == 2) {
+                return "2019-02-01";
+            } else if (columnIndex == 3) {
+                return "Toyota";
+            } else if (columnIndex == 4) {
+                return "1000 off every 10000";
+            } else if (columnIndex == 5) {
+                return "Stay warm";
+            } else {
+                return "All rights reserved";
+            }
+        }
+       return null;
+*/
 
         //List<Special> list = new ArrayList<>();
 
@@ -75,6 +148,10 @@ public class SpecialTableModel implements TableModel{
         } else{
             return record.getEndDate();
         }
+
+
+
+
     }
 
     @Override
@@ -93,3 +170,4 @@ public class SpecialTableModel implements TableModel{
     }
 
 }
+
