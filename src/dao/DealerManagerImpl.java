@@ -2,6 +2,7 @@ package dao;
 
 import dto.*;
 
+import java.io.PrintStream;
 import java.sql.*;
 import java.util.*;
 
@@ -13,47 +14,12 @@ public class DealerManagerImpl implements DealerManager {
         conn = DBconnect.connectDB();
     }
 
-    @Override
-    public DealerQueryResponse searchDealers(int postCode, int lines) throws SQLException {
+    private DealerQueryResponse generateResponse(String sql) throws SQLException {
         Statement stm = conn.createStatement();
         ResultSet rs = null;
         List<Dealer> dealerList = new ArrayList<>();
         DealerQueryResponse response = null;
         try {
-            rs = stm.executeQuery("SELECT SQL_CALC_FOUND_ROWS * FROM dealer WHERE zip=" + postCode + " LIMIT " + lines);
-
-            while (rs.next()) {
-                dealerList.add(createDealerFromRS(rs));
-            }
-            rs = stm.executeQuery("SELECT FOUND_ROWS()");
-            rs.next();
-            response = new DealerQueryResponse(dealerList, pages(rs.getInt(1)));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            response = new DealerQueryResponse(new ArrayList<>(), 0);
-        } finally {
-            rs.close();
-        }
-        return response;
-    }
-
-    /**
-     * find Dealers By Name And City With PageNumber
-     * method overloading
-     * parameters = dealerName , city, pageNumber
-     *
-     * @throws SQLException
-     */
-
-    @Override
-    public DealerQueryResponse searchDealers(String dealerName, String city, int pageNumber) throws SQLException {
-        List<Dealer> dealerList = new ArrayList<>();
-        Statement stm = conn.createStatement();
-        ResultSet rs = null;
-        DealerQueryResponse response = null;
-
-        try {
-            String sql = querySql("SELECT SQL_CALC_FOUND_ROWS * FROM dealer", dealerName, city, pageNumber);
             rs = stm.executeQuery(sql);
 
             while (rs.next()) {
@@ -69,6 +35,23 @@ public class DealerManagerImpl implements DealerManager {
             rs.close();
         }
         return response;
+    }
+
+    public DealerQueryResponse searchDealers(int postCode, int lines) throws SQLException {
+        return generateResponse("SELECT SQL_CALC_FOUND_ROWS * FROM dealer WHERE zip=" + postCode + " LIMIT " + lines);
+    }
+
+    /**
+     * find Dealers By Name And City With PageNumber
+     * method overloading
+     * parameters = dealerName , city, pageNumber
+     *
+     * @throws SQLException
+     */
+
+    @Override
+    public DealerQueryResponse searchDealers(String dealerName, String city, int pageNumber) throws SQLException {
+        return generateResponse(querySql("SELECT SQL_CALC_FOUND_ROWS * FROM dealer", dealerName, city, pageNumber));
     }
 
     private int pages(int total) {

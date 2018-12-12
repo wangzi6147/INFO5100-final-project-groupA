@@ -588,7 +588,7 @@ public abstract class BasePage extends JFrame {
 
 
 				try {
-					String result = vehicleService.saveOrUpdateVehicle(vehicle);
+					String result = vehicleService.maintainVehicle(vehicle);
 					if (!result.equals(null)&& e.getSource() == addButton) {
 						JOptionPane.showMessageDialog(frame,"You have successfully add this vehicle, this vehicle id is " + result);
 						frame.dispose();

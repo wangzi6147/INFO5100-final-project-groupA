@@ -60,7 +60,7 @@ public class VehicleManagerImpl implements VehicleManager {
     }
 
     /**
-     *  Vehicle Query
+     * Vehicle Query
      */
     public Vehicle findVehicleById(int vehicleId) throws SQLException {
         stmt = conn.createStatement();
@@ -68,14 +68,14 @@ public class VehicleManagerImpl implements VehicleManager {
         if (rs.next()) {
             return generatVehicleFromResultSet(rs);
         } else {
-            return new Vehicle("-1","-1");
+            return new Vehicle("-1", "-1");
         }
     }
 
     private Vehicle generatVehicleFromResultSet(ResultSet rs) {
         Vehicle v = null;
         try {
-            v = new Vehicle(rs.getString("id"),"");
+            v = new Vehicle(rs.getString("id"), "");
             v.setDealerID(rs.getString("dealerId"));
             v.setYear(rs.getString("year"));
             v.setBrand(rs.getString("brand"));
@@ -115,13 +115,13 @@ public class VehicleManagerImpl implements VehicleManager {
     }
 
     //A specified simplified query port ONLY used for apply specials.
-    public List<Vehicle> getAllVehiclesByFilter(VehicleFilterSelected p) throws SQLException{
+    public List<Vehicle> getAllVehiclesByFilter(VehicleFilterSelected p) throws SQLException {
 
         List<Vehicle> res = new ArrayList<>();
         String sql = generateConditionSQL(p);
         stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql.toString());
-        while(rs.next()){
+        while (rs.next()) {
             Vehicle v = generatVehicleFromResultSet(rs);
             res.add(v);
         }
@@ -148,8 +148,7 @@ public class VehicleManagerImpl implements VehicleManager {
                 if (rs.getInt(1) > 0) {
                     if (y[0] == 0) {
                         yearList.add("Before " + y[1]);
-                    }
-                    else if (y[0] == y[1]) {
+                    } else if (y[0] == y[1]) {
                         yearList.add(y[0] + "");
                     } else {
                         yearList.add(y[0] + "--" + y[1]);
@@ -177,7 +176,7 @@ public class VehicleManagerImpl implements VehicleManager {
         List<String> conidtions = new ArrayList<>();
         while (rs.next()) {
             boolean isnew = rs.getBoolean(1);
-            conidtions.add(isnew?"New":"Used");
+            conidtions.add(isnew ? "New" : "Used");
         }
         vehicleFilterContent.setIsNew(conidtions);
         // Prices
@@ -231,7 +230,7 @@ public class VehicleManagerImpl implements VehicleManager {
         }
         vehicleFilterContent.setMiles(miles);
 
-        rs = stmt.executeQuery("SELECT * FROM " + cacheTableName + sortTypeSql(p.getSortType()) + " LIMIT " + ((p.getPageNumber() -1) * pageSize) + " , " + pageSize);
+        rs = stmt.executeQuery("SELECT * FROM " + cacheTableName + sortTypeSql(p.getSortType()) + " LIMIT " + ((p.getPageNumber() - 1) * pageSize) + " , " + pageSize);
         while (rs.next()) {
             Vehicle v = new Vehicle(rs.getString("id"), rs.getString("dealerID"));
             v.setYear(rs.getString("year"));
@@ -295,15 +294,17 @@ public class VehicleManagerImpl implements VehicleManager {
 
         return sql.toString();
     }
-    private String pageSql(int PageNumber){
+
+    private String pageSql(int PageNumber) {
         StringBuffer sql = new StringBuffer(" ");
-        int pageSplit_start=(PageNumber-1)*20;
+        int pageSplit_start = (PageNumber - 1) * 20;
         sql.append(" limit ");
         sql.append(pageSplit_start);
         sql.append(" , ");
         sql.append(20);
         return sql.toString();
     }
+
     private String yearSql(List<String> years) {
         StringBuffer sql = new StringBuffer(" and (");
         for (String year : years) {
@@ -348,11 +349,11 @@ public class VehicleManagerImpl implements VehicleManager {
     }
 
     private String isNewSql(List<String> isNew) {
-        if(isNew==null || isNew.isEmpty() ||isNew.size() == 2){
+        if (isNew == null || isNew.isEmpty() || isNew.size() == 2) {
             return "";
         }
-        String s = isNew.get(0).equals("New")?"1":"0";
-        return " AND isNew="+s;
+        String s = isNew.get(0).equals("New") ? "1" : "0";
+        return " AND isNew=" + s;
     }
 
     private String priceSql(List<String> prices) {
@@ -364,9 +365,9 @@ public class VehicleManagerImpl implements VehicleManager {
             }
             if (price.equals("Negotiable")) {
                 sql.append(" price=" + priceChart[0][0]);
-            } else if(price.contains("Above")){
+            } else if (price.contains("Above")) {
                 sql.append(" price>=" + priceChart[priceChart.length - 1][0]);
-            }else{
+            } else {
                 String[] p = price.split("--");
                 sql.append(" (price>=" + p[0] + " and price<=" + p[1] + ")");
             }
@@ -413,13 +414,13 @@ public class VehicleManagerImpl implements VehicleManager {
 
     private String milesSql(List<String> miles) {
         StringBuffer sql = new StringBuffer(" and (");
-        for(String mile : miles){
+        for (String mile : miles) {
             if (sql.length() != " and (".length()) {
                 sql.append("||");
             }
-            if(mile.contains("Above")){
+            if (mile.contains("Above")) {
                 sql.append(" miles>=" + milesChart[milesChart.length - 1][0]);
-            }else{
+            } else {
                 String[] m = mile.split("--");
                 sql.append(" (miles>=" + m[0] + " and miles<=" + m[1] + ")");
             }
@@ -439,15 +440,20 @@ public class VehicleManagerImpl implements VehicleManager {
         StringBuffer sql = new StringBuffer(" order by ");
         switch (sortType) {
             case PRICE_ASC:
-                sql.append("price ");break;
+                sql.append("price ");
+                break;
             case PRICE_DSC:
-                sql.append("price desc ");break;
+                sql.append("price desc ");
+                break;
             case DISCOUNT:
-                sql.append("discountRate desc ");break;
+                sql.append("discountRate desc ");
+                break;
             case YEAR:
-                sql.append("year desc ");break;
+                sql.append("year desc ");
+                break;
             case MILES:
-                sql.append("miles ");break;
+                sql.append("miles ");
+                break;
             // we can have a default sort. but not specified now.
         }
         return sql.toString();
@@ -459,13 +465,13 @@ public class VehicleManagerImpl implements VehicleManager {
      */
 
     /**
-     *
      * method to Insert or Update Vehicle
+     *
      * @param vehicle
      * @return
      */
     @Override
-    public String maintainVehicle(Vehicle vehicle) {
+    public String maintainVehicle(Vehicle vehicle) throws SQLException {
         if (vehicle.getId() == null) {
             generateVehicleBySQL("INSERT INTO vehicle " +
                     "( year, brand, model, price, exColor, inColor, type, miles, images, dealerID, isNew, features ) " +
@@ -474,103 +480,104 @@ public class VehicleManagerImpl implements VehicleManager {
         } else {
             generateVehicleBySQL("UPDATE vehicle SET " +
                     "year = ?, brand = ?, model = ?, price = ?, exColor = ?, " +
-                    "inColor = ?, type = ?, miles = ?, images = ?, dealerID = ?, isNew = ?, features = ? WHERE id = "+ vehicle.getId() , vehicle);
+                    "inColor = ?, type = ?, miles = ?, images = ?, dealerID = ?, isNew = ?, features = ? WHERE id = " + vehicle.getId(), vehicle);
             return vehicle.getId();
         }
     }
 
-    private String getLastInsertID() {
+    private String getLastInsertID() throws SQLException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT LAST_INSERT_ID();");
-            ResultSet rs = ps.executeQuery();
-            if (rs.next())  {
+            ps = conn.prepareStatement("SELECT LAST_INSERT_ID();");
+            rs = ps.executeQuery();
+            if (rs.next()) {
                 return rs.getString(1);
             }
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            ps.close();
+            rs.close();
         }
         // when catch an exception or empty result set
         return "-1";
     }
 
-    public void generateVehicleBySQL(String sql, Vehicle v){
+    public void generateVehicleBySQL(String sql, Vehicle v) throws SQLException {
+
+        PreparedStatement ps = conn.prepareStatement(sql);
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-//            ps.setString(1,  v.getId());
-            ps.setString(1,  v.getYear());
-            ps.setString(2,  v.getBrand());
-            ps.setString(3,  v.getModel());
-            ps.setString(4,  v.getPrice());
-            ps.setString(5,  v.getExteriorColor());
-            ps.setString(6,  v.getInteriorColor());
-            ps.setString(7,  v.getBodyType()==null? null : v.getBodyType().toString());
-            ps.setString(8,  v.getMiles());
-
-            if(v.getImages() != null &&  !v.getImages().isEmpty()){
+            ps.setString(1, v.getYear());
+            ps.setString(2, v.getBrand());
+            ps.setString(3, v.getModel());
+            ps.setString(4, v.getPrice());
+            ps.setString(5, v.getExteriorColor());
+            ps.setString(6, v.getInteriorColor());
+            ps.setString(7, v.getBodyType() == null ? null : v.getBodyType().toString());
+            ps.setString(8, v.getMiles());
+            if (v.getImages() != null && !v.getImages().isEmpty()) {
                 StringBuilder sb = new StringBuilder();
-                for(String s : v.getImages()) {
+                for (String s : v.getImages())
                     sb.append(s + "\n");
-                }
-                ps.setString(9,  sb.toString()); // all images url compressed to one string.
-            }else{
-                ps.setString(9,  null);
-            }
-
-            ps.setString(10,  v.getDealerID());
-            ps.setBoolean(11,  v.getIsNew());
-
-            if(v.getImages() != null &&  !v.getImages().isEmpty()){
+                ps.setString(9, sb.toString()); // all images url compressed to one string.
+            } else
+                ps.setString(9, null);
+            ps.setString(10, v.getDealerID());
+            ps.setBoolean(11, v.getIsNew());
+            if (v.getFeatures() != null && !v.getFeatures().isEmpty()) {
                 StringBuilder sb = new StringBuilder();
-                for(String s : v.getFeatures()){
+                for (String s : v.getFeatures())
                     sb.append(s + "\n");
-                }
-                ps.setString(12,  sb.toString());
-            }else{
-                ps.setString(12,  null);
-            }
+                ps.setString(12, sb.toString());
+            } else
+                ps.setString(12, null);
             ps.executeUpdate();
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            ps.close();
         }
     }
 
     /**
      * method to delete vehicle
+     *
      * @param vehicleId
      * @return
      */
     @Override
-    public boolean deleteVehicle(String vehicleId){
+    public boolean deleteVehicle(String vehicleId) throws SQLException {
+        PreparedStatement preparedStatement = null;
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement(
+            preparedStatement = conn.prepareStatement(
                     "DELETE FROM vehicle WHERE id=" + vehicleId);
             preparedStatement.executeUpdate();
-            preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } finally {
+            preparedStatement.close();
         }
         return true;
     }
 
-    public void updateFinalPriceAndDiscount(List<Vehicle> vehicles) throws SQLException{
+    public void updateFinalPriceAndDiscount(List<Vehicle> vehicles) throws SQLException {
 
         Statement stmt = conn.createStatement();
         StringBuffer sql = new StringBuffer("UPDATE vehicle SET finalPrice = CASE id ");
-        for(Vehicle v : vehicles){
-            sql.append(" when "+ v.getId() + " then " + v.getFinalPrice());
+        for (Vehicle v : vehicles) {
+            sql.append(" when " + v.getId() + " then " + v.getFinalPrice());
         }
         sql.append(" END, discountRate = CASE id");
-        for(Vehicle v : vehicles){
-            sql.append(" when "+ v.getId() + " then " + v.getDiscountRate());
+        for (Vehicle v : vehicles) {
+            sql.append(" when " + v.getId() + " then " + v.getDiscountRate());
         }
-        sql.append( " END where id in (");
-        for(Vehicle v :vehicles){
+        sql.append(" END where id in (");
+        for (Vehicle v : vehicles) {
             sql.append(v.getId() + ",");
         }
-        sql.deleteCharAt(sql.length()-1);
+        sql.deleteCharAt(sql.length() - 1);
         sql.append(")");
         System.out.println(sql);
         stmt.executeUpdate(sql.toString());

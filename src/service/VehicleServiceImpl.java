@@ -80,27 +80,15 @@ public class VehicleServiceImpl implements VehicleService {
         return vehicleManager.findVehicleById(vehicleId);
     }
 
-    @Override
     public List<Vehicle> findAllVehiclesByDealerId(String dealerId) throws SQLException {
         return vehicleManager.findAllVehiclesByDealerId(dealerId);
     }
-    // add Vehicle
-    // delete by ID
-    // modify vehicle by ID
 
-    public String saveOrUpdateVehicle(Vehicle vehicle) throws SQLException {
+    public String maintainVehicle(Vehicle vehicle) throws SQLException {
         return vehicleManager.maintainVehicle(vehicle);
     }
 
     public boolean deleteVehicleByVehicleId(String vehicleId) throws SQLException {
         return vehicleManager.deleteVehicle(vehicleId);
-    }
-
-    public static void main(String[] args) throws SQLException {
-//        VehicleService vehicleService = new VehicleServiceImpl();
-//        Vehicle addV = new Vehicle("10153", "2018", "GTR", "GTR2000", true, "1", "red", "black", BodyType.CAR, "100");
-//        addV.setId("976487684");
-//        String res = vehicleService.saveOrUpdateVehicle(addV);
-//        System.out.println(res);
     }
 }
