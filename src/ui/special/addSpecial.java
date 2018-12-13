@@ -294,38 +294,20 @@ public class addSpecial extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				//String title = titleText.getText();
-				//Special special = new Special();
-				//special.setTitle(title);
-				//String strid = "1";
-
 				String sd = startDate.toString();
 				String ed = endDate.toString();
 				String title = titleText.getText();
 				String brand = String.valueOf(Brand.getSelectedItem());
-				//String year = "2018";
+			
 				Boolean isNew = true;
 				BodyType bodyType = SUV;
-				//String value = "10000";
+				
 				ValueType valueType = CASHBACKEACH;
 				Boolean isMutex = false;
 
 				String description = descriptionText.getText();
 				String disclaimer = disclaimerText.getText();
-				//String value = valueText.getText();
-
-
-				/*Special special = new Special(dealerId,sd,ed,title,description,disclaimer,"value",brand,isNew,"2018",
-						bodyType,isMutex,valueType);*/
-
-				//String dealerID, String startDate, String endDate, String title, String description, String disclaimer, String value,
-						// String brand, Boolean isNew,String year, BodyType bodyType, Boolean isMutex, ValueType valueType
-				//System.out.println(dealerId);
-
-
-				//specialManagerImpl.addSpecial(special);
-
-
+			
 
 				JOptionPane.showMessageDialog(null,"Special added for dealerId:"+dealerId);
 			}
