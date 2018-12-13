@@ -5,6 +5,7 @@ import ui.Setting;
 import ui.label.BeautifulLabel;
 import ui.menu.MenuBarPanel;
 import ui.VehicleSearchMainView;
+import ui.special.SpecialView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,7 @@ public class SingleDealerRecordPanel extends JPanel {
     private BeautifulLabel name;
     private BeautifulLabel address;
     private JButton checkInventory;
+    private JButton ModifyDealer;
     private String dealerId;
 
     public SingleDealerRecordPanel(Dealer dealer) {
@@ -36,7 +38,13 @@ public class SingleDealerRecordPanel extends JPanel {
         checkInventory.setBackground(Setting.CHECK_INVENTORY_BUTTON_COLOR_BEFORE);
         checkInventory.setBorderPainted(false);
         checkInventory.setOpaque(true);
-        checkInventory.addActionListener(new ButtonPressActionListener());
+        checkInventory.addActionListener(new ButtonPressActionListener1());
+
+        ModifyDealer = new JButton("Special for Dealer");
+        ModifyDealer.setBackground(Setting.CHECK_INVENTORY_BUTTON_COLOR_BEFORE);
+        ModifyDealer.setBorderPainted(false);
+        ModifyDealer.setOpaque(true);
+        ModifyDealer.addActionListener(new ButtonPressActionListener2());
 
         BeautifulLabel nameDetail = new BeautifulLabel(dealer.getName());
         nameDetail.setPreferredSize(detailSize);
@@ -58,7 +66,9 @@ public class SingleDealerRecordPanel extends JPanel {
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.add(checkInventory);
+        buttonPanel.add(ModifyDealer);
         buttonPanel.setBackground(Setting.DEALER_RECORD_BACKGROUND_COLOR);
+
 
         this.setLayout(new GridLayout(3, 1));
         this.add(namePanel);
@@ -67,7 +77,7 @@ public class SingleDealerRecordPanel extends JPanel {
         this.setBackground(Setting.DEALER_RECORD_BACKGROUND_COLOR);
     }
 
-    class ButtonPressActionListener implements ActionListener {
+    class ButtonPressActionListener1 implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -79,6 +89,16 @@ public class SingleDealerRecordPanel extends JPanel {
             VehicleSearchMainView.searchVehiclePanel.init(dealerId);
             VehicleSearchMainView.mainEastPanel.add(VehicleSearchMainView.searchVehiclePanel, BorderLayout.CENTER);
             VehicleSearchMainView.mainEastPanel.updateUI();
+        }
+    }
+
+    class ButtonPressActionListener2 implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //导入修改dealer组的接口
+            SpecialView specialView = new SpecialView(dealerId);
+
         }
     }
 

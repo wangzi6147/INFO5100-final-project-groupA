@@ -72,7 +72,7 @@ public class MenuBarPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            searchVehicleButton.setToolTipText("just test test test ...");
+            searchVehicleButton.setToolTipText("Please choose a dealer to search car ...");
             VehicleSearchMainView.mainEastPanel.removeAll();
             VehicleSearchMainView.mainEastPanel.repaint();
             VehicleSearchMainView.searchVehiclePanel.removeAll();
