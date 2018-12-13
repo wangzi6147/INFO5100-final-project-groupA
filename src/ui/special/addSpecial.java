@@ -315,8 +315,8 @@ public class addSpecial extends JDialog{
 				//String value = valueText.getText();
 
 
-				Special special = new Special(dealerId,sd,ed,title,description,disclaimer,"value",brand,isNew,"2018",
-						bodyType,isMutex,valueType);
+				/*Special special = new Special(dealerId,sd,ed,title,description,disclaimer,"value",brand,isNew,"2018",
+						bodyType,isMutex,valueType);*/
 
 				//String dealerID, String startDate, String endDate, String title, String description, String disclaimer, String value,
 						// String brand, Boolean isNew,String year, BodyType bodyType, Boolean isMutex, ValueType valueType
