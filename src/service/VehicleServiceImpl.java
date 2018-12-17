@@ -1,5 +1,6 @@
 package service;
 
+import dao.VehicleManager;
 import dao.VehicleManagerImpl;
 import dto.*;
 
@@ -35,7 +36,6 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     public List<List<ImageIcon>> getImages() {
-
         List<List<ImageIcon>> res = new ArrayList<>();
         ImageIcon noIMG;
         try {
@@ -90,5 +90,11 @@ public class VehicleServiceImpl implements VehicleService {
 
     public boolean deleteVehicleByVehicleId(String vehicleId) throws SQLException {
         return vehicleManager.deleteVehicle(vehicleId);
+    }
+
+    public static void main(String[] args) throws SQLException {
+        VehicleService vehicleService = new VehicleServiceImpl();
+        List<Vehicle> res = vehicleService.findAllVehiclesByDealerId("10153");
+        System.out.println(res);
     }
 }
